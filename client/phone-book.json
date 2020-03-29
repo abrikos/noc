@@ -43,6 +43,7 @@
   },
   {
     "division": "научно-образовательный центр",
+    "path": "/struktura-nauchno-obrazovatelnyj-centr",
     "employers": [
       {
         "fio": "Пермякова Анна Васильевна",
@@ -143,6 +144,7 @@
   },
   {
     "division": "отдел изучения мамонтовой фауны",
+    "path": "/struktura-otdel-izucheniya-mamontovoj-fauny",
     "employers": [
       {
         "fio": "Протопопов Альберт Васильевич",
@@ -230,6 +232,7 @@
   },
   {
     "division": "отдел этносоциальных и этноэкономических исследований геосистем",
+    "path": "/struktura-otdel-etnosocialnyx-i-etnoekonomicheskix-issledovanij-geosistem",
     "employers": [
       {
         "fio": "Самсонова Ирина Валентиновна",
@@ -347,6 +350,7 @@
   },
   {
     "division": "центр интеллектуальной собственности РС(Я)",
+    "path": "/struktura-centr-intellektualnoj-sobstvennosti",
     "employers": [
       {
         "fio": "Неизвестных Анна Алексеевна",

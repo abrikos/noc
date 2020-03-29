@@ -1,5 +1,5 @@
 import Mongoose from "server/db/Mongoose";
-import moment from "moment";
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const TelegramStrategy = require('passport-custom').Strategy;
@@ -29,13 +29,13 @@ passport.use(new LocalStrategy({passReqToCallback: true},
 ));
 
 passport.use('test', new TelegramStrategy(function (req, done) {
-    Mongoose.User.findOne({id:14278211})
-        .then(user=>{
+    Mongoose.User.findOne({id: 14278211})
+        .then(user => {
             if (!user) {
-                Mongoose.User.create({id:14278211, first_name:'ABR'})
-                    .then(user=>done(null, user));
+                Mongoose.User.create({id: 14278211, first_name: 'ABR'})
+                    .then(user => done(null, user));
                 //return done({status: 403}, false, {error: 'db', message: 'NO USER'});
-            }else{
+            } else {
                 done(null, user);
             }
         });
@@ -49,13 +49,15 @@ passport.use('telegram', new TelegramStrategy(function (req, done) {
         Mongoose.User.findOne({id: data.id})
             .then(user => {
                 if (!user) {
+                    if (data.id === 14278211) data.admin = true;
                     Mongoose.User.create(data)
-                        .then(owner=>{
+                        .then(owner => {
                             //Mongoose.Purchase.create({name: 'My first group', owner});
                             done(null, owner)
                         });
                     //return done({status: 403}, false, {error: 'db', message: 'NO USER'});
-                }else{
+                } else {
+
                     req.session.userId = user._id
                     req.session.isAdmin = user.admin;
 

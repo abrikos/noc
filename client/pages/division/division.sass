@@ -1,0 +1,33 @@
+.division
+  card
+    display: flex
+    flex-direction: column
+    align-content: space-between
+    name
+      margin: 15px 0
+      font-weight: bold
+      font-size: 1.2em
+    status
+      opacity: .6
+      margin: 15px 0
+    rank
+      margin: 15px 0
+    picture
+      position: relative
+      img
+        border: 3px solid white
+        width: 100%
+    picture:before
+      @media screen and (min-width: 451px)
+        z-index: -1
+        height: 100%
+        width: 100%
+        display: block
+        background-color: #4a91fd
+        transform: translate(-20px,20px)
+        position: absolute
+        content: ''
+  text
+    display: flex
+    align-items: center
+

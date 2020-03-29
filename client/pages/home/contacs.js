@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import "./contacts.sass";
+import "client/pages/home/contacts.sass";
 const DG = require('2gis-maps');
 const latlng = [62.02448, 129.72488];
 

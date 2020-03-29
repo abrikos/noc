@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-        post: {type: mongoose.Schema.Types.ObjectId, ref: 'Post'},
-        type: String
+        extension: String,
+        name: String,
+        page: String,
+
     },
     {
         timestamps: {createdAt: 'createdAt'},
@@ -17,7 +19,7 @@ const modelSchema = new Schema({
 
 modelSchema.virtual('path')
     .get(function () {
-        return `/uploads/${this.id}.${this.type || 'jpg'}`;
+        return `/uploads/${this.name}.${this.extension}`;
     });
 
 modelSchema.virtual('date')

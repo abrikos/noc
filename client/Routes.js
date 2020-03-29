@@ -1,27 +1,31 @@
 import React from "react";
-import Home from "client/components/home/home";
+import Home from "client/pages/home/home";
 import Login from "client/components/login/login";
-import Cabinet from "client/components/cabinet/cabinet";
+import Cabinet from "client/pages/cabinet/cabinet";
 import RubricChoose from "client/components/create-post/RubricChoose";
-import PostUpdate from "client/components/create-post/PostUpdate";
+import PostUpdate from "client/components/post/PostUpdate";
 import PostView from "client/components/post/PostView";
 import RubricView from "client/components/post/RubricView";
 import PostMy from "client/components/post/PostMy";
-import AdminIndex from "client/components/admin/AdminIndex";
+import AdminIndex from "client/pages/admin/AdminIndex";
 import SearchResult from "client/components/search/SearchResult";
-import Contacts from "client/components/home/contacs";
-import Static from "client/components/home/Static";
+import Contacts from "client/pages/home/contacs";
+import Static from "client/pages/home/Static";
+import Division from "client/pages/division/Division";
+import PhoneBook from "client/pages/phone-book/PhoneBook";
 
 export default function Routes(props) {
 
     return {
         "/": () => <Home {...props}/>,
         "/cabinet": () => <Cabinet {...props}/>,
+        "/phone-book": () => <PhoneBook {...props}/>,
         "/contacts": () => <Contacts {...props}/>,
         "/login": () => <Login {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
         "/create": () => <RubricChoose {...props}/>,
         "/static/:page": (params) => <Static {...params} {...props}/>,
+        "/division/:page": (params) => <Division {...params} {...props}/>,
         "/post/update/:id": (params) => <PostUpdate {...params} {...props}/>,
         "/post/create/:cookie": (params) => <PostUpdate {...params} {...props}/>,
         "/post/my": (params) => <PostMy {...params} {...props}/>,

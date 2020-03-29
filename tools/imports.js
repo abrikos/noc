@@ -1,6 +1,7 @@
 import * as axios from "axios";
 import {parse} from "node-html-parser";
 import siteMap from "client/site-map";
+import phoneBook from "client/phone-book";
 import md5 from "md5";
 import Mongoose from "server/db/Mongoose";
 
@@ -35,6 +36,7 @@ const mainSite = 'https://yakutia.science';
 function adaptLink(path) {
     return path.replace(mainSite, '').substr(1).split('/').join('-')
 }
+
 /*
 
 async function phones() {
@@ -64,42 +66,105 @@ async function phones() {
 }
 */
 
-function fileName(src) {
+
+function getFileName(src) {
     const extension = src.split('.').pop();
-    return 'uploads/' + md5(src) + '.' + extension;
+    return {name: md5(src) , extension};
 }
 
-function getImage(image){
-    let src = image.attributes['data-src'];
+
+
+async function divisions() {
+    await Mongoose.Division.deleteMany().exec();
+    await Mongoose.Person.deleteMany().exec();
+
+    for (const map of siteMap.filter(m => m.pages[0] === 'struktura' && m.pages.length > 1)) {
+        const path = './static' + map.path;
+        const root = await getDomFile(path);
+        const name = root.querySelector('h1').rawText.trim();
+        const fio = root.querySelector('h3').rawText.trim();
+
+        const status = root.querySelector('.el-meta').rawText.trim();
+        const rank = root.querySelector('.el-content').rawText.trim();
+        console.log(rank)
+        const imageNode = root.querySelector('.el-image');
+        const file = getImage(imageNode);
+        const description = root.querySelector('.uk-flex-auto.uk-width-2-3@m').rawText.trim().replace(/ +(?= )/g,'')
+        const division = await Mongoose.Division.create({name, description, path: map.path});
+        const image = await Mongoose.Image.findOne({name:file.name});
+        division.chief = await Mongoose.Person.create({fio, rank, status, division, image});
+        await division.save();
+    }
+    //return //Mongoose.Person.find().then(console.log)
+
+    for (const book of phoneBook) {
+        let division;
+        if (!book.path) {
+            division = await Mongoose.Division.create({name: book.division});
+        } else {
+            division = await Mongoose.Division.findOne({path: book.path});
+            //console.log(division)
+        }
+
+        for (const e of book.employers) {
+            const personExists = await Mongoose.Person.findOne({fio: e.fio});
+
+            let phone = e.links.find(l => l.match('tel:'));
+            if (phone) phone = phone.replace('tel:', '');
+            let email = e.links.find(l => l.match('mailto:'));
+            if (email) email = email.replace('mailto:', '');
+            if (personExists) {
+                personExists.email = email;
+                personExists.phone = phone;
+                personExists.division = division;
+                await personExists.save()
+            } else {
+                await Mongoose.Person.create({phone, email, division, ...e})
+            }
+
+        }
+    }
+    for (const book of phoneBook) {
+        if (!book.path) {
+            const div = await Mongoose.Division.findOne({name: book.division.trim()});
+            const chief = await Mongoose.Person.findOne({fio: book.employers[0].fio.trim()});
+            div.chief = chief;
+            await div.save()
+        }
+    }
+    Mongoose.close()
+}
+
+function getImage(image) {
+    let src = image.attributes.src;
+    if (!src) src = image.attributes['data-src'];
     if (!src) src = image.attributes['uk-img'];
-    if (!src) src = image.attributes.src;
-    const extension = src.split('.').pop();
-    const fileName = fileName(src);
-    return `wget -nc -O ${fileName} "${mainSite}${src}"`;
+    if(!src.includes(mainSite)) src = mainSite + src;
+    const file = getFileName(src);
+    return {src, ...file}
 }
 
-async function downloads() {
+async function downloadsImages() {
+    await Mongoose.Image.deleteMany().exec();
     const wgets = [];
     for (const map of siteMap) {
         const link = mainSite + '/' + map.pages.join('/');
         const path = './static' + (map.path === '/' ? '/home' : map.path);
         const root = await getDomFile(path);
         const images = root.querySelectorAll('img');
-        /*if(fs.existsSync(path)) continue;
-        const response = await axios.get(link);
-        console.log(map.path)
-        const file2 = fs.openSync(path, 'w');
-        fs.writeSync(file2, response.data, null, null);
-        fs.closeSync(file2);*/
         for (const image of images) {
-            wgets.push(getImage(image));
+            const file = getImage(image);
+            file.path = map.path;
+            const imageModel = await Mongoose.Image.create(file);
+            wgets.push(`wget -nc -O ${imageModel.path.slice(1)} "${file.src}"`);
         }
     }
     const file = fs.openSync(`./images.sh`, 'w');
-    fs.writeSync(file, wgets.join(';'), null, null);
+    fs.writeSync(file, wgets.join('\n'), null, null);
     fs.closeSync(file);
     Mongoose.close()
 }
+
 
 /*
 
@@ -137,7 +202,9 @@ async function menuDb() {
 }
 */
 
-downloads()
+
+divisions()
+//downloadsImages()
 //phones()
 //pages()
 //menu()

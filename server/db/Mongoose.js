@@ -2,7 +2,9 @@ import User from "server/db/models/Model-User";
 import Rubric from "server/db/models/Model-Rubric";
 import Image from "server/db/models/Model-Image";
 import Post from "server/db/models/Model-Post";
-import Menu from "server/db/models/Model-Menu";
+import Division from "server/db/models/Model-Division";
+import Person from "server/db/models/Model-Person";
+
 
 const mongoose = require("mongoose");
 mongoose.set('useCreateIndex', true);
@@ -30,7 +32,7 @@ const Mongoose = {
     isValidId: function (id) {
         return mongoose.Types.ObjectId.isValid(id)
     },
-    User, Rubric, Image, Post, Menu
+    User, Rubric, Image, Post, Division, Person
 
 };
 export default Mongoose;

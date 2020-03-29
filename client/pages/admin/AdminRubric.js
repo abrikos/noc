@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import "./admin.sass"
+import "client/pages/admin/admin.sass"
 import {Button, Input} from "reactstrap";
 
 export default function AdminRubric(props) {

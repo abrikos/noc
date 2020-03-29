@@ -9,17 +9,6 @@ const fs = require('fs')
 
 module.exports.controller = function (app) {
 
-
-    app.post('/api/static/:page', async (req, res) => {
-        const file = 'client/static/'+req.params.page+'.html';
-        try {
-            const html = fs.readFileSync(file, 'utf8');
-            res.send({html})
-        }catch (e) {
-            res.sendStatus(404)
-        }
-    });
-
     app.post('/api/feeds', async (req, res) => {
         function item(feed) {
             return {
@@ -87,6 +76,7 @@ module.exports.controller = function (app) {
                     addReferral(parent, req);
                 })
         }*/
+        console.log('zzzzzzzzzzz')
         res.redirect(req.cookies.returnUrl || req.query.returnUrl)
     });
 

@@ -1,15 +1,17 @@
 import React from "react";
-import AdminRubric from "client/components/admin/AdminRubric";
-import AdminTariff from "client/components/admin/AdminTariff";
-import AdminUser from "client/components/admin/AdminUser";
+import AdminRubric from "client/pages/admin/AdminRubric";
+import AdminDivision from "client/pages/admin/AdminDivision";
+import AdminUser from "client/pages/admin/AdminUser";
 import {A} from "hookrouter"
 import ErrorPage from "client/components/service/ErrorPage";
+import AdminStart from "client/pages/admin/AdminStart";
 
 export default function AdminIndex(props) {
     const pages = {
-        rubric:['Рубрики', <AdminRubric {...props}/>],
-        tariffs:['Тарифы', <AdminTariff  {...props}/>],
+        //rubric:['Рубрики', <AdminRubric {...props}/>],
+        start:['Начало', <AdminStart  {...props}/>],
         users:['Пользователи', <AdminUser  {...props}/>],
+        divisions:['Структура', <AdminDivision  {...props}/>],
     };
 
     if(!props.authenticatedUser.admin) return <ErrorPage error={403}/>;

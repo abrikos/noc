@@ -3,7 +3,6 @@ import {t} from "client/components/Translator"
 import MyBreadCrumb from "client/components/MyBreadCrumb";
 import {Button, Input} from "reactstrap";
 import ErrorPage from "client/components/service/ErrorPage";
-import PostMy from "client/components/post/PostMy";
 
 export default function Cabinet(props) {
     if (!props.authenticatedUser) return <ErrorPage {...{error: 403, message: 'Доступ запрещен'}}/>;
@@ -43,7 +42,7 @@ export default function Cabinet(props) {
             <Button className="input-group-text" id="basic-addon3">{t('Save')}</Button>
         </form>
 
-        <PostMy {...props}/>
+
 
         {/*{avatar && <img src={avatar} alt="user avatar" style={{maxWidth: 150, maxHeight: 150}}/>}*/}
     </div>
