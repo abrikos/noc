@@ -1,0 +1,3 @@
+
+		{path:'/proekty/istoriya-yakutii', lablel:'История Якутии'},
+		{path:'/proekty/pererabotka-musora', lablel:'Переработка мусора'},

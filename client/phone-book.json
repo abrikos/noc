@@ -1,0 +1,385 @@
+[
+  {
+    "division": "административно-хозяйственный отдел",
+    "employers": [
+      {
+        "fio": "Будикин Василий Прокопьевич",
+        "status": "начальник",
+        "links": [
+          "tel:+7(4112)39-06-66",
+          "mailto:budikin@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "бухгалтерия",
+    "employers": [
+      {
+        "fio": "Лучко Лилия Николаевна",
+        "status": "главный бухгалтер",
+        "links": [
+          "tel:+7(4112)39-06-60",
+          "mailto:luchko@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Поликарпова Валентина Дмитриевна",
+        "status": "экономист",
+        "links": [
+          "tel:+7(4112)39-06-60",
+          "mailto:v-polik@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Терентьева Надежда Николаевна",
+        "status": "бухгалтер-кассир",
+        "links": [
+          "tel:+7(4112)39-06-60",
+          "mailto:bux@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "научно-образовательный центр",
+    "employers": [
+      {
+        "fio": "Пермякова Анна Васильевна",
+        "status": "главный специалист",
+        "links": [
+          "tel:+7(4112)39-06-69",
+          "mailto:a.permyakova@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "научно-организационный отдел",
+    "employers": [
+      {
+        "fio": "Туркебаев Тимур Джумгалбекович",
+        "status": "руководитель",
+        "links": [
+          "tel:+7(4112)39-06-62",
+          "mailto:ttd@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Петрова Татьяна Федоровна",
+        "status": "специалист",
+        "links": [
+          "tel:+7(4112)39-06-62",
+          "mailto:ptf@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Корякина Анастасия Ивановна",
+        "status": "специалист",
+        "links": [
+          "tel:+7(4112)39-06-62",
+          "mailto:press@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Старостина Вероника Анатольевна",
+        "status": "специалист",
+        "links": [
+          "tel:+7(4112)39-06-62",
+          "mailto:vstar@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "общий отдел",
+    "employers": [
+      {
+        "fio": "Павлова Юлия Гавриловна",
+        "status": "секретарь-референт",
+        "links": [
+          "tel:+7(4112)33-57-11",
+          "mailto:secretary@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Васильева Туяра Борисовна",
+        "status": "специалист по кадрам",
+        "links": [
+          "tel:+7(4112)33-06-60",
+          "mailto:v.tuyaara@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Никифорова Августа Семеновна",
+        "status": "юрист",
+        "links": [
+          "tel:+7(4112)33-06-60",
+          "mailto:aura-69@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "отдел закупок",
+    "employers": [
+      {
+        "fio": "Степанов Иннокентий Васильевич",
+        "status": "руководитель",
+        "links": [
+          "tel:+7(4112)33-06-66",
+          "mailto:gz_anrsya@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Окороков Владимир Владимирович",
+        "status": "специалист",
+        "links": [
+          "tel:+7(4112)33-06-66",
+          "mailto:gz_anrsya@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "отдел изучения мамонтовой фауны",
+    "employers": [
+      {
+        "fio": "Протопопов Альберт Васильевич",
+        "status": "руководитель",
+        "links": [
+          "tel:+7(4112)34-40-17",
+          "mailto:a.protopopov@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Плотников Валерий Валерьевич",
+        "status": "научный сотрудник",
+        "links": [
+          "tel:+7(4112)34-40-17",
+          "mailto:v.plotnikov@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Колесов Станислав Дмитриевич",
+        "status": "научный сотрудник",
+        "links": [
+          "tel:+7(4112)34-40-17",
+          "mailto:s.kolesov@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Климовский Айсен Иванович",
+        "status": "научный сотрудник",
+        "links": [
+          "tel:+7(4112)34-40-17",
+          "mailto:a.klimovsky@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "отдел составления энциклопедического словаря Якутии",
+    "employers": [
+      {
+        "fio": "Брагина Дария Григорьевна",
+        "status": "главный научный сотрудник",
+        "links": [
+          "tel:+7(4112)39-06-67",
+          "mailto:bragina@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Иевлева Саргылана Иннокентьевна",
+        "status": "научный сотрудник",
+        "links": [
+          "tel:+7(4112)39-06-67",
+          "mailto:otdel@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Осипова Александра Петровна",
+        "status": "научный сотрудник",
+        "links": [
+          "tel:+7(4112)39-06-67",
+          "mailto:a.osipova@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "отдел экспертизы НИР и НИОКР",
+    "employers": [
+      {
+        "fio": "Шадрина Людмила Панкратьевна",
+        "status": "главный научный сотрудник",
+        "links": [
+          "tel:+7(4112)39-06-69",
+          "mailto:lushadr@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Алексеев Максим Семенович",
+        "status": "специалист",
+        "links": [
+          "mailto:colinya@yakutia.science",
+          "tel:+7(4112)39-06-62"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "отдел этносоциальных и этноэкономических исследований геосистем",
+    "employers": [
+      {
+        "fio": "Самсонова Ирина Валентиновна",
+        "status": "главный научный сотрудник",
+        "links": [
+          "tel:+7(4112)33-57-11",
+          "mailto:irsam@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Неустроева Аиза Борисовна",
+        "status": "ведущий научный сотрудник",
+        "links": [
+          "tel:+7(4112)33-57-11",
+          "mailto:a.neustroeva@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Павлова Мария Борисовна",
+        "status": "ведущий научный сотрудник",
+        "links": [
+          "tel:+7(4112)33-57-11",
+          "mailto:m.pavlova@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Малышева Матрена Семеновна",
+        "status": "ведущий научный сотрудник",
+        "links": [
+          "tel:+7(4112)33-57-11",
+          "mailto:m.malysheva@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Семенова Любовь Александровна",
+        "status": "научный сотрудник",
+        "links": [
+          "tel:+7(4112)33-57-11",
+          "mailto:l.a.semenova@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "президиум",
+    "employers": [
+      {
+        "fio": "Колодезников Игорь Иннокентьевич",
+        "status": "президент",
+        "links": [
+          "tel:+7(4112)33-57-11",
+          "mailto:kii@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Гоголев Анатолий Игнатьевич",
+        "status": "вице-президент",
+        "links": [
+          "tel:+7(4112)39-06-67",
+          "mailto:gogolev@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Матвеев Андрей Иннокентьевич",
+        "status": "вице-президент",
+        "links": [
+          "tel:+7(4112)39-06-65",
+          "mailto:andrei.mati@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Попов Сергей Вячеславович",
+        "status": "глав.ученый секретарь",
+        "links": [
+          "tel:+7(4112)39-06-72",
+          "mailto:gusan@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Чугунов Афанасий Васильевич",
+        "status": "советник",
+        "links": [
+          "tel:+7(4112)33-57-11"
+        ]
+      },
+      {
+        "fio": "Иванов Василий Николаевич",
+        "status": "советник",
+        "links": [
+          "tel:+7(4112)33-57-11"
+        ]
+      },
+      {
+        "fio": "Степанова Лилиана Владимировна",
+        "status": "руководит. аппарата",
+        "links": [
+          "tel:+7(4112)33-57-79",
+          "mailto:ste-liliana@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "секретариат",
+    "employers": [
+      {
+        "fio": "Корнилова Зинаида Андреевна",
+        "status": "секретарь президиума",
+        "links": [
+          "tel:+7(4112)39-06-64",
+          "mailto:z.korn@yakutia.science"
+        ]
+      }
+    ]
+  },
+  {
+    "division": "центр интеллектуальной собственности РС(Я)",
+    "employers": [
+      {
+        "fio": "Неизвестных Анна Алексеевна",
+        "status": "руководитель",
+        "links": [
+          "tel:+7(4112)39-06-68",
+          "mailto:anna_n@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Скрябин Василий Васильевич",
+        "status": "специалист",
+        "links": [
+          "tel:+7(4112)39-06-68",
+          "mailto:v.skryabin@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Андреев Сергей Александрович",
+        "status": "специалист",
+        "links": [
+          "tel:+7(4112)39-06-68",
+          "mailto:andreev-sa@yakutia.science"
+        ]
+      },
+      {
+        "fio": "Саломатов Александр Константинович",
+        "status": "главный специалист",
+        "links": [
+          "tel:+7(4112)39-06-68",
+          "mailto:a.salomatov@yakutia.science"
+        ]
+      }
+    ]
+  }
+]
