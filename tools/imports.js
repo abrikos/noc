@@ -2,6 +2,7 @@ import * as axios from "axios";
 import {parse} from "node-html-parser";
 import siteMap from "client/site-map";
 import phoneBook from "client/phone-book";
+import meetingVoices from "client/meeting-voices";
 import md5 from "md5";
 import Mongoose from "server/db/Mongoose";
 
@@ -21,21 +22,6 @@ const orders = [
 ];
 
 
-async function getDom(url) {
-    const response = await axios.get(url);
-    return parse(response.data);
-}
-
-async function getDomFile(path) {
-    const data = fs.readFileSync(path, 'utf-8');
-    return parse(data);
-}
-
-const mainSite = 'https://yakutia.science';
-
-function adaptLink(path) {
-    return path.replace(mainSite, '').substr(1).split('/').join('-')
-}
 
 /*
 
@@ -69,12 +55,41 @@ async function phones() {
 
 function getFileName(src) {
     const extension = src.split('.').pop();
-    return {name: md5(src) , extension};
+    return {name: md5(src), extension};
 }
 
-
+async function uchsovety() {
+    await Mongoose.Meeting.deleteMany().exec()
+    for (const map of siteMap.filter(m => m.pages[0] === 'obedinyonnye-uchyonye-sovety' && m.pages.length > 1)) {
+        const path = './static' + map.path;
+        const root = await getDomFile(path);
+        const personsContainer = root.querySelector('.js-filter');
+        const persons = personsContainer.childNodes.filter(n => n.nodeType === 1);
+        const name = root.querySelector('h1').rawText.trim();
+        let meetingFound = await Mongoose.Meeting.findOne({name});
+        if (!meetingFound) meetingFound = await Mongoose.Meeting.create({name, path: map.pages[1]});
+        meetingFound.persons = [];
+        for (const person of persons) {
+            const fio = person.querySelector('.el-title').rawText.trim();
+            const statusNode = person.querySelector('.el-meta');
+            const status = statusNode && statusNode.rawText.trim();
+            const rank = person.querySelector('.el-content').rawText.trim();
+            let personFound = await Mongoose.Person.findOne({fio});
+            if(!personFound) personFound = await Mongoose.Person.create({fio, rank, status});
+            const voiceName = person.attributes['data-tag'].replace(/\-/g, ' ');
+            const voice = meetingVoices.indexOf(voiceName);
+            personFound.voice = voice;
+            await personFound.save();
+            meetingFound.persons.push(personFound);
+            await meetingFound.save()
+            console.log(fio, voice, voiceName)
+        }
+    }
+    Mongoose.close()
+}
 
 async function divisions() {
+    return console.log('EXIT. DIVISION READY')
     await Mongoose.Division.deleteMany().exec();
     await Mongoose.Person.deleteMany().exec();
 
@@ -89,9 +104,9 @@ async function divisions() {
         console.log(rank)
         const imageNode = root.querySelector('.el-image');
         const file = getImage(imageNode);
-        const description = root.querySelector('.uk-flex-auto.uk-width-2-3@m').rawText.trim().replace(/ +(?= )/g,'')
+        const description = root.querySelector('.uk-flex-auto.uk-width-2-3@m').rawText.trim().replace(/ +(?= )/g, '')
         const division = await Mongoose.Division.create({name, description, path: map.path});
-        const image = await Mongoose.Image.findOne({name:file.name});
+        const image = await Mongoose.Image.findOne({name: file.name});
         division.chief = await Mongoose.Person.create({fio, rank, status, division, image});
         await division.save();
     }
@@ -135,14 +150,6 @@ async function divisions() {
     Mongoose.close()
 }
 
-function getImage(image) {
-    let src = image.attributes.src;
-    if (!src) src = image.attributes['data-src'];
-    if (!src) src = image.attributes['uk-img'];
-    if(!src.includes(mainSite)) src = mainSite + src;
-    const file = getFileName(src);
-    return {src, ...file}
-}
 
 async function downloadsImages() {
     await Mongoose.Image.deleteMany().exec();
@@ -202,8 +209,8 @@ async function menuDb() {
 }
 */
 
-
-divisions()
+uchsovety()
+//divisions()
 //downloadsImages()
 //phones()
 //pages()

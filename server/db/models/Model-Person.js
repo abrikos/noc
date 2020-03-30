@@ -9,6 +9,13 @@ const modelSchema = new Schema({
         rank: String,
         phone: String,
         email: String,
+        supervisorStatus: String,
+        supervisorOrder: Number,
+        description: String,
+        voice: Number,
+        member: Number,
+        memberStatus: String,
+        isApparat: Boolean,
         division: {type: mongoose.Schema.Types.ObjectId, ref: 'Division'},
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
 

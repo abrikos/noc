@@ -13,6 +13,10 @@ import Contacts from "client/pages/home/contacs";
 import Static from "client/pages/home/Static";
 import Division from "client/pages/division/Division";
 import PhoneBook from "client/pages/phone-book/PhoneBook";
+import Meeting from "client/pages/meeting/Meeting";
+import SiteMap from "client/pages/SiteMap";
+import Apparatus from "client/pages/Apparatus";
+import PersonsLarge from "client/pages/persons/PersonsLarge";
 
 export default function Routes(props) {
 
@@ -24,8 +28,12 @@ export default function Routes(props) {
         "/login": () => <Login {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
         "/create": () => <RubricChoose {...props}/>,
+        "/apparatus": () => <Apparatus {...props}/>,
+        "/persons/:type": (params) => <PersonsLarge {...params} {...props}/>,
+        "/site-map": () => <SiteMap {...props}/>,
         "/static/:page": (params) => <Static {...params} {...props}/>,
         "/division/:page": (params) => <Division {...params} {...props}/>,
+        "/meeting/:page": (params) => <Meeting {...params} {...props}/>,
         "/post/update/:id": (params) => <PostUpdate {...params} {...props}/>,
         "/post/create/:cookie": (params) => <PostUpdate {...params} {...props}/>,
         "/post/my": (params) => <PostMy {...params} {...props}/>,

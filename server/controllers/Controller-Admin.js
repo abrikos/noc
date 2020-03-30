@@ -3,7 +3,7 @@ import Mongoose from "server/db/Mongoose";
 const passportLib = require('server/lib/passport');
 //const passport = require('passport');
 
-//Mongoose.User.find({id:14278211}).then(console.log)
+//Mongoose.Meeting.find({}).then(console.log)
 
 
 module.exports.controller = function (app) {
@@ -14,6 +14,18 @@ module.exports.controller = function (app) {
                 for(const f of Object.keys(req.body)){
                     r[f] = req.body[f]
                 }
+                r.save();
+                res.sendStatus(200);
+            })
+    });
+
+    app.post('/api/admin/person/:id/update', passportLib.isAdmin, (req, res) => {
+        Mongoose.Person.findById(req.params.id)
+            .then(r => {
+                for(const f of Object.keys(req.body)){
+                    if(req.body[f]) r[f] = req.body[f]
+                }
+                console.log(req.body)
                 r.save();
                 res.sendStatus(200);
             })

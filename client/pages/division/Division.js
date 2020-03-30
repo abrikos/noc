@@ -25,7 +25,7 @@ export default function Division(props) {
         <div className="row">
             <card className="col-md-4">
                 <picture>
-                    <img src={data.chief.image.path}/>
+                    <img src={data.chief.image && data.chief.image.path}/>
                 </picture>
             </card>
             <text className="col-md-8">

@@ -1,25 +1,24 @@
 import React, {useEffect, useState} from "react";
 import {Button, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import MarkdownEditor from "client/components/markdown-editor/MarkdownEditor";
+import meetingVoices from "client/meeting-voices";
 
-
-export default function AdminDivision(props) {
+export default function AdminMeeting(props) {
     const [list, setList] = useState([]);
-    const [persons, setPersons] = useState([]);
+    const [divisions, setDivisions] = useState([]);
     const [model, setModel] = useState({});
     const [errors, setErrors] = useState({});
 
 
     useEffect(() => {
-        props.api('/person/list').then(setPersons)
         getList();
     }, []);
 
     function getList() {
-        props.api('/division/list').then(setList)
+        props.api('/meeting/list').then(setList)
     }
 
-    function modelChange(m){
+    function modelChange(m) {
         setModel(m);
     }
 
@@ -36,11 +35,13 @@ export default function AdminDivision(props) {
         const form = props.formToObject(e.target);
         const err = {};
         //if (!form.name) err.name = 'Название обязательно';
-        if (!form.name) err.name = 'Название обязательно';
+        if (!form.fio) err.fio = 'Название обязательно';
+        if (!form.rank) err.rank = 'Звание';
+        if (!form.status) err.status = 'Должность';
         if (Object.keys(err).length) return setErrors(err);
         setErrors({});
         if (model.id) {
-            props.api(`/admin/division/${model.id}/update`, form)
+            props.api(`/admin/person/${model.id}/update`, form)
                 .then(() => {
                     getList()
                 })
@@ -53,22 +54,10 @@ export default function AdminDivision(props) {
     function form(model) {
         return <form onSubmit={submit} key={model.id}>
             <Button>{model.id ? 'Сохранить' : 'Создать'}</Button>
+
             <FormGroup>
-                <Label>Название</Label>
+                <Label>name</Label>
                 <Input name="name" defaultValue={model.name} invalid={!!errors.name}/>
-                <FormFeedback>{errors.name}</FormFeedback>
-            </FormGroup>
-            <FormGroup>
-                <Label>Путь</Label>
-                <Input name="path" defaultValue={model.path} invalid={!!errors.path}/>
-                <FormFeedback>{errors.path}</FormFeedback>
-            </FormGroup>
-            <FormGroup>
-                <Label>Руководитель</Label>
-                <Input name="chief" defaultValue={model.chief} invalid={!!errors.chief} type="select">
-                    <option></option>
-                    {persons.map(p=><option value={p.id} key={p.id}>{p.fio}</option>)}
-                </Input>
                 <FormFeedback>{errors.name}</FormFeedback>
             </FormGroup>
 
@@ -87,11 +76,16 @@ export default function AdminDivision(props) {
 
     return <div className="row">
         <div className="col-4">
+            <select size={20} style={({width:'100%'})}>
             <option className={!model.id ? 'selected' : ''} onClick={() => setModel({})}>Создать</option>
-            {list.map(l => <option key={l.id} className={l.id === model.id ? 'selected' : ''} onClick={() => modelChange(l)}>{l.name || l.id}</option>)}
+            {list.map(l => <option key={l.id} className={l.id === model.id ? 'selected' : ''} onClick={() => modelChange(l)}>
+                {l.name || l.id}
+            </option>)}
+            </select>
         </div>
         <div className="col-8">
             {form(model)}
+            <h3>Персоны совета</h3>
             {model.persons && model.persons.map(p=><div key={p.id}>{p.fio}</div>)}
         </div>
 
