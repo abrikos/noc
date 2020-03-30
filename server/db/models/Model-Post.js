@@ -8,9 +8,10 @@ const modelSchema = new Schema({
         header: String,
         text: String,
         path: String,
-        published: Boolean,
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+        images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
+        image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
     },
     {
         timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt'},
@@ -20,19 +21,12 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.statics.population = ['images', {path: 'payment', populate: ['tariff']}, {path: 'types', options: {sort: {order: 1}}}, {path: 'options', populate: 'parent'}];
+modelSchema.statics.population = ['image','images', {path: 'payment', populate: ['tariff']}, {path: 'types', options: {sort: {order: 1}}}, {path: 'options', populate: 'parent'}];
 
 modelSchema.virtual('date')
     .get(function () {
         return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss')
     });
-
-modelSchema.virtual('images', {
-    ref: 'Image',
-    localField: '_id',
-    foreignField: 'post',
-    justOne: false // set true for one-to-one relationship
-});
 
 
 export default mongoose.model("Post", modelSchema)

@@ -1,7 +1,7 @@
 html
 	head
 		meta( name="viewport" content="width={width},initial-scale=1")
-		meta( data-n-head="true" data-hid="og-title" name="og:title" content="Беру14.ру - " + types)
+		meta( data-n-head="true" data-hid="og-title" name="og:title" content="Беру14.ру - " + header)
 		meta( data-n-head="true" data-hid="og-description" name="og:description" content=text)
 		meta( data-n-head="true" data-hid="og-image" name="og:image" content=image)
 
@@ -11,6 +11,6 @@ html
 		div=text
 		img(src=image)
 		div=url
-
+		div=image
 		script.
-			document.location.href = '#{url}'
+			//document.location.href = '#{url}'

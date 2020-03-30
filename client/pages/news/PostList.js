@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Pagination, PaginationItem, PaginationLink} from 'reactstrap';
-import PostSmall from "client/components/post/PostSmall";
+import PostSmall from "client/pages/news/PostSmall";
 
 export default function PostList(props) {
     const [posts, setPosts] = useState([]);
@@ -12,8 +12,8 @@ export default function PostList(props) {
     const paginationLength = 5;
 
     useEffect(() => {
-        const f = Object.assign(props.filter,{});
-        f.limit = 20;
+        const f = {where:{},order:{createdAt:-1}};
+        f.limit = 9;
         f.skip = 0;
         setFilter(f);
         props.api('/post/search', f).then(setPosts);

@@ -1,6 +1,6 @@
 import React from "react";
 import SearchForm from "client/components/search/SearchForm";
-import PostList from "client/components/post/PostList";
+import PostList from "client/pages/news/PostList";
 
 export default function SearchResult(props) {
     let text = b64DecodeUnicode(props.code);

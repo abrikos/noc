@@ -5,8 +5,8 @@ import md5 from "md5";
 const fs = require('fs');
 
 export default {
-    async getDom(url) {
-        const response = await axios.get(url);
+    async getDom(path) {
+        const response = await axios.get(path);
         return parse(response.data);
     },
 

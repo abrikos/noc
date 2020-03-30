@@ -31,6 +31,7 @@ module.exports.controller = function (app) {
                 {label: 'Почетные члены', path: '/persons/honor-members'},
                 {label: 'Иностранные члены', path: '/persons/foreign-members'},
             ]});
+        map.push({label: 'Новости', path: '/news', menu: true});
 
         res.send(map)
     });

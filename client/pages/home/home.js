@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import SearchForm from "client/components/search/SearchForm";
 import {A} from "hookrouter";
-import PostList from "client/components/post/PostList";
+import PostList from "client/pages/news/PostList";
 import ImageList from "client/components/image-list/ImageList";
 import ImageCarousel from "client/components/image-list/ImageCarousel";
 

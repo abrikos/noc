@@ -7,6 +7,7 @@ const modelSchema = new Schema({
         extension: String,
         name: String,
         page: String,
+        description: String,
 
     },
     {

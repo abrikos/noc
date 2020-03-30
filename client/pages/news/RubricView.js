@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PostList from "client/components/post/PostList";
+import PostList from "client/pages/news/PostList";
 import MyBreadCrumb from "client/components/MyBreadCrumb";
 
 export default function RubricView(props) {

@@ -78,7 +78,7 @@ module.exports.controller = function (app) {
 
     function bodyToWhere(body) {
         if (!body.where) body.where = {};
-        body.where.published = true;
+        //body.where.published = true;
 
         let type;
         if (body.where.root && body.where.root !== '0') type = body.where.root;
@@ -121,7 +121,7 @@ module.exports.controller = function (app) {
     app.post('/api/post/search', (req, res) => {
         const filter = bodyToWhere(req.body);
         Mongoose.Post.find(filter)
-            .sort({payment: -1, updatedAt: -1})
+            .sort({createdAt: -1})
             .limit(parseInt(req.body.limit) || 10)
             .skip(parseInt(req.body.skip))
             .populate(Mongoose.Post.population)
@@ -165,7 +165,7 @@ module.exports.controller = function (app) {
 
 
     app.get('/api/rss', (req, res) => {
-        const filter = {published: true};
+        const filter = {};
         Mongoose.Post.find(filter)
             .sort({payment: -1, updatedAt: -1,})
             //.sort([['payment', -1],['createdAt', -1]])
@@ -228,15 +228,13 @@ module.exports.controller = function (app) {
     });
 
     app.post('/api/post/view/:id', (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
-        Mongoose.Post.findById(req.params.id)
+        Mongoose.Post.findOne({path: req.params.id})
             .populate(Mongoose.Post.population)
             .populate('token')
             .then(post => {
                 post.views++;
                 post.save()
                     .then(p => {
-                        p.editable = checkAccess(req, post);
                         p.token = null;
                         res.send(p)
                     })
@@ -249,7 +247,6 @@ module.exports.controller = function (app) {
         Mongoose.Post.findById(req.params.id)
             .populate('token')
             .then(post => {
-                if (!checkAccess(req, post)) return res.status(401).send();
                 if (req.files && Object.keys(req.files).length) {
                     if (!req.files) return res.send(app.locals.sendError({error: 500, message: 'No files uploaded'}));
                     if (!req.files.image) return res.send(app.locals.sendError({error: 500, message: 'No files uploaded'}));
@@ -283,22 +280,12 @@ module.exports.controller = function (app) {
         Mongoose.Post.findById(req.params.id)
             .populate(Mongoose.Post.population)
             .then(post => res.render('post', {
+                header: post.header,
                 text: post.text,
-                types: post.types.map(r => r.name).join(', '),
-                image: post.images[post.images.length - 1] && req.protocol + '://' + req.get('host') + post.images[post.images.length - 1].path,
+                image: req.protocol + '://' + req.get('host') + (post.image ? post.image.path : '/logo.svg'),
                 url: req.protocol + '://' + req.get('host') + '/post/' + post.id
             }))
             .catch(e => res.send(app.locals.sendError({error: 404, message: e.message})))
-    });
-
-    app.post('/api/post/check/editable/:id', async (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
-        Mongoose.Post.findById(req.params.id)
-            .populate('token')
-            .then(post => {
-                const editable = checkAccess(req, post);
-                res.send({editable});
-            })
     });
 
     app.post('/api/post/delete/:id', async (req, res) => {
@@ -306,8 +293,8 @@ module.exports.controller = function (app) {
         Mongoose.Post.findById(req.params.id)
             .populate('token')
             .then(post => {
-                const editable = checkAccess(req, post);
-                if (editable || req.session.isAdmin) {
+
+                if (req.session.isAdmin) {
 
                     post.delete();
                 }
@@ -320,8 +307,7 @@ module.exports.controller = function (app) {
         Mongoose.Post.findById(req.body.img.post)
             .populate('token')
             .then(post => {
-                const editable = checkAccess(req, post);
-                if (editable || req.session.isAdmin) {
+                if (req.session.isAdmin) {
                     Mongoose.Image.findById(req.body.img.id)
                         .then(img => {
                             img.delete()
@@ -334,27 +320,19 @@ module.exports.controller = function (app) {
             })
     });
 
-    function checkAccess(req, post) {
-        if (!post) return false;
-        const user = req.session.userId;
-        const tokens = req.body.tokens ? typeof req.body.tokens === 'object' ? req.body.tokens : req.body.tokens.split(',') : [];
-        console.log(tokens, post.token.name)
-        return tokens.includes(post.token.name) || (post.token.user && post.token.user.equals(user)) || req.session.isAdmin;
-    }
 
     app.post('/api/post/update/:id', async (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose.Post.findById(req.params.id)
             .populate('token')
             .then(post => {
-                if (!checkAccess(req, post)) return res.status(401).send();
                 post.phone = req.body.phone;
                 post.text = striptags(req.body.text)
                 //.replace(/(?:\r\n|\r|\n)/g,'<br/>');
                 post.isDelivery = !!req.body.isDelivery;
                 post.price = parseInt(req.body.price) || 0;
                 if (!post.phone) return res.send({error: 500, message: 'Телефон обязателен'});
-                post.published = true;
+                //post.published = true;
                 post.ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
                 post.save();
                 res.send({ok: 200});

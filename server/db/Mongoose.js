@@ -5,7 +5,6 @@ import Post from "server/db/models/Model-Post";
 import Division from "server/db/models/Model-Division";
 import Person from "server/db/models/Model-Person";
 import Meeting from "server/db/models/Model-Meeting";
-import Presidium from "server/db/models/Model-Presidium";
 
 
 const mongoose = require("mongoose");
@@ -34,7 +33,7 @@ const Mongoose = {
     isValidId: function (id) {
         return mongoose.Types.ObjectId.isValid(id)
     },
-    User, Rubric, Image, Post, Division, Person, Meeting, Presidium
+    User, Rubric, Image, Post, Division, Person, Meeting
 
 };
 export default Mongoose;
