@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import "client/pages/persons/person-list-large.sass";
 import MarkDown from "react-markdown";
+import Loader from "client/components/Loader";
 
 export default function PersonListLarge(props) {
-    const [persons, setPersons] = useState([]);
+    const [persons, setPersons] = useState();
     const pages = {
         supervisors: {title: 'Руководство АН РС(Я)', filter: {where: {supervisorStatus: {$ne: null}}, order: {supervisorOrder: 1}}},
         'real-members': {title: 'Действительные члены АН РС(Я)', filter: {where: {member: 0}}},
@@ -13,11 +14,13 @@ export default function PersonListLarge(props) {
 
     useEffect(() => {
         if (!pages[props.type]) return;
+        setPersons(null)
         props.api('/person/list', pages[props.type].filter)
             .then(setPersons)
     }, [props.type]);
 
     if (!pages[props.type]) return <div/>;
+    if(!persons) return <Loader/>
     return <div className="phone-book">
         <h1>{pages[props.type].title}</h1>
         <div className="supervisors-list">
