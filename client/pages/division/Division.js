@@ -7,6 +7,7 @@ export default function Division(props) {
     const [data, setData] = useState();
 
     useEffect(()=>{
+        setData(null)
         props.api('/division/'+props.page).then(setData)
     },[props.page]);
 
