@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import MarkDown from "react-markdown";
 import "./edition.sass"
 import MarkdownEditor from "client/components/markdown-editor/MarkdownEditor";
+import Loader from "client/components/Loader";
 
 export default function Edition(props) {
     const [data, setData] = useState();
@@ -10,7 +11,7 @@ export default function Edition(props) {
         props.api('/edition/list').then(setData)
     },[]);
 
-    if(!data) return <div>No data</div>;
+    if(!data) return <Loader/>;
     return <div className="edition">
         <h1>Издания</h1>
         {data.map(d=><div key={d.id} className="edition-item">

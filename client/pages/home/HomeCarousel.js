@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem} from "reactstrap";
 import noImage from "client/images/noImage.png"
 import "client/pages/home/home.sass"
-import {A, navigate} from "hookrouter"
+import {A} from "hookrouter"
 
 export default function HomeCarousel(props) {
     const [items, setItems] = useState([]);
@@ -29,7 +29,7 @@ export default function HomeCarousel(props) {
     useEffect(() => {
         props.api('/post/search', {limit: 5})
             .then(posts => {
-                setItems(posts.map(p => ({src: p.image ? p.image.path : noImage, caption: p.header, link: '/news/' + p.path})))
+                setItems(posts.map(p => ({id: p.id, src: p.image ? p.image.path : noImage, caption: p.header, link: '/news/' + p.path})))
             })
     }, []);
 
@@ -46,12 +46,11 @@ export default function HomeCarousel(props) {
             {items.map(item => <CarouselItem key={item.id}
                                              onExiting={() => setAnimating(true)}
                                              onExited={() => setAnimating(false)}
-                                             key={item.src}
             >
                 <A href={item.link}>
-                <img src={item.src} alt={item.altText}/>
+                    <img src={item.src} alt={item.altText}/>
                     <div className="plain-caption">{item.caption}</div>
-                <CarouselCaption captionHeader={item.caption} />
+                    <CarouselCaption captionText="" captionHeader={item.caption}/>
                 </A>
             </CarouselItem>)}
             <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous}/>
