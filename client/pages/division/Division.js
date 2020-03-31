@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MarkDown from "react-markdown";
 import "./division.sass"
+import Loader from "client/components/Loader";
 
 export default function Division(props) {
     const [data, setData] = useState();
@@ -9,8 +10,8 @@ export default function Division(props) {
         props.api('/division/'+props.page).then(setData)
     },[props.page]);
 
-    if(!data) return <div>No data</div>;
-    return <div className="division">
+    if(!data) return <Loader/>;
+    return <div className="division" key={props.page}>
         <h1>{data.name}</h1>
         <div className="row">
             <card className="col-md-4">
