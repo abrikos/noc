@@ -16,6 +16,8 @@ import PersonsLarge from "client/pages/persons/PersonsLarge";
 import PostList from "client/pages/news/PostList";
 import Edition from "client/pages/edition/Edition";
 import About from "client/pages/about/About";
+import Research from "client/pages/home/research/Research";
+import Intellectual from "client/pages/home/intellectual/Intellectual";
 
 export default function Routes(props) {
 
@@ -26,6 +28,8 @@ export default function Routes(props) {
         "/phone-book": () => <PhoneBook {...props}/>,
         "/contacts": () => <Contacts {...props}/>,
         "/login": () => <Login {...props}/>,
+        "/research": () => <Research {...props}/>,
+        "/intellectual": () => <Intellectual {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
         "/news": () => <PostList {...props}/>,
         "/edition": () => <Edition {...props}/>,

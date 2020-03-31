@@ -1,0 +1,34 @@
+@import "client/style/params"
+
+.home
+  .pages
+    a
+      display: block
+    h2
+      margin: 40px 0
+    div:nth-child(odd)
+      flex-direction: row-reverse
+    div
+      margin: 30px 0
+      img
+        border-radius: 120px
+  .home-carousel
+    overflow: hidden
+    .carousel-item
+      text-align: center
+      .plain-caption
+        @media screen and (min-width: $min-width)
+          display: none
+
+      img
+        display: block
+        margin: auto
+
+        @media screen and (max-width: $min-width)
+          height: 200px
+
+        @media screen and (min-width: $min-width)
+          max-height: 400px
+        max-width: 100%
+    .carousel-caption
+      background-color: rgba(74, 145, 253, 0.8)

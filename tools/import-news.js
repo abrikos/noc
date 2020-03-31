@@ -16,8 +16,12 @@ async function main() {
             const link = article.querySelector('a').attributes.href;
             const newsRoot = await funcs.getDom(link);
             const header = newsRoot.querySelector('h1').rawText.trim();
+            if(!header) continue;
             const createdAt = newsRoot.querySelector('time').attributes.datetime;
-            const textNode = newsRoot.querySelector('[property="text"]');
+            let textNode = newsRoot.querySelector('[property="text"]');
+            if(!textNode) textNode = newsRoot.querySelector('.post');
+            if(!textNode) continue;
+            console.log(link)
             const paragraphs = textNode.querySelectorAll('p');
             let text = '';
             for(const p of paragraphs){
