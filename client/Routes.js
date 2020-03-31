@@ -5,7 +5,7 @@ import Cabinet from "client/pages/cabinet/cabinet";
 import PostView from "client/pages/news/PostView";
 import AdminIndex from "client/pages/admin/AdminIndex";
 import SearchResult from "client/components/search/SearchResult";
-import Contacts from "client/pages/home/contacs";
+import Contacts from "client/pages/contacts/contacs";
 import Static from "client/pages/home/Static";
 import Division from "client/pages/division/Division";
 import PhoneBook from "client/pages/phone-book/PhoneBook";
@@ -15,12 +15,14 @@ import Apparatus from "client/pages/Apparatus";
 import PersonsLarge from "client/pages/persons/PersonsLarge";
 import PostList from "client/pages/news/PostList";
 import Edition from "client/pages/edition/Edition";
+import About from "client/pages/about/About";
 
 export default function Routes(props) {
 
     return {
         "/": () => <Home {...props}/>,
         "/cabinet": () => <Cabinet {...props}/>,
+        "/about": () => <About {...props}/>,
         "/phone-book": () => <PhoneBook {...props}/>,
         "/contacts": () => <Contacts {...props}/>,
         "/login": () => <Login {...props}/>,

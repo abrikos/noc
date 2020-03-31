@@ -43,6 +43,7 @@ module.exports.controller = function (app) {
             ]});
         map.push({label: 'Новости', path: '/news', menu: true});
         map.push({label: 'Издания', path: '/edition', menu: true});
+        map.push({label: 'Контакты', path: '/contacts', menu: true});
 
         res.send(map)
     });

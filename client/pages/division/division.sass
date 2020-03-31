@@ -30,4 +30,23 @@
   text
     display: flex
     align-items: center
+  ul
+    list-style: none
+    padding-left: 0
+    li
+      position: relative
+      padding-left: 60px
+      margin: 20px 0
+
+    li:before
+      content: ''
+      width: 40px
+      height: 40px
+      position: absolute
+      background-size: cover
+      background-position: center
+      background-image: url(/bullet.svg)
+      left: 0
+      top: 50%
+      transform: translateY(-50%)
 
