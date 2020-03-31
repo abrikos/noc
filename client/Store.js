@@ -88,7 +88,7 @@ export default function App() {
         },
 
         setAlert: (response) => {
-            const color = response.error ? 'danger' : 'success';
+            //const color = response.error ? 'danger' : 'success';
             console.error(response)
             //setAlert({isOpen: true, children: response.message, color})
         },

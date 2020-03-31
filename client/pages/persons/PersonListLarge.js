@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import "client/pages/persons/persons-large.sass";
+import "client/pages/persons/person-list-large.sass";
 import MarkDown from "react-markdown";
 
-export default function PersonsLarge(props) {
+export default function PersonListLarge(props) {
     const [persons, setPersons] = useState([]);
     const pages = {
         supervisors: {title: 'Руководство АН РС(Я)', filter: {where: {supervisorStatus: {$ne: null}}, order: {supervisorOrder: 1}}},
@@ -22,7 +22,10 @@ export default function PersonsLarge(props) {
         <h1>{pages[props.type].title}</h1>
         <div className="supervisors-list">
             {persons.map(p => <div key={p.id} className="supervisor-person">
-                <img src={p.image.path} alt={p.fio}/>
+                <div className="supervisor-image">
+                    <img src={p.image.path} alt={p.fio}/>
+                </div>
+
                 <div className="supervisor-text">
                     <h4>{p.fio}</h4>
                     <div className="status">{p.supervisorStatus}</div>

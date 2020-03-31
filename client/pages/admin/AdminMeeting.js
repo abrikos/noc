@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Button, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import MarkdownEditor from "client/components/markdown-editor/MarkdownEditor";
-import meetingVoices from "client/meeting-voices";
 
 export default function AdminMeeting(props) {
     const [list, setList] = useState([]);
-    const [divisions, setDivisions] = useState([]);
     const [model, setModel] = useState({});
     const [errors, setErrors] = useState({});
 
@@ -76,17 +74,17 @@ export default function AdminMeeting(props) {
 
     return <div className="row">
         <div className="col-4">
-            <select size={20} style={({width:'100%'})}>
-            <option className={!model.id ? 'selected' : ''} onClick={() => setModel({})}>Создать</option>
-            {list.map(l => <option key={l.id} className={l.id === model.id ? 'selected' : ''} onClick={() => modelChange(l)}>
-                {l.name || l.id}
-            </option>)}
+            <select size={20} style={({width: '100%'})}>
+                <option className={!model.id ? 'selected' : ''} onClick={() => setModel({})}>Создать</option>
+                {list.map(l => <option key={l.id} className={l.id === model.id ? 'selected' : ''} onClick={() => modelChange(l)}>
+                    {l.name || l.id}
+                </option>)}
             </select>
         </div>
         <div className="col-8">
             {form(model)}
             <h3>Персоны совета</h3>
-            {model.persons && model.persons.map(p=><div key={p.id}>{p.fio}</div>)}
+            {model.persons && model.persons.map(p => <div key={p.id}>{p.fio}</div>)}
         </div>
 
     </div>

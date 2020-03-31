@@ -13,28 +13,28 @@ export default function Division(props) {
 
     if(!data) return <Loader/>;
     return <div className="division" key={props.page}>
-        <h1>{data.name}</h1>
+        <h1 className="text-uppercase">{data.name}</h1>
         <div className="row">
-            <card className="col-md-4">
-                <name>{data.chief.fio}</name>
-                <status>{data.chief.status}</status>
-                <rank>{data.chief.rank}</rank>
+            <div className="col-md-4 division-card">
+                <div className="fio">{data.chief.fio}</div>
+                <div className="status">{data.chief.status}</div>
+                <div className="rank">{data.chief.rank}</div>
 
 
-            </card>
+            </div>
 
         </div>
         <div className="row">
-            <card className="col-md-4">
+            <div className="col-md-4 division-card">
                 <picture>
-                    <img key={props.page} src={data.chief.image && data.chief.image.path}/>
+                    <img key={props.page} src={data.chief.image && data.chief.image.path} alt={data.name}/>
                 </picture>
-            </card>
-            <text className="col-md-8">
+            </div>
+            <div className="col-md-8 text">
                 <div>
                     <MarkDown source={data.description}/>
                 </div>
-            </text>
+            </div>
         </div>
 
 

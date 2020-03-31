@@ -1,10 +1,10 @@
 import Phone from "client/components/Phone";
 import Email from "client/components/Email";
 import React from "react";
-import "client/pages/persons/persons-list.sass"
+import "client/pages/persons/persons-list-small.sass"
 import noPhoto from "client/images/nouser.png"
 
-export default function PersonsList(props) {
+export default function PersonListSmall(props) {
     return <div className="persons-list">
         {props.persons.map(p => <span className="person-card">
             <strong>{p.fio}</strong>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Input} from "reactstrap";
 import meetingVoices from "client/meeting-voices";
-import PersonsList from "client/pages/persons/PersonsList";
+import PersonListSmall from "client/pages/persons/PersonListSmall";
 
 export default function Meeting(props) {
     const [data, setData] = useState();
@@ -29,6 +29,6 @@ export default function Meeting(props) {
             <option value={''}>Все</option>
             {meetingVoices.map((d, i) => <option key={i} value={i}>{d}</option>)}
         </Input>
-        <PersonsList persons={persons}/>
+        <PersonListSmall persons={persons}/>
     </div>
 }

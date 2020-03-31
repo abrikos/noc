@@ -90,7 +90,7 @@ export default function AdminPerson(props) {
                     </FormGroup>
                 </div>
                 <div className="col-6">
-                    {model.image && <img src={model.image.path} />}
+                    {model.image && <img src={model.image.path} alt={model.fio}/>}
                 </div>
             </div>
 

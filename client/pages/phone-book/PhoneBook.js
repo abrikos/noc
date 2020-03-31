@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Input} from "reactstrap";
-import PersonsList from "client/pages/persons/PersonsList";
+import PersonListSmall from "client/pages/persons/PersonListSmall";
 
 export default function PhoneBook(props) {
     const [data, setData] = useState([]);
@@ -29,7 +29,7 @@ export default function PhoneBook(props) {
                 {data.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </Input>
 
-            <PersonsList persons={persons}/>
+            <PersonListSmall persons={persons}/>
 
     </div>
 }

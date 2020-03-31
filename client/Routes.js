@@ -12,7 +12,7 @@ import PhoneBook from "client/pages/phone-book/PhoneBook";
 import Meeting from "client/pages/meeting/Meeting";
 import SiteMap from "client/pages/SiteMap";
 import Apparatus from "client/pages/Apparatus";
-import PersonsLarge from "client/pages/persons/PersonsLarge";
+import PersonListLarge from "client/pages/persons/PersonListLarge";
 import PostList from "client/pages/news/PostList";
 import Edition from "client/pages/edition/Edition";
 import About from "client/pages/about/About";
@@ -35,7 +35,7 @@ export default function Routes(props) {
         "/edition": () => <Edition {...props}/>,
         "/news/:id": (params) => <PostView {...params} {...props}/>,
         "/apparatus": () => <Apparatus {...props}/>,
-        "/persons/:type": (params) => <PersonsLarge {...params} {...props}/>,
+        "/persons/:type": (params) => <PersonListLarge {...params} {...props}/>,
         "/site-map": () => <SiteMap {...props}/>,
         "/static/:page": (params) => <Static {...params} {...props}/>,
         "/division/:page": (params) => <Division {...params} {...props}/>,

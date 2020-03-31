@@ -1,13 +1,12 @@
 import React from 'react';
 import "client/pages/news/post-small.sass"
-import {A, navigate} from "hookrouter";
+import {A} from "hookrouter";
 import DateFormat from "client/components/DateFormat";
 import noImage from "client/images/noImage.png"
 
 
 export default function PostSmall(props) {
     const post = props.post;
-    const image = post.images[post.images.length - 1];
     const path = `/news/${post.path}`;
 
 
