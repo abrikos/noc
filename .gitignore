@@ -8,6 +8,8 @@
 
 package-lock.json
 
+/dump
+
 # testing
 /coverage
 
