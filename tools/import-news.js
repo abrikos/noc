@@ -15,9 +15,10 @@ async function main() {
 
             const link = article.querySelector('a').attributes.href;
             const newsRoot = await funcs.getDom(link);
-            if(!newsRoot) continue;
-            const header = newsRoot.querySelector('h1').rawText.trim();
-            if(!header) continue;
+
+            const headerNode = newsRoot.querySelector('h1');
+            if(!headerNode) continue;
+            const header = headerNode.rawText.trim();
             const createdAt = newsRoot.querySelector('time').attributes.datetime;
             let textNode = newsRoot.querySelector('[property="text"]');
             if(!textNode) textNode = newsRoot.querySelector('.post');
