@@ -12,7 +12,7 @@ async function main() {
         const root = await funcs.getDom(funcs.mainSite + '/novosti/page/'+page);
         const articles = root.querySelectorAll('article');
         for(const article of articles){
-            const img = funcs.mainSite + article.querySelector('img').attributes['data-src'];
+
             const link = article.querySelector('a').attributes.href;
             const newsRoot = await funcs.getDom(link);
             const header = newsRoot.querySelector('h1').rawText.trim();
@@ -23,14 +23,17 @@ async function main() {
             for(const p of paragraphs){
                 text += p.rawText.trim();
             }
-            let image
-            if(noImage!==img){
-                const file = funcs.getFileName(img)
-                image = await Mongoose.Image.findOne({name:file.name})
-                if(!image) image = await Mongoose.Image.create(file);
-                wgets.push(`wget -nc -O ${image.path.slice(1)} "${img}"`);
+            let image;
+            const img = article.querySelector('img');
+            if(img) {
+                const imgSrc = funcs.mainSite + img.attributes['data-src'];
+                if (noImage !== imgSrc) {
+                    const file = funcs.getFileName(imgSrc);
+                    image = await Mongoose.Image.findOne({name: file.name});
+                    if (!image) image = await Mongoose.Image.create(file);
+                    wgets.push(`wget -nc -O ${image.path.slice(1)} "${imgSrc}"`);
+                }
             }
-
 
             const path = transliterate(header).replace(/ /g, '-');
             let postFound = await Mongoose.Post.findOne({header});

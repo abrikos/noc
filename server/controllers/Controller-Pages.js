@@ -6,9 +6,19 @@ module.exports.controller = function (app) {
 
     //Mongoose.Person.find({member:0}).populate('division').then(console.log)
 
+
     app.post('/api/division/list', (req, res) => {
         Mongoose.Division.find()
             .populate([{path: 'persons', populate: 'image'}])
+            .then(items => {
+                res.send(items)
+            })
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+    });
+
+    app.post('/api/edition/list', (req, res) => {
+        Mongoose.Edition.find()
+            .populate('image')
             .then(items => {
                 res.send(items)
             })
@@ -32,6 +42,7 @@ module.exports.controller = function (app) {
                 {label: 'Иностранные члены', path: '/persons/foreign-members'},
             ]});
         map.push({label: 'Новости', path: '/news', menu: true});
+        map.push({label: 'Издания', path: '/edition', menu: true});
 
         res.send(map)
     });

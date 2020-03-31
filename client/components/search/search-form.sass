@@ -1,3 +1,4 @@
+@import "client/style/params"
 .search-form
   form
     background-color: coral
@@ -10,7 +11,7 @@
     grid-gap: 10px
 
   .options
-    @media screen and (min-width: 601px)
+    @media screen and (min-width: $min-width)
       display: grid
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
       grid-gap: 10px

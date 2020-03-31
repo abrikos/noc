@@ -2,11 +2,7 @@ import React from "react";
 import Home from "client/pages/home/home";
 import Login from "client/components/login/login";
 import Cabinet from "client/pages/cabinet/cabinet";
-import RubricChoose from "client/components/create-post/RubricChoose";
-import PostUpdate from "client/pages/news/PostUpdate";
 import PostView from "client/pages/news/PostView";
-import RubricView from "client/pages/news/RubricView";
-import PostMy from "client/pages/news/PostMy";
 import AdminIndex from "client/pages/admin/AdminIndex";
 import SearchResult from "client/components/search/SearchResult";
 import Contacts from "client/pages/home/contacs";
@@ -18,6 +14,7 @@ import SiteMap from "client/pages/SiteMap";
 import Apparatus from "client/pages/Apparatus";
 import PersonsLarge from "client/pages/persons/PersonsLarge";
 import PostList from "client/pages/news/PostList";
+import Edition from "client/pages/edition/Edition";
 
 export default function Routes(props) {
 
@@ -29,6 +26,7 @@ export default function Routes(props) {
         "/login": () => <Login {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
         "/news": () => <PostList {...props}/>,
+        "/edition": () => <Edition {...props}/>,
         "/news/:id": (params) => <PostView {...params} {...props}/>,
         "/apparatus": () => <Apparatus {...props}/>,
         "/persons/:type": (params) => <PersonsLarge {...params} {...props}/>,
