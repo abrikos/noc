@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import "client/pages/contacts/contacts.sass";
 import Phone from "client/components/Phone";
 import Email from "client/components/Email";
+import {Button} from "reactstrap";
 
 const DG = require('2gis-maps');
 const latlng = [62.02448, 129.72488];
@@ -23,6 +24,10 @@ export default function Contacts(props) {
 
     return <div>
         <h1>Приемная АН РС(Я)</h1>
+        <div>
+            <div>Если у вас есть возможность не загружать телефонный трафик, пожалуйста, отправьте ваш вопрос на почту</div>
+            <a href="mailto:secretary@yakutia.science" target="_blank" className="btn btn-light">Напишите нам <img src="/bullet.svg" alt="Bullet" width={20}/></a>
+        </div>
         <div className="contact-row">
             <div className="contact-col">
                 <h3>Мы рядом</h3>
