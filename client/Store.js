@@ -4,7 +4,7 @@ import API from "client/API";
 import {navigate} from "hookrouter";
 import cookieParser from 'cookie';
 import {useCookies} from 'react-cookie';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default function App() {
     const [cookies, setCookie] = useCookies([]);

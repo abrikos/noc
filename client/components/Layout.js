@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import TopMenu from "client/components/TopMenu";
-//import 'bootstrap/dist/css/bootstrap.css';
 import 'client/style/main.sass';
 import 'client/style/modal.css';
 import {useRoutes} from "hookrouter";
 import routes from "client/Routes";
 //import YandexMetrica from "client/components/YandexMetrica";
 import BottomInfo from "client/pages/home/BottomInfo";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Layout(props) {
     const [siteMap, setSiteMap] = useState([]);
