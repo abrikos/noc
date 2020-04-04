@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, UncontrolledDropdown,} from "reactstrap";
 import {A, navigate, usePath} from "hookrouter";
 import "client/style/navbar.sass"
+import logo from "client/images/logo-text.svg"
 
 export default function TopMenu(props) {
     const [menuPulled, pullMenu] = useState(false);
@@ -15,7 +16,7 @@ export default function TopMenu(props) {
     return (
         <Navbar light expand="md">
             <NavbarBrand href='#' onClick={e => navigate('/')} className='mr-auto site-logo'>
-                <img src="/logo.svg" alt="logo" className="logo"/>
+                <img src={logo} alt="logo" className="logo"/>
             </NavbarBrand>
             <NavbarToggler onClick={e => pullMenu(!menuPulled)} className="dark"/>
             <Collapse isOpen={menuPulled} navbar>

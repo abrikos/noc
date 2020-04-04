@@ -1,6 +1,6 @@
 'use strict';
-
 require('dotenv').config();
+const mailer = require('express-mailer');
 const fs = require('fs');
 const session = require('express-session');
 const express = require('express');
@@ -16,6 +16,8 @@ const app = express();
 const wss = new WebSocket.Server({clientTracking: true, noServer: true});
 app.locals.wss = wss;
 const bot = require('server/bot');
+
+mailer.extend(app, JSON.parse(process.env.mailer));
 
 const sessionParser = session({
     saveUninitialized: false,

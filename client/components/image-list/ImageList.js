@@ -1,21 +1,30 @@
 import React, {useState} from "react";
 import "./image-list.sass";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import PropTypes from "prop-types";
+
+ImageList.propTypes = {
+    images: PropTypes.array.isRequired,
+    editable: PropTypes.bool,
+    controls: PropTypes.array,
+    onDelete: PropTypes.func,
+};
+
 
 export default function ImageList(props) {
     const [deleted, setDeleted] = useState([]);
     const [modal, setModal] = useState(false);
     const [modalImage, setModalImage] = useState();
     const toggle = () => setModal(!modal);
-    const tokens = props.getCookie(props.cookieName);
-
 
     function deleteImage(img) {
-        props.api('/post/image/delete', {img, tokens})
+        if(!window.confirm('Удалить изображение?')) return;
+        props.api('/image/delete/'+img.id)
             .then(() => {
                 const del = [...deleted];
                 del.push(img.id);
                 setDeleted(del);
+                if(props.onDelete) props.onDelete()
             })
     }
 
@@ -24,14 +33,16 @@ export default function ImageList(props) {
         toggle();
     }
 
-
+    if(!props.images) return <div/>;
     return <div className="image-list">
         {props.images.filter(img => !deleted.includes(img.id)).map((img, i) => <div key={i} className="image-cell">
-            {(props.editable) && <div className="img-tools">
+            <div className="img-tools">
+                {props.controls}
+                {props.editable  && img.id && <Button size="sm" color="danger" onClick={() => deleteImage(img)}>🗑</Button>}
 
-                <Button size="sm" color="danger" onClick={() => deleteImage(img)}>🗑</Button>
-            </div>}
+            </div>
             <div className="img-container">
+
                 {img.error ?
                     <small>
                         <div className="error">{img.error}</div>

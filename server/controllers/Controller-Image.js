@@ -1,0 +1,37 @@
+import Mongoose from "server/db/Mongoose";
+const passportLib = require('server/lib/passport');
+//Mongoose.Post.findOne({_id:'5e6b377260ee8707805367b6'})    .populate('token')    .then(console.log)
+
+module.exports.controller = function (app) {
+
+    app.post('/api/image/upload', async (req, res) => {
+        if (req.files && Object.keys(req.files).length) {
+            if (!req.files) return res.send(app.locals.sendError({error: 500, message: 'No files uploaded'}));
+            if (!req.files.image) return res.send(app.locals.sendError({error: 500, message: 'No files uploaded'}));
+            if (!req.files.image.mimetype.match('image')) return res.send(app.locals.sendError({error: 500, message: 'Wrong images uploaded'}));
+            const match = req.files.image.mimetype.match(/\/([a-z]+)/);
+            Mongoose.Image.create({type: match[1], user: req.session.userId})
+                .then(file => req.files.image.mv(`.${file.path}`, function (err) {
+                    if (err) return res.send({error: 500, message: err})
+                    res.send(file)
+                    /*post.populate('images').execPopulate((e, p)=>{
+                        res.send(p.images)
+                    })*/
+                }))
+                .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+        }
+    });
+
+    app.post('/api/image/delete/:id', passportLib.isLogged, async (req, res) => {
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong ID'}))
+
+        Mongoose.Image.findById(req.params.id)
+            .then(img => {
+                if(!img.user.equals(req.session.userId)) return res.sendStatus(403)
+                img.delete()
+                res.sendStatus(200);
+            })
+    });
+
+}
+;

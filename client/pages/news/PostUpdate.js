@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ImageUpload from "client/components/create-post/ImageUpload";
+import ImageUpload from "client/components/image-list/ImageUpload";
 import {Button, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {A, navigate} from "hookrouter";
 import MyBreadCrumb from "client/components/MyBreadCrumb";

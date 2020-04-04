@@ -2,26 +2,20 @@ import React, {useEffect} from "react";
 import "client/pages/contacts/contacts.sass";
 import Phone from "client/components/Phone";
 import Email from "client/components/Email";
+import * as axios from "axios";
 
 const DG = require('2gis-maps');
 const latlng = [62.02448, 129.72488];
 
 export default function Contacts(props) {
-    useEffect(() => {
-        const map = DG.map('map', {
-            'center': latlng,
-            'zoom': 17
-        });
-        const popup = DG.popup()
-            .setLatLng(latlng)
-            .setContent('<p>Академия наук</p>')
-            .openOn(map);
 
-        DG.marker(latlng).addTo(map);
-        console.log(map)
-    }, [])
 
     return <div>
+
+
+
+
+
         <h1 className="my-5">Приемная АН РС(Я)</h1>
         <div className="my-5">
             <div>Если у вас есть возможность не загружать телефонный трафик, пожалуйста, отправьте ваш вопрос на почту</div>
@@ -77,7 +71,7 @@ export default function Contacts(props) {
             </div>
         </div>
 
-        <div id="map"></div>
+        <iframe src="/2gis.html" className="iframe-2gis"/>
 
     </div>
 }

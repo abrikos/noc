@@ -12,15 +12,16 @@ export default function PersonListSmall(props) {
                 <div className="col-4">
                     <img src={p.image ? p.image.path : noPhoto} alt={p.fio} className={p.image ? '' : 'no-photo'}/>
                 </div>
-                <div className="col-8">
-                    {p.division && <span className="division">{p.division.name}</span>}
-                    <span className="rank">{p.rank}</span>
-                    <span className="status">{p.status}</span>
-                    <Phone phone={p.phone}/>
-                    <Email email={p.email}/>
+                <div className="col-8 d-flex flex-column justify-content-center">
+                    <div>
+                        {p.division && <span className="division">{p.division.name}</span>}
+                        <span className="rank">{p.rank}</span>
+                        <span className="status">{p.status}</span>
+                    </div>
                 </div>
             </div>
-
+            <Phone phone={p.phone}/>
+            <Email email={p.email}/>
         </span>)}
     </div>
 }

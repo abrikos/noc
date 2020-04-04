@@ -28,6 +28,11 @@ modelSchema.virtual('date')
         return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss')
     });
 
+modelSchema.virtual('link')
+    .get(function () {
+        return '/news/'+this.id
+    });
+
 
 export default mongoose.model("Post", modelSchema)
 

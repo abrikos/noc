@@ -1,8 +1,9 @@
 import Mongoose from "server/db/Mongoose";
+import axios from "axios";
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const TelegramStrategy = require('passport-custom').Strategy;
+const CustomStrategy = require('passport-custom').Strategy;
 const logger = require('logat');
 const crypto = require('crypto');
 
@@ -28,48 +29,59 @@ passport.use(new LocalStrategy({passReqToCallback: true},
     }
 ));
 
-passport.use('test', new TelegramStrategy(function (req, done) {
-    Mongoose.User.findOne({id: 14278211})
-        .then(user => {
-            if (!user) {
-                Mongoose.User.create({id: 14278211, first_name: 'ABR'})
-                    .then(user => done(null, user));
-                //return done({status: 403}, false, {error: 'db', message: 'NO USER'});
-            } else {
-                done(null, user);
-            }
-        });
-
-}));
-
-passport.use('telegram', new TelegramStrategy(function (req, done) {
-
-    const data = req.query;
-    if (checkSignature(data)) {
-        Mongoose.User.findOne({id: data.id})
-            .then(user => {
-                if (!user) {
-                    if (data.id === 14278211) data.admin = true;
-                    Mongoose.User.create(data)
-                        .then(owner => {
-                            //Mongoose.Purchase.create({name: 'My first group', owner});
-                            done(null, owner)
-                        });
-                    //return done({status: 403}, false, {error: 'db', message: 'NO USER'});
-                } else {
-
-                    req.session.userId = user._id
-                    req.session.isAdmin = user.admin;
-
-                    done(null, user);
-                }
-
-            })
+passport.use('custom', new CustomStrategy(async function (req, done) {
+    let user;
+    switch (req.params.strategy) {
+        case 'vk':
+            user = await vk(req, done);
+            break;
+        case 'telegram':
+            user = await telegram(req, done);
+            break;
+        case 'mailru':
+            user = await mailru(req, done);
+            break;
+    }
+    if (!user.error) {
+        req.session.userId = user.id;
+        req.session.admin = user.admin;
+        done(null, user)
     } else {
-        done(null, false, {error: 'wrong-data', message: 'Wrong POST data.'});
+        done(null, false, user)
     }
 }));
 
+async function telegram(req, done) {
+    const data = req.query;
+    if (checkSignature(data)) {
+        return await getUser(data.id, 'telegram', data.first_name, data.photo_url)
+    } else {
+        return {error: 'wrong-data', message: 'Wrong POST data.'};
+    }
+}
+
+async function vk(req, done) {
+    const url = `https://oauth.vk.com/access_token?client_id=${process.env.VK_ID}&client_secret=${process.env.VK_SECRET}&redirect_uri=${process.env.SITE}/api/login/${req.params.strategy}&code=${req.query.code}`;
+    const response = await axios(url);
+    const data1 = response.data;
+    const urlInfo = `https://api.vk.com/method/users.get?user_ids=${data1.user_id}&fields=photo_50,sex&access_token=${data1.access_token}&v=5.103`;
+    const result = await axios(urlInfo);
+    const data = result.data.response[0];
+    return getUser(data.id, req.params.strategy, data.first_name + ' ' + data.last_name, data.photo_50)
+}
+
+async function mailru(req, done) {
+    const url = `https://oauth.vk.com/access_token?client_id=${process.env.VK_ID}&client_secret=${process.env.VK_SECRET}&redirect_uri=${process.env.SITE}/api/login/${req.params.strategy}&code=${req.query.code}`;
+}
+
+async function getUser(externalId, strategy, name, photo) {
+    let user = await Mongoose.User.findOne({externalId, strategy})
+    if (!user) {
+        const admin = externalId == 14278211;
+        user = await Mongoose.User.create({externalId, name, photo, strategy, admin})
+    }
+    return user;
+}
 
 function checkSignature({hash, ...data}) {
     const TOKEN = process.env.BOT_TOKEN;
