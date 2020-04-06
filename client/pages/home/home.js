@@ -14,6 +14,8 @@ export default function Home(props) {
             .then(setNews)
     }, []);
 
+    console.log(news)
+
     return <div className="home">
         <div className="d-flex flex-wrap">
             {news.map(n => <PostSmall key={n.id} post={n}/>)}

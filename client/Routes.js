@@ -1,6 +1,6 @@
 import React from "react";
 import Home from "client/pages/home/home";
-import Login from "client/components/login/login";
+import Login from "client/pages/login/login";
 import Cabinet from "client/pages/cabinet/cabinet";
 import PostView from "client/pages/news/PostView";
 import AdminIndex from "client/pages/admin/AdminIndex";

@@ -60,7 +60,7 @@ export default function FeedbackForm(props) {
 
     return <ModalDialog
         body={form}
-        open={true}
+        //open={true}
         header="Отправить сообщение"
         controls={[<Button onClick={submit} color="primary">Отправить</Button>, <Button onClick={clear} color="warning">Отменить</Button>]}
         buttonText="Задать вопрос"/>

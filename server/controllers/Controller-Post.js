@@ -5,7 +5,7 @@ const logger = require('logat');
 module.exports.controller = function (app) {
 
     app.post('/api/post/search', (req, res) => {
-        Mongoose.Post.find(req.body)
+        Mongoose.Post.find(req.body.where)
             .sort({createdAt: -1})
             .limit(parseInt(req.body.limit) || 10)
             .skip(parseInt(req.body.skip))
@@ -15,7 +15,7 @@ module.exports.controller = function (app) {
     });
 
     app.post('/api/post/search/count', (req, res) => {
-        Mongoose.Post.countDocuments(req.body)
+        Mongoose.Post.countDocuments(req.body.where)
             .then(count => res.send({count}))
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });

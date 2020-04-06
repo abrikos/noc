@@ -47,10 +47,11 @@ export default function PostList(props) {
     }
 
     return <div className="post-list">
-        <div className="m-3">Найдено: {totalCount}</div>
+
         <div className="d-flex flex-wrap">
             {posts.map(p => <PostSmall key={p.id} post={p}/>)}
         </div>
+        <div className="m-3">Найдено: {totalCount}</div>
 
         {!!pages.length && <div className="d-flex justify-content-center">
             <Pagination>
