@@ -24,7 +24,6 @@ export default function AdminUser(props) {
                 <th>Юзер</th>
                 <th>Стратегия</th>
                 <th>Админ</th>
-                <th>Показывать страницу компании</th>
             </tr>
             </thead>
             <tbody>
@@ -35,10 +34,7 @@ export default function AdminUser(props) {
                 <td>
                     <input type="checkbox" defaultChecked={u.admin} onChange={() => setAdmin(u)}/> Администратор
                 </td>
-                <td>
-                    <input type="checkbox" defaultChecked={u.companyListed} onChange={() => setListed(u)}/>
-                    {u.companyName}
-                </td>
+
             </tr>)}
             </tbody>
         </table>
