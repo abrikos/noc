@@ -25,7 +25,7 @@ export default function Login(props) {
 
                     <TelegramLogin {...props}/>
 
-                    <Button onClick={()=>responseVk('vk')} color="light"><img src={vk} alt="В контакте" style={{width:50}}/> </Button>
+                    {/*<Button onClick={()=>responseVk('vk')} color="light"><img src={vk} alt="В контакте" style={{width:50}}/> </Button>*/}
                     {/*<Button onClick={()=>responseVk('mailru')}>Mailru</Button>*/}
 
                     {/*<GoogleLogin
