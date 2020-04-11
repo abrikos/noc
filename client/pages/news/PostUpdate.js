@@ -60,7 +60,7 @@ export default function PostUpdate(props) {
     }
 
     return <div>
-        <A href={`/news/${post.id}`}>Промотр</A>
+        <A href={post.link}>Промотр {post.link}</A>
 
         <form onSubmit={_handleSubmit} encType="multipart/form-data" onChange={change}>
             <div className="row">

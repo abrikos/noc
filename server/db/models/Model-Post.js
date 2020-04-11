@@ -1,5 +1,5 @@
 import moment from "moment";
-
+import transliterate from "transliterate"
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -36,9 +36,10 @@ modelSchema.virtual('imageOne')
         return this.image || images[images.length -1];
     });
 
+
 modelSchema.virtual('link')
     .get(function () {
-        return '/news/'+this.id
+        return '/news/'+this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g,'-') : '')
     });
 
 
