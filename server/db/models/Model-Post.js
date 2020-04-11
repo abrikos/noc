@@ -9,6 +9,7 @@ const modelSchema = new Schema({
         text: String,
         path: String,
         editable: Boolean,
+        published: Boolean,
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],

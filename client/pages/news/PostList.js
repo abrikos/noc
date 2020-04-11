@@ -16,6 +16,7 @@ export default function PostList(props) {
         const f = {where:{},order:{createdAt:-1}};
         f.limit = 9;
         f.skip = 0;
+        if(!props.isAdmin) f.where.published = true;
         setFilter(f);
         props.api('/post/search', f).then(setPosts);
         props.api('/post/search/count', f).then(count => {
