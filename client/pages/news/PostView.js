@@ -9,6 +9,7 @@ import MarkDown from "react-markdown"
 import noImage from "client/images/noImage.png"
 import {A} from "hookrouter"
 import ImageCarousel from "client/components/image-list/ImageCarousel";
+import HtmlView from "client/components/HtmlView";
 
 export default function PostView(props) {
     const [post, setPost] = useState({});
@@ -29,18 +30,20 @@ export default function PostView(props) {
 
     if (error) return <ErrorPage {...error}/>;
     if (!post.id) return <div/>;
-    const images = post.images.filter(i => i.isImage && i.id !== post.imageOne.id);
     return <div>
         <div className="post-full">
             <h1>{post.header}</h1>
             <DateFormat date={post.date}/> | <FontAwesomeIcon icon={faEye}/> {post.views}
             <hr/>
             <div className="d-flex justify-content-center">
-                <img src={post.imageOne ? post.imageOne.path : noImage} className="m-auto" alt={post.header}/>
+                {post.image && <img src={post.image.path} className="m-auto" alt={post.header}/>}
             </div>
 
-            <div className="post-text"><MarkDown source={post.text}/></div>
-            {!!images.length && <ImageCarousel images={images}/>}
+            <div className="post-text">
+                {/*<MarkDown source={post.text}/>*/}
+                <HtmlView text={post.text}/>
+            </div>
+            {/*{!!images.length && <ImageCarousel images={images}/>}*/}
             <hr/>
             {post.images.filter(i => !i.isImage).map(i => <a href={i.path} key={i.id}>{i.description}</a>)}
             <hr/>

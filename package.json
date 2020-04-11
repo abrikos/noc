@@ -71,6 +71,7 @@
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
+    "jodit-react": "^1.0.42",
     "jsonfeed-to-rss": "^3.0.2",
     "logat": "^1.0.11",
     "markdown": "^0.5.0",

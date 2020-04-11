@@ -12,11 +12,11 @@ export default function AdminNews(props) {
     }
 
     return <div className="row">
-        <div className="col-4">
+        <div className="col-2">
             <Button onClick={create}>Создать</Button>
             <PostList isAdmin={true} {...props}/>
         </div>
-        <div className="col-8">
+        <div className="col-10">
             <PostUpdate key={props.id} {...props}/>
         </div>
 

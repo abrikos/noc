@@ -14,6 +14,7 @@ const modelSchema = new Schema({
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
+        preview: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
     },
     {
         timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt'},
@@ -23,7 +24,7 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.statics.population = ['image','images'];
+modelSchema.statics.population = ['image','images','preview'];
 
 modelSchema.virtual('date')
     .get(function () {
@@ -32,8 +33,7 @@ modelSchema.virtual('date')
 
 modelSchema.virtual('imageOne')
     .get(function () {
-        const images = this.images.filter(i=>i.isImage)
-        return this.image || images[images.length -1];
+        return this.image || this.preview;
     });
 
 

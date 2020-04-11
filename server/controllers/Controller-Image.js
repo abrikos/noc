@@ -1,4 +1,5 @@
 import Mongoose from "server/db/Mongoose";
+
 const passportLib = require('server/lib/passport');
 //Mongoose.Post.findOne({_id:'5e6b377260ee8707805367b6'})    .populate('token')    .then(console.log)
 
@@ -8,10 +9,11 @@ module.exports.controller = function (app) {
         if (req.files && Object.keys(req.files).length) {
             if (!req.files) return res.send(app.locals.sendError({error: 500, message: 'No files uploaded'}));
             if (!req.files.image) return res.send(app.locals.sendError({error: 500, message: 'No files uploaded'}));
-            if (!req.files.image.mimetype.match('image')) return res.send(app.locals.sendError({error: 500, message: 'Wrong images uploaded'}));
+            //if (!req.files.image.mimetype.match('image')) return res.send(app.locals.sendError({error: 500, message: 'Wrong images uploaded'}));
             const match = req.files.image.mimetype.match(/\/([a-z]+)/);
-            Mongoose.Image.create({extension: match[1], user: req.session.userId})
+            Mongoose.Image.create({extension: match[1], name: new Date().valueOf(), description: req.files.image.name, user: req.session.userId})
                 .then(file => req.files.image.mv(`.${file.path}`, function (err) {
+                    console.log(file.path)
                     if (err) return res.send({error: 500, message: err})
                     res.send(file)
                     /*post.populate('images').execPopulate((e, p)=>{
@@ -27,7 +29,7 @@ module.exports.controller = function (app) {
 
         Mongoose.Image.findById(req.params.id)
             .then(img => {
-                if(!img.user.equals(req.session.userId)) return res.sendStatus(403)
+                if (!img.user.equals(req.session.userId)) return res.sendStatus(403)
                 img.delete()
                 res.sendStatus(200);
             })

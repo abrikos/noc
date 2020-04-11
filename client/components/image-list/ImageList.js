@@ -47,7 +47,7 @@ export default function ImageList(props) {
                         <div className="error">{img.error}</div>
                         <strong>{img.file.name}</strong> <br/> <small className="error">{(img.file.size / 1024 / 1024).toFixed(1)} Mb</small> </small>
                     :
-                    <img src={img.path || img} alt={''} onClick={() => showImage(img)}/>}
+                    <img src={img.path || img} alt={img.path} onClick={() => showImage(img)}/>}
             </div>
         </div>)}
         <Modal isOpen={modal} toggle={toggle} backdrop={true} keyboard={true}>

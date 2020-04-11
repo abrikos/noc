@@ -10,7 +10,7 @@ export default function PostList(props) {
 
     useEffect(() => {
         const f = {where:{},order:{createdAt:-1}};
-        f.limit = 9;
+        f.limit = 12;
         f.skip = 0;
         if(!props.isAdmin) f.where.published = true;
         setFilter(f);
