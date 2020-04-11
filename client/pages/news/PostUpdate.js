@@ -104,7 +104,7 @@ export default function (props) {
             <div style={{height:200}}>{post.preview && <img src={post.preview.path} alt={post.preview}/>}</div>
             <ImageUpload uploadDone={uploadDone} editable={true} {...props}/>
             <h3>Изображения</h3>
-            <ImageList images={post.images.filter(i => i.isImage)} editable={true} controls={<Button size="sm"  color="primary" title="Сделать основным" onClick={setPreview}><FontAwesomeIcon icon={faCheck}/></Button>} {...props}/>
+            <ImageList images={post.images.filter(i => i.isImage)} editable={true} {...props}/>
             <h3>Документы</h3>
             {post.images.filter(i => !i.isImage).map(f => <a href={``} key={f.id} className="d-block border-bottom">{f.description}</a>)}
         </div>

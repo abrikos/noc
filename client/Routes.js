@@ -19,12 +19,14 @@ import About from "client/pages/about/About";
 import Research from "client/pages/home/research/Research";
 import Intellectual from "client/pages/home/intellectual/Intellectual";
 import VideoList from "client/pages/news/VideoList";
+import AboutRepublic from "client/pages/about-republic/AboutRepublic";
 
 export default function Routes(props) {
 
     return {
         "/": () => <Home {...props}/>,
         "/cabinet": () => <Cabinet {...props}/>,
+        "/about-republic": () => <AboutRepublic {...props}/>,
         "/about": () => <About {...props}/>,
         "/phone-book": () => <PhoneBook {...props}/>,
         "/contacts": () => <Contacts {...props}/>,

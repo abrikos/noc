@@ -1,30 +1,18 @@
-import functions from "./parser.inc";
 const fs = require('fs');
 
+const tpl = 'export {default as MODULE} from "client/pages/about-republic/images/DIR/FILE"'
+const path = './client/pages/about-republic/images/';
+const dirs = fs.readdirSync(path);
 
-const link = `https://commons.wikimedia.org/wiki/Category:SVG_playing_cards`;
-const fileImages = `download-images.sh`;
-try {
-    fs.unlinkSync(fileImages);
-} catch (e) {
-
-}
-
-
-async function main() {
-    const fdImg = fs.openSync(fileImages, 'w');
-    const doc = await functions.getDom(link);
-    const root = doc.querySelector('.mw-gallery-traditional');
-    const links = root.querySelectorAll('a.image');
-    for(const link of links){
-        const pageLink = 'https://commons.wikimedia.org' + link.attributes.href;
-        const pageDoc = await functions.getDom(pageLink);
-        const a = pageDoc.querySelector('a.internal');
-        console.log(a.attributes.href)
-        fs.writeSync(fdImg, `wget -nc -O "client/views/blackjack/cards/${a.attributes.title}" "${a.attributes.href}"\n`, null, null);
+for(const dir of dirs){
+    const files = fs.readdirSync(path+ dir);
+    let i = 0;
+    for(const file of files){
+        i++;
+        console.log(tpl
+            .replace('MODULE',`img_${dir}_${i}`)
+            .replace('DIR',dir)
+            .replace('FILE',file)
+        )
     }
-    fs.closeSync(fdImg);
 }
-
-
-main();
