@@ -18,6 +18,7 @@ import Edition from "client/pages/edition/Edition";
 import About from "client/pages/about/About";
 import Research from "client/pages/home/research/Research";
 import Intellectual from "client/pages/home/intellectual/Intellectual";
+import VideoList from "client/pages/news/VideoList";
 
 export default function Routes(props) {
 
@@ -31,11 +32,13 @@ export default function Routes(props) {
         "/research": () => <Research {...props}/>,
         "/intellectual": () => <Intellectual {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
+        "/admin/:control/update/:id": (params) => <AdminIndex {...params} {...props}/>,
         "/news": () => <PostList {...props}/>,
+        "/video": () => <VideoList {...props}/>,
         "/edition": () => <Edition {...props}/>,
         "/news/:id": (params) => <PostView {...params} {...props}/>,
         "/news/:id/:path": (params) => <PostView {...params} {...props}/>,
-        "/admin/:control/update/:id": (params) => <AdminIndex {...params} {...props}/>,
+
         "/apparatus": () => <Apparatus {...props}/>,
         "/persons/:type": (params) => <PersonListLarge {...params} {...props}/>,
         "/site-map": () => <SiteMap {...props}/>,

@@ -28,12 +28,12 @@ module.exports.controller = function (app) {
     app.post('/api/site-map', async (req, res) => {
         const map = [];
         map.push({label: 'Главная', path: '/', menu: true});
-        map.push({label: 'Об Академии', path: '/about', menu: true});
+        map.push({label: 'Новости', path: '/news', menu: true});
         const divisions = await Mongoose.Division.find({path: {$ne: null}});
-        map.push({label: 'Структура', path:'/division', items: divisions.map(d => ({label: d.name, path: '/division' + d.path})), menu: true});
+        map.push({label: 'Структура', items: divisions.map(d => ({label: d.name, path: '/division' + d.path})), menu: true});
         const meetings = await Mongoose.Meeting.find({path: {$ne: null}});
-        map.push({label: 'ОУС', path:'/meeting', items: meetings.map(d => ({label: d.name, path: '/meeting/' + d.path})), menu: true});
-        map.push({label: 'Президиум', path: '/apparatus', menu: true, items:[
+        map.push({label: 'ОУС',  items: meetings.map(d => ({label: d.name, path: '/meeting/' + d.path})), menu: true});
+        map.push({label: 'Президиум',  menu: true, items:[
                 {label: 'Аппарат', path: '/apparatus'},
                 {label: 'Секретариат', path: '/division/secretariat'},
                 {label: 'Руководство', path: '/persons/supervisors'},
@@ -41,9 +41,14 @@ module.exports.controller = function (app) {
                 {label: 'Почетные члены', path: '/persons/honor-members'},
                 {label: 'Иностранные члены', path: '/persons/foreign-members'},
             ]});
-        map.push({label: 'Новости', path: '/news', menu: true});
-        map.push({label: 'Издания', path: '/edition', menu: true});
-        map.push({label: 'Контакты', path: '/contacts', menu: true});
+        map.push({label: 'Издания', path: '/edition', menu:true})
+        map.push({label: 'Информация', items:[
+                {label: 'Об Академии', path: '/about'},
+                {label: 'Контакты', path: '/contacts'}
+            ], menu: true});
+
+
+
 
         res.send(map)
     });

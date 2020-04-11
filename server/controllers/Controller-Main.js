@@ -23,6 +23,7 @@ const options = [
 ];
 
 module.exports.controller = function (app) {
+
     app.post('/api/feedback', (req, res) => {
         logger.info(req.body);
 
@@ -30,7 +31,7 @@ module.exports.controller = function (app) {
         req.files.file.mv(`./${file}`);
         const message = {
             from: mailer.auth.user,
-            to: "abrikoz@gmail.com",
+            to: "Anrsya@mail.ru",
             subject: "Обращение в общественную приёмную президента АН РС(Я)",
             text: req.body.name + ':\n\n' + options[req.body.option] +'\n\n' +  req.body.text,
             attachments: [{path: `./${file}`}]

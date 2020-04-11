@@ -4,6 +4,8 @@ import {Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, Navba
 import {A, navigate, usePath} from "hookrouter";
 import "client/style/navbar.sass"
 import logo from "client/images/logo-text.svg"
+import YouTube from "client/images/youtube.svg"
+import Instagram from "client/images/instagram.svg"
 
 export default function TopMenu(props) {
     const [menuPulled, pullMenu] = useState(false);
@@ -58,6 +60,14 @@ export default function TopMenu(props) {
                             </DropdownMenu>
                         </UncontrolledDropdown>*/}
 
+                </Nav>
+                <Nav>
+                    <NavItem >
+                        <a href="https://www.instagram.com/academy_of_sciences" target="_blank" className={'nav-link svg-circle'}><img src={Instagram} alt="Instagram"/></a>
+                    </NavItem>
+                    <NavItem >
+                        <a href="https://www.youtube.com/channel/UC-ACL2rOnpLvtNYw9HZJQKQ" target="_blank" className={'nav-link svg-circle'}><img src={YouTube} alt="Видео"/></a>
+                    </NavItem>
                 </Nav>
             </Collapse>
         </Navbar>

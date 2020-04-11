@@ -43,7 +43,7 @@ export default function PostUpdate(props) {
 
     }
 
-    if (!post.id) return <div>Not post</div>;
+    if (!post.id) return <div></div>;
     if (!post.editable) return <ErrorPage error={403}/>;
 
     function textChange(value) {

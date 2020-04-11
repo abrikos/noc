@@ -9,7 +9,7 @@ export default function SiteMap(props) {
     return <div>
         <ul>
             {siteMap.map((s, i) => <li key={i}>
-                {s.path && <A href={s.path}>{s.label}</A>}
+                {s.path ? <A href={s.path}>{s.label}</A>:s.label}
                 {s.items && <ul>
                     {s.items.map((s2,i2)=><li key={i2}><A href={s2.path}>{s2.label}</A></li>)}
                 </ul>}
