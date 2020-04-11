@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Pagination, PaginationItem, PaginationLink} from 'reactstrap';
 import PostSmall from "client/pages/news/PostSmall";
+import {A} from "hookrouter";
 
 export default function PostList(props) {
     const [posts, setPosts] = useState([]);
@@ -47,10 +48,12 @@ export default function PostList(props) {
     }
 
     return <div className="post-list">
-
-        <div className="d-flex flex-wrap">
+        {props.isAdmin && <div>
+            {posts.map(p => <A href={`/admin/news/update/${p.id}`} key={p.id} className={`d-block border-bottom ${props.id===p.id ? 'bg-success':''}`}>{p.header}</A>)}
+        </div>}
+        {props.isAdmin || <div className="d-flex flex-wrap">
             {posts.map(p => <PostSmall key={p.id} post={p}/>)}
-        </div>
+        </div>}
         <div className="m-3">Найдено: {totalCount}</div>
 
         {!!pages.length && <div className="d-flex justify-content-center">

@@ -7,15 +7,18 @@ import AdminStart from "client/pages/admin/AdminStart";
 import AdminPerson from "client/pages/admin/AdminPerson";
 import AdminMeeting from "client/pages/admin/AdminMeeting";
 import {Nav, NavItem} from "reactstrap";
+import AdminNews from "client/pages/admin/AdminNews";
 
 export default function AdminIndex(props) {
     const pages = {
-        //rubric:['Рубрики', <AdminRubric {...props}/>],
+
         start: ['Начало', <AdminStart  {...props}/>],
+        news:['Новости', <AdminNews {...props}/>],
         users: ['Пользователи', <AdminUser  {...props}/>],
         divisions: ['Структура', <AdminDivision  {...props}/>],
         persons: ['Персоны', <AdminPerson  {...props}/>],
         meeting: ['ОУС', <AdminMeeting  {...props}/>],
+
     };
 
     if (!props.authenticatedUser.admin) return <ErrorPage error={403}/>;

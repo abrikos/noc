@@ -42,7 +42,6 @@ export default function ImageList(props) {
 
             </div>
             <div className="img-container">
-
                 {img.error ?
                     <small>
                         <div className="error">{img.error}</div>

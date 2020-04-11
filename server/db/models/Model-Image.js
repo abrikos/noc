@@ -18,6 +18,11 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
+modelSchema.virtual('isImage')
+    .get(function () {
+        return this.extension && ['jpeg','png','svg','jpg'].includes(this.extension.toLowerCase());
+    });
+
 modelSchema.virtual('path')
     .get(function () {
         return `/uploads/${this.name}.${this.extension}`;

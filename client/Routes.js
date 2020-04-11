@@ -34,6 +34,7 @@ export default function Routes(props) {
         "/news": () => <PostList {...props}/>,
         "/edition": () => <Edition {...props}/>,
         "/news/:id": (params) => <PostView {...params} {...props}/>,
+        "/admin/:control/update/:id": (params) => <AdminIndex {...params} {...props}/>,
         "/apparatus": () => <Apparatus {...props}/>,
         "/persons/:type": (params) => <PersonListLarge {...params} {...props}/>,
         "/site-map": () => <SiteMap {...props}/>,

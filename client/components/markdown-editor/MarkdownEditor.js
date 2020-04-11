@@ -16,7 +16,7 @@ export default function MarkdownEditor(props) {
     }
 
     return <div>
-        <textarea name={props.name} value={value} hidden/>
+        <textarea name={props.name} defaultValue={value} hidden/>
         <div className="row">
             <div className="col-md-6">
                 <Editor

@@ -38,7 +38,7 @@ export default function ImageUpload(props) {
             }
 
         }
-        if (uploaded.length) props.uploadDone(uploaded.map(i => i.id))
+        if (uploaded.length && props.uploadDone) props.uploadDone(uploaded.map(i => i.id))
         //setImagesUploaded(uploaded);
         setImagesDeclined(declined);
         setLoader(false)

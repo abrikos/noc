@@ -31,15 +31,30 @@ module.exports.controller = function (app) {
 
     });
 
-    app.post('/api/post/view/:id', (req, res) => {
-        Mongoose.Post.findOne({path: req.params.id})
-            .populate(Mongoose.Post.population)
+
+    app.post('/api/post/:id/images/add', (req, res) => {
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
+        Mongoose.Post.findById(req.params.id)
             .populate('token')
+            .then(post => {
+                if (!req.session.admin) return res.status(403).send();
+                post.images = post.images.concat(req.body.images);
+                post.save();
+                post.editable = true;
+                res.send(post)
+            })
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+    });
+
+
+    app.post('/api/post/view/:id', (req, res) => {
+        Mongoose.Post.findById( req.params.id)
+            .populate(Mongoose.Post.population)
             .then(post => {
                 post.views++;
                 post.save()
                     .then(p => {
-                        p.token = null;
+                        p.editable = req.session.admin;
                         res.send(p)
                     })
             })
@@ -77,7 +92,7 @@ module.exports.controller = function (app) {
         Mongoose.Post.findById(req.params.id)
             .populate('token')
             .then(post => {
-                post.phone = req.body.phone;
+                post.header = req.body.header;
                 post.text = req.body.text;
                 //.replace(/(?:\r\n|\r|\n)/g,'<br/>');
                 //post.published = true;

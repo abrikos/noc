@@ -7,6 +7,8 @@ import DateFormat from "client/components/DateFormat";
 import "client/pages/news/post-view.sass"
 import MarkDown from "react-markdown"
 import noImage from "client/images/noImage.png"
+import {A} from "hookrouter"
+import ImageCarousel from "client/components/image-list/ImageCarousel";
 
 export default function PostView(props) {
     const [post, setPost] = useState({});
@@ -27,20 +29,24 @@ export default function PostView(props) {
 
     if (error) return <ErrorPage {...error}/>;
     if (!post.id) return <div/>;
+    const images = post.images.filter(i => i.isImage && i.id !== post.imageOne.id);
     return <div>
         <div className="post-full">
             <h1>{post.header}</h1>
             <DateFormat date={post.date}/> | <FontAwesomeIcon icon={faEye}/> {post.views}
             <hr/>
             <div className="d-flex justify-content-center">
-                <img src={post.image ? post.image.path : noImage} className="m-auto" alt={post.header}/>
+                <img src={post.imageOne ? post.imageOne.path : noImage} className="m-auto" alt={post.header}/>
             </div>
 
             <div className="post-text"><MarkDown source={post.text}/></div>
-            {post.images.map(i => <a href={i.path} key={i.id}>{i.description}</a>)}
+            {!!images.length && <ImageCarousel images={images}/>}
+            <hr/>
+            {post.images.filter(i => !i.isImage).map(i => <a href={i.path} key={i.id}>{i.description}</a>)}
             <hr/>
 
             <ShareButtons link={apiLink}/>
+            {post.editable && <A href={`/admin/news/update/${post.id}`}>редактировать новость</A>}
         </div>
     </div>
 }

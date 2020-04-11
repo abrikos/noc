@@ -10,7 +10,7 @@ module.exports.controller = function (app) {
             if (!req.files.image) return res.send(app.locals.sendError({error: 500, message: 'No files uploaded'}));
             if (!req.files.image.mimetype.match('image')) return res.send(app.locals.sendError({error: 500, message: 'Wrong images uploaded'}));
             const match = req.files.image.mimetype.match(/\/([a-z]+)/);
-            Mongoose.Image.create({type: match[1], user: req.session.userId})
+            Mongoose.Image.create({extension: match[1], user: req.session.userId})
                 .then(file => req.files.image.mv(`.${file.path}`, function (err) {
                     if (err) return res.send({error: 500, message: err})
                     res.send(file)

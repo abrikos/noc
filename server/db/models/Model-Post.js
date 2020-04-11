@@ -8,6 +8,7 @@ const modelSchema = new Schema({
         header: String,
         text: String,
         path: String,
+        editable: Boolean,
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
@@ -21,11 +22,16 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.statics.population = ['image','images', {path: 'payment', populate: ['tariff']}, {path: 'types', options: {sort: {order: 1}}}, {path: 'options', populate: 'parent'}];
+modelSchema.statics.population = ['image','images'];
 
 modelSchema.virtual('date')
     .get(function () {
         return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss')
+    });
+
+modelSchema.virtual('imageOne')
+    .get(function () {
+        return this.image || this.images[this.images.length -1];
     });
 
 modelSchema.virtual('link')
