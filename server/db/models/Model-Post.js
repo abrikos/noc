@@ -10,6 +10,7 @@ const modelSchema = new Schema({
         path: String,
         editable: Boolean,
         published: Boolean,
+        type: {type:String, enum:['static','news']},
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
@@ -24,7 +25,7 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.statics.population = ['image','images','preview'];
+modelSchema.statics.population = ['image', 'images', 'preview'];
 
 modelSchema.virtual('date')
     .get(function () {
@@ -39,7 +40,7 @@ modelSchema.virtual('imageOne')
 
 modelSchema.virtual('link')
     .get(function () {
-        return '/news/'+this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g,'-') : '')
+        return `/${this.type}/` + this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g, '-') : '')
     });
 
 

@@ -14,13 +14,12 @@ import HtmlView from "client/components/HtmlView";
 export default function PostView(props) {
     const [post, setPost] = useState({});
     const [error, setError] = useState();
-    const tokens = props.getCookie(props.cookieName);
     const url = window.location.href.split('/');
     const apiLink = `${url[0]}//${url[2]}/api/post/share/${props.id}`;
 
     useEffect(() => {
 
-        props.api('/post/view/' + props.id, {tokens})
+        props.api('/post/view/' + props.id)
             .then(res => {
                 if (!res.id) return setError({error: 404, message: 'Новость не найдена'});
                 setPost(res);

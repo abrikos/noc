@@ -14,6 +14,6 @@ const modelSchema = new Schema({
 );
 
 
-export default mongoose.model("Page", modelSchema)
+export default mongoose.model("Static", modelSchema)
 
 

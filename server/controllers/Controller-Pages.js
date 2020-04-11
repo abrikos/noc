@@ -43,6 +43,7 @@ module.exports.controller = function (app) {
             ]});
         map.push({label: 'Издания', path: '/edition', menu:true})
         map.push({label: 'Информация', items:[
+                {label: 'О Республике', path: '/static/about-republic'},
                 {label: 'Об Академии', path: '/about'},
                 {label: 'Контакты', path: '/contacts'}
             ], menu: true});

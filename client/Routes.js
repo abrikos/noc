@@ -36,6 +36,7 @@ export default function Routes(props) {
         "/news": () => <PostList {...props}/>,
         "/video": () => <VideoList {...props}/>,
         "/edition": () => <Edition {...props}/>,
+        "/static/:path": (params) => <PostView {...params} {...props}/>,
         "/news/:id": (params) => <PostView {...params} {...props}/>,
         "/news/:id/:path": (params) => <PostView {...params} {...props}/>,
 

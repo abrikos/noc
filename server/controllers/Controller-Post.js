@@ -1,5 +1,5 @@
 import Mongoose from "server/db/Mongoose";
-
+import moment from "moment"
 const logger = require('logat');
 const passportLib = require('server/lib/passport');
 //Mongoose.Post.findOne({_id:'5e6b377260ee8707805367b6'})    .populate('token')    .then(console.log)
@@ -24,8 +24,8 @@ module.exports.controller = function (app) {
 
     app.post('/api/post/create', passportLib.isAdmin, async (req, res) => {
         const user = req.session.userId;
-        const header = 'Новый пост'
-        Mongoose.Post.create({user, header}).then(post => res.send(post))
+        const header = 'Новость ' + moment().format('YYYY-MM-DD HH:mm');
+        Mongoose.Post.create({user, header, type: req.body.type}).then(post => res.send(post))
     });
 
     app.post('/api/post/:id/images/add', passportLib.isAdmin, (req, res) => {
@@ -69,7 +69,7 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError({error: 404, message: e.message})))
     });
 
-    app.post('/api/post/delete/:id', passportLib.isAdmin, async (req, res) => {
+    app.post('/api/post/:id/delete', passportLib.isAdmin, async (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose.Post.findById(req.params.id)
             .populate('token')
@@ -79,12 +79,11 @@ module.exports.controller = function (app) {
             })
     });
 
-    app.post('/api/post/update/:id', passportLib.isAdmin, async (req, res) => {
+    app.post('/api/post/:id/update', passportLib.isAdmin, async (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose.Post.findById(req.params.id)
             .populate('token')
             .then(post => {
-                console.log(req.body)
                 post.header = req.body.header;
                 post.text = req.body.text;
                 post.published = req.body.published;

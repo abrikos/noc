@@ -14,8 +14,9 @@ export default function AdminIndex(props) {
     const pages = {
 
         start: ['Начало', <AdminStart  {...props}/>],
-        news:['Новости', <AdminNews {...props}/>],
-        video:['YouTube', <AdminVideo {...props}/>],
+        news:['Новости', <AdminNews type={'news'} {...props}/>],
+        //static:['Страницы', <AdminNews type={'static'} {...props}/>],
+        //video:['YouTube', <AdminVideo {...props}/>],
         users: ['Пользователи', <AdminUser  {...props}/>],
         divisions: ['Структура', <AdminDivision  {...props}/>],
         persons: ['Персоны', <AdminPerson  {...props}/>],
@@ -30,7 +31,7 @@ export default function AdminIndex(props) {
             {Object.keys(pages).map(key => <NavItem key={key}><A className={`nav-link ${key === props.control ? 'active' : ''}`} href={`/admin/${key}`}>{pages[key][0]}</A></NavItem>)}
         </Nav>
         <div className="mt-3">
-            {pages[props.control][1]}
+            {pages[props.control] && pages[props.control][1]}
         </div>
 
     </div>

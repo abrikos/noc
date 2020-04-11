@@ -13,7 +13,6 @@ module.exports.controller = function (app) {
             const match = req.files.image.mimetype.match(/\/([a-z]+)/);
             Mongoose.Image.create({extension: match[1], name: new Date().valueOf(), description: req.files.image.name, user: req.session.userId})
                 .then(file => req.files.image.mv(`.${file.path}`, function (err) {
-                    console.log(file.path)
                     if (err) return res.send({error: 500, message: err})
                     res.send(file)
                     /*post.populate('images').execPopulate((e, p)=>{
