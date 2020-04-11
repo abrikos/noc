@@ -32,7 +32,8 @@ modelSchema.virtual('date')
 
 modelSchema.virtual('imageOne')
     .get(function () {
-        return this.image || this.images[this.images.length -1];
+        const images = this.images.filter(i=>i.isImage)
+        return this.image || images[images.length -1];
     });
 
 modelSchema.virtual('link')

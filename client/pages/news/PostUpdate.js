@@ -10,6 +10,7 @@ import ImageList from "client/components/image-list/ImageList";
 
 export default function PostUpdate(props) {
     const [post, setPost] = useState({});
+    const [updated, setUpdated] = useState(false);
     const [errors, setErrors] = useState({});
     const [postText, setPostText] = useState();
     const tokens = props.getCookie(props.cookieName);
@@ -36,7 +37,8 @@ export default function PostUpdate(props) {
         if (tokens) form.tokens = tokens;
         props.api('/post/update/' + post.id, form)
             .then(p => {
-                navigate(`/post/${post.id}`)
+                setUpdated(false)
+                //navigate(`/post/${post.id}`)
             })
 
     }
@@ -53,10 +55,14 @@ export default function PostUpdate(props) {
         props.api(`/post/${post.id}/images/add`, {images, tokens}).then(loadPost)
     }
 
+    function change() {
+        setUpdated(true)
+    }
 
     return <div>
         <A href={`/news/${post.id}`}>Промотр</A>
-        <form onSubmit={_handleSubmit} encType="multipart/form-data">
+
+        <form onSubmit={_handleSubmit} encType="multipart/form-data" onChange={change}>
             <div className="row">
                 <div className="col-8">
                     <FormGroup>
@@ -69,8 +75,6 @@ export default function PostUpdate(props) {
                 <div className="col-4">{post.imageOne && <img src={post.imageOne.path} alt={post.header} width="100px"/>}</div>
             </div>
 
-
-
             <textarea name="text" value={postText} hidden={true}/>
             <FormGroup>
                 <Label>Текст объявления</Label>
@@ -81,9 +85,17 @@ export default function PostUpdate(props) {
                 />
             </FormGroup>
 
+            <FormGroup check>
+                <Label check>
+                    <Input type="checkbox" name="published" checked={post.published}/>
+                    Опубликовано
+                </Label>
+
+            </FormGroup>
+
             {/*<Input type="Xhidden" name="options" value={JSON.stringify(cookieJson.options)} readOnly/>
             <Input type="Xhidden" name="types" value={JSON.stringify(post.map(b => b.id))} readOnly/>*/}
-            <Button>Сохранить</Button>
+            {updated && <Button>Сохранить</Button>}
         </form>
         <h3/>
         <h3>Изображения</h3>

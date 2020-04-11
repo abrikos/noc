@@ -3,14 +3,13 @@ import {A} from "hookrouter"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import PostSmall from "client/pages/news/PostSmall";
-import {ModalDialog} from "client/components/ModalDialog";
 import FeedbackForm from "client/pages/home/FeedbackForm";
 import "./home.sass"
 
 export default function Home(props) {
     const [news, setNews] = useState([]);
     useEffect(() => {
-        props.api('/post/search', {limit: 4})
+        props.api('/post/search', {where: {published: true}, limit: 4})
             .then(setNews)
     }, []);
 
@@ -23,7 +22,7 @@ export default function Home(props) {
         <hr/>
 
         <h1 className="text-center my-3">Наши цели</h1>
-        <div  className="d-sm-flex">
+        <div className="d-sm-flex">
             <div className="mx-5">
                 <h2>Комплексные научные исследования</h2>
                 Президентом Российской Федерации В.В. Путиным дано поручение по организации комплексных научных исследований в Республике Саха (Якутия), направленных на развитие производительных сил и социальной сферы Республики, с проведением комплексной научной экспедиции с участием Российской академии наук.
