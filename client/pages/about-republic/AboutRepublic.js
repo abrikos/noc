@@ -28,7 +28,7 @@ export default function (props) {
     const style = {backgroundImage: `url(${river})`, backgroundPositionY: -200, height: 400, borderBottomLeftRadius: radius, borderBottomRightRadius: radius, marginBottom: 100}
     return <div className="about-republic static-page">
         <div style={style} className="d-flex flex-column justify-content-end">
-            <img src={coat} width={300} height={300} className="mx-auto" style={{position: 'relative', top: 100}}/>
+            <img src={coat} width={300} height={300} className="mx-auto" style={{position: 'relative', top: 100}} alt="Coat"/>
         </div>
         <p>Протяженность Якутии в широтном направлении — 2500 км, в меридиональном — 2000 км. Самая западная точка — на границе с Эвенкийским автономным округом (105°в.д.), восточная — на границе с Чукотским автономным округом (165° в.д.), южная – на Становом хребте (55°3039 с.ш.), северная материковая — на мысе Нордвик (74° с.ш.) и северная островная — на острове Генриетты (77°с.ш.).</p>
 
@@ -37,7 +37,7 @@ export default function (props) {
 
         <p>Территория Якутии находится в пределах трех часовых поясов, их разница с московским временем составляет +6, +7, + 8 часов. До настоящего времени Якутия является одним из самых изолированных и труднодоступных регионов мира в транспортном отношении: 90% территории не имеет круглогодичного транспортного сообщения.</p>
 
-        <img src={map} className="img-fluid m-auto d-block w-100"/>
+        <img src={map} className="img-fluid m-auto d-block w-100" alt="Map"/>
 
         <div className="row">
             <div className="col-sm-6 p-5">

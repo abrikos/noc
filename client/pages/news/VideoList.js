@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import PostSmall from "client/pages/news/PostSmall";
-import {A} from "hookrouter";
 import Pager from "client/components/Pager";
 import VideoPlay from "client/components/VideoPlay";
 
@@ -11,7 +9,7 @@ export default function VideoList(props) {
 
     function getList(f) {
         props.api('/video/list', f)
-            .then(res=>{
+            .then(res => {
                 setTotalCount(res.count);
                 setModels(res.list)
                 console.log(res)
@@ -20,7 +18,7 @@ export default function VideoList(props) {
 
     useEffect(() => {
         getList(filter)
-    },[]);
+    }, []);
 
     return <div className="post-list">
         {models.map(m => <VideoPlay key={m.id} video={m}/>)}

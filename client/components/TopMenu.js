@@ -63,13 +63,13 @@ export default function TopMenu(props) {
                 </Nav>
                 <Nav>
                     <NavItem >
-                        <A href="/search" className={'nav-link'}><span role="image">🔍</span></A>
+                        <A href="/search" className={'nav-link'}><span role="img" aria-label="Search">🔍</span></A>
                     </NavItem>
                     <NavItem >
-                        <a href="https://www.instagram.com/academy_of_sciences" target="_blank" className={'nav-link svg-circle'}><img src={Instagram} alt="Instagram"/></a>
+                        <a href="https://www.instagram.com/academy_of_sciences" target="_blank" rel="noopener noreferrer" className={'nav-link svg-circle'}><img src={Instagram} alt="Instagram"/></a>
                     </NavItem>
                     <NavItem >
-                        <a href="https://www.youtube.com/channel/UC-ACL2rOnpLvtNYw9HZJQKQ" target="_blank" className={'nav-link svg-circle'}><img src={YouTube} alt="Видео"/></a>
+                        <a href="https://www.youtube.com/channel/UC-ACL2rOnpLvtNYw9HZJQKQ" target="_blank" rel="noopener noreferrer" className={'nav-link svg-circle'}><img src={YouTube} alt="Видео"/></a>
                     </NavItem>
                 </Nav>
             </Collapse>

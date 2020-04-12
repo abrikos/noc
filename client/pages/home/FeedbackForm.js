@@ -10,10 +10,10 @@ export default function FeedbackForm(props) {
         {field: 'email', label: 'Ваше email', required: true, text: 'Email необходим для обратной связи'},
     ];
 
-    useEffect(()=>{
+    useEffect(() => {
         props.api('/feedback/options')
             .then(setOptions)
-    },[])
+    }, [])
 
     function clear() {
         const form = document.getElementById("feedback-form");
@@ -22,14 +22,14 @@ export default function FeedbackForm(props) {
 
     function submit(e) {
         const formNode = document.getElementById("feedback-form");
-        const form = props.formToObject(formNode)
+        //const form = props.formToObject(formNode)
         const formData = new FormData(formNode);
         /*const files = document.querySelector('[type=file]').files;
         for(const file of files){
             formData.append('files[]', file)
         }*/
         //console.log(files)
-        props.api('/feedback',formData)
+        props.api('/feedback', formData)
             .then()
     }
 
@@ -42,7 +42,7 @@ export default function FeedbackForm(props) {
             {f.text && <FormText>{f.text}</FormText>}
         </FormGroup>)}
         <div className="d-flex flex-wrap">
-            {options.map((o,i) => <FormGroup check key={i} className="w-25 m-3">
+            {options.map((o, i) => <FormGroup check key={i} className="w-25 m-3">
                 <Label check>
                     <Input type="radio" name="option" value={i} placeholder="Введите текст сообщения"/>{' '}{o}
                 </Label>

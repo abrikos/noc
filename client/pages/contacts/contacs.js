@@ -1,19 +1,13 @@
-import React, {useEffect} from "react";
+import React from "react";
 import "client/pages/contacts/contacts.sass";
 import Phone from "client/components/Phone";
 import Email from "client/components/Email";
-import * as axios from "axios";
 
-const DG = require('2gis-maps');
-const latlng = [62.02448, 129.72488];
 
 export default function Contacts(props) {
 
 
     return <div>
-
-
-
 
 
         <h1 className="my-5">Приемная АН РС(Я)</h1>
@@ -71,7 +65,7 @@ export default function Contacts(props) {
             </div>
         </div>
 
-        <iframe src="/2gis.html" className="iframe-2gis"/>
+        <iframe src="/2gis.html" className="iframe-2gis" title="2gis"/>
 
     </div>
 }

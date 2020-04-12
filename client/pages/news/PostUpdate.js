@@ -6,7 +6,7 @@ import ErrorPage from "client/components/service/ErrorPage";
 import ImageList from "client/components/image-list/ImageList";
 import HtmlEditor from "client/components/html-editor/HtmlEditor";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck, faTimes, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faTimes, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function (props) {
@@ -56,9 +56,9 @@ export default function (props) {
     }
 
     function deletePost() {
-        if(!window.confirm('Удалить новость?')) return;
+        if (!window.confirm('Удалить новость?')) return;
         props.api(`/post/${post.id}/delete`)
-            .then(()=>navigate('/admin/news'))
+            .then(() => navigate('/admin/news'))
     }
 
     return <div className="row">
@@ -101,12 +101,12 @@ export default function (props) {
         </div>
         <div className="col-2">
             <h3>Превью</h3>
-            <div style={{height:200}}>{post.preview && <img src={post.preview.path} alt={post.preview}/>}</div>
+            <div style={{height: 200}}>{post.preview && <img src={post.preview.path} alt={post.preview}/>}</div>
             <ImageUpload uploadDone={uploadDone} editable={true} {...props}/>
             <h3>Изображения</h3>
             <ImageList images={post.images.filter(i => i.isImage)} editable={true} {...props}/>
             <h3>Документы</h3>
-            {post.images.filter(i => !i.isImage).map(f => <a href={``} key={f.id} className="d-block border-bottom">{f.description}</a>)}
+            {post.images.filter(i => !i.isImage).map(f => <a href={f.path} key={f.id} className="d-block border-bottom">{f.description}</a>)}
         </div>
 
     </div>
