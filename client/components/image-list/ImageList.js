@@ -28,6 +28,7 @@ export default function ImageList(props) {
             })
     }
 
+
     function showImage(img) {
         setModalImage(img.path);
         toggle();
@@ -38,6 +39,7 @@ export default function ImageList(props) {
         {props.images.filter(img => !deleted.includes(img.id)).map((img, i) => <div key={i} className="image-cell">
             <div className="img-tools">
                 {props.controls}
+                {props.editable  && img.id && props.setPreview &&  <Button size="sm" color="success" onClick={() => props.setPreview(img)}>👁</Button>}
                 {props.editable  && img.id && <Button size="sm" color="danger" onClick={() => deleteImage(img)}>🗑</Button>}
 
             </div>

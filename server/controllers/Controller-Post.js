@@ -46,12 +46,20 @@ module.exports.controller = function (app) {
         Mongoose.Post.create({user, header, type: req.body.type}).then(post => res.send(post))
     });
 
+    app.post('/api/post/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
+        Mongoose.Post.findById(req.params.id)
+            .then(post => {
+                post.preview = req.params.image;
+                post.save().then(p=>res.send(p));
+            })
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+    });
+
     app.post('/api/post/:id/images/add', passportLib.isAdmin, (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose.Post.findById(req.params.id)
-            .populate('token')
             .then(post => {
-                if (!req.session.admin) return res.status(403).send();
                 post.images = post.images.concat(req.body.images);
                 post.save();
                 post.editable = true;

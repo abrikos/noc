@@ -61,10 +61,16 @@ export default function (props) {
             .then(() => navigate('/admin/news'))
     }
 
+    function setPreview(img) {
+        console.log(img)
+        props.api(`/post/${post.id}/image-preview/${img.id}`)
+            .then(loadPost)
+    }
+
     return <div className="row">
 
         <div className="col-10">
-            <A href="/admin/news" className="btn btn-warning" title="Закрыть"><FontAwesomeIcon icon={faTimes}/></A>
+            <A href="/admin/news" className="btn btn-warning" title="Закрыть"><FontAwesomeIcon icon={faTimes}/> Закрыть</A>
 
             <form onSubmit={_handleSubmit} encType="multipart/form-data" onChange={change}>
                 <FormGroup>
@@ -101,10 +107,14 @@ export default function (props) {
         </div>
         <div className="col-2">
             <h3>Превью</h3>
-            <div style={{height: 200}}>{post.preview && <img src={post.preview.path} alt={post.preview}/>}</div>
+            <div style={{height: 200}}>{post.preview && <img src={post.preview.path} alt={post.preview} className="img-fluid"/>}</div>
             <ImageUpload uploadDone={uploadDone} editable={true} {...props}/>
             <h3>Изображения</h3>
-            <ImageList images={post.images.filter(i => i.isImage)} editable={true} {...props}/>
+            <ImageList
+                setPreview={setPreview}
+                images={post.images.filter(i => i.isImage)}
+                editable={true}
+                {...props}/>
             <h3>Документы</h3>
             {post.images.filter(i => !i.isImage).map(f => <a href={f.path} key={f.id} className="d-block border-bottom">{f.description}</a>)}
         </div>
