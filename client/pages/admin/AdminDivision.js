@@ -80,6 +80,13 @@ export default function AdminDivision(props) {
                 />
 
             </FormGroup>
+            <FormGroup check>
+                <Label check>
+                    <Input type="checkbox" name="noMenu" defaultChecked={model.noMenu}/>
+                    Не показывать в меню
+                </Label>
+
+            </FormGroup>
             <Button>{model.id ? 'Сохранить' : 'Создать'}</Button>
 
         </form>

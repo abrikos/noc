@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const modelSchema = new Schema({
         name: String,
         path: String,
+        noMenu: Boolean,
         chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person'},
         description: String,
     },
