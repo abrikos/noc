@@ -6,8 +6,25 @@ const passportLib = require('server/lib/passport');
 
 module.exports.controller = function (app) {
 
+    function bodyToWhere(body) {
+        if (!body.where) body.where = {};
+        body.where.published = true;
+        for(const f in body.where){
+            if(!body.where[f]) delete body.where[f];
+        }
+        if (body.where.text) {
+            body.where.$or =[{text:new RegExp(body.where.text, 'i')},{header:new RegExp(body.where.text, 'i')},]
+            delete body.where.text;
+        } else {
+            delete body.where.text;
+        }
+        return body.where;
+    }
+
     app.post('/api/post/search', (req, res) => {
-        Mongoose.Post.find(req.body.where)
+        const filter = bodyToWhere(req.body);
+        logger.info(JSON.stringify(filter))
+        Mongoose.Post.find(filter)
             .sort({createdAt: -1})
             .limit(parseInt(req.body.limit) || 10)
             .skip(parseInt(req.body.skip))
@@ -17,7 +34,8 @@ module.exports.controller = function (app) {
     });
 
     app.post('/api/post/search/count', (req, res) => {
-        Mongoose.Post.countDocuments(req.body.where)
+        const filter = bodyToWhere(req.body);
+        Mongoose.Post.countDocuments(filter)
             .then(count => res.send({count}))
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });

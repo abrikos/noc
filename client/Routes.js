@@ -20,12 +20,14 @@ import Research from "client/pages/home/research/Research";
 import Intellectual from "client/pages/home/intellectual/Intellectual";
 import VideoList from "client/pages/news/VideoList";
 import AboutRepublic from "client/pages/about-republic/AboutRepublic";
+import Search from "client/pages/search/Search";
 
 export default function Routes(props) {
 
     return {
         "/": () => <Home {...props}/>,
         "/cabinet": () => <Cabinet {...props}/>,
+        "/search": () => <Search {...props}/>,
         "/about-republic": () => <AboutRepublic {...props}/>,
         "/about": () => <About {...props}/>,
         "/phone-book": () => <PhoneBook {...props}/>,
