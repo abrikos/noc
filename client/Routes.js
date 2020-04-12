@@ -33,6 +33,7 @@ export default function Routes(props) {
         "/phone-book": () => <PhoneBook {...props}/>,
         "/contacts": () => <Contacts {...props}/>,
         "/login": () => <Login {...props}/>,
+        "/wp-login": () => <Login {...props}/>,
         "/research": () => <Research {...props}/>,
         "/intellectual": () => <Intellectual {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
