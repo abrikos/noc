@@ -63,6 +63,9 @@ export default function TopMenu(props) {
                 </Nav>
                 <Nav>
                     <NavItem >
+                        <A href="/search" className={'nav-link'}><span role="image">🔍</span></A>
+                    </NavItem>
+                    <NavItem >
                         <a href="https://www.instagram.com/academy_of_sciences" target="_blank" className={'nav-link svg-circle'}><img src={Instagram} alt="Instagram"/></a>
                     </NavItem>
                     <NavItem >

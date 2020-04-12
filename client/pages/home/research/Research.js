@@ -1,5 +1,4 @@
 import React from 'react';
-import "client/pages/home/research/research.sass"
 import aurora from "client/pages/home/research/aurora.jpeg"
 import autumn from "client/pages/home/research/autumn.jpeg"
 import birds from "client/pages/home/research/birds.jpeg"
@@ -17,7 +16,7 @@ import tea from "client/pages/home/research/tea.jpeg"
 export default function Research(props) {
 
 
-    return <div className="research">
+    return <div className="static-page">
         <h1 className="mb-5">КОМПЛЕКСНЫЕ НАУЧНЫЕ ИССЛЕДОВАНИЯ</h1>
         <div className="row">
             <div className="col-md-6">
@@ -28,7 +27,7 @@ export default function Research(props) {
                 С 2016 года из средств республиканского госбюджета в объеме 220 млн. рублей/год, через Академию наук РС (Я) финансируются исследования в рамках Программы комплексных научных исследований в Республике Саха (Якутия), направленных на развитие производительных сил и социальной сферы.
             </div>
             <div className="col-md-6">
-                <img src={diamond} alt="Diamond"/>
+                <img src={diamond} alt="Diamond" className="img-fluid"/>
                 <p>Программа разработана Правительством РС(Я), Министерством образования и науки РС(Я), ФАНО России и научным учреждениями Российской академии наук.</p>
                 <p>Она ориентирована на наиболее проблемные зоны, которые в ближайшее время могут оказать значительное стагнационное воздействие на процессы модернизации, реализуемые в рамках стратегических документов развития страны.</p>
                 <p>Реализация программы комплексных научных исследований в Республике Саха (Якутия), направленных на развитие производительных сил и социальной сферы, станет научной основой стратегического планирования социально-экономического развития Республики Саха (Якутия), как региона важнейших геостратегических интересов России в Арктической зоне и Дальнем Востоке.</p>
@@ -43,9 +42,9 @@ export default function Research(props) {
         </div>
 
         <div className="row">
-            <div className="col-md-4"><img src={birds} alt="birds"/></div>
-            <div className="col-md-4"><img src={bone} alt="bone"/></div>
-            <div className="col-md-4"><img src={cow} alt="bull"/></div>
+            <div className="col-md-4"><img src={birds} alt="birds" className="img-fluid"/></div>
+            <div className="col-md-4"><img src={bone} alt="bone" className="img-fluid"/></div>
+            <div className="col-md-4"><img src={cow} alt="bull" className="img-fluid"/></div>
         </div>
 
 
@@ -54,9 +53,9 @@ export default function Research(props) {
         </div>
 
         <div className="row">
-            <div className="col-md-4"><img src={aurora} alt="aurora"/></div>
-            <div className="col-md-4"><img src={autumn} alt="autumn"/></div>
-            <div className="col-md-4"><img src={deer} alt="deer"/></div>
+            <div className="col-md-4"><img src={aurora} alt="aurora" className="img-fluid"/></div>
+            <div className="col-md-4"><img src={autumn} alt="autumn" className="img-fluid"/></div>
+            <div className="col-md-4"><img src={deer} alt="deer" className="img-fluid"/></div>
         </div>
 
         <div className="blue-block">
@@ -64,9 +63,9 @@ export default function Research(props) {
         </div>
 
         <div className="row">
-            <div className="col-md-4"><img src={mountain} alt="mountain"/></div>
-            <div className="col-md-4"><img src={tea} alt="tea"/></div>
-            <div className="col-md-4"><img src={gold} alt="gold"/></div>
+            <div className="col-md-4"><img src={mountain} alt="mountain" className="img-fluid"/></div>
+            <div className="col-md-4"><img src={tea} alt="tea" className="img-fluid"/></div>
+            <div className="col-md-4"><img src={gold} alt="gold" className="img-fluid"/></div>
         </div>
 
         <div className="blue-block">

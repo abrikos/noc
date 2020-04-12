@@ -12,11 +12,6 @@ export default function AdminUser(props) {
         props.api(`/admin/user/${user._id}/change-admin`);
     }
 
-    function setListed(user) {
-        user.admin = !user.admin;
-        props.api(`/admin/user/${user._id}/change-page-listing`);
-    }
-
     return <div className="row">
         <table className="table-sm">
             <thead>

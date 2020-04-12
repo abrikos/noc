@@ -6,6 +6,7 @@ import {
     CarouselIndicators,
     CarouselCaption
 } from 'reactstrap';
+import ImageList from "client/components/image-list/ImageList";
 
 export default function ImageCarousel(props) {
     const items= props.images.map(i=>({src:i.path}))
@@ -42,9 +43,9 @@ export default function ImageCarousel(props) {
         );
     });
 
-    return (
+    return <div>
         <Carousel
-            className="image-carousel"
+            className="image-carousel d-sm-block d-none"
             activeIndex={activeIndex}
             next={next}
             previous={previous}
@@ -54,6 +55,7 @@ export default function ImageCarousel(props) {
             <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
             <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
         </Carousel>
-    );
+        <div  className="d-sm-none d-block"><ImageList images={props.images}/></div>
+    </div>
 
 }
