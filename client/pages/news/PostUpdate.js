@@ -110,6 +110,7 @@ export default function (props) {
             <div style={{height: 200}}>{post.preview && <img src={post.preview.path} alt={post.preview} className="img-fluid"/>}</div>
             <ImageUpload uploadDone={uploadDone} editable={true} {...props}/>
             <h3>Изображения</h3>
+            <small>Перетащите в текст или пкм "Скопировать" - "Вставить"</small>
             <ImageList
                 setPreview={setPreview}
                 images={post.images.filter(i => i.isImage)}
