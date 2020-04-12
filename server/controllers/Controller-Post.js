@@ -23,7 +23,7 @@ module.exports.controller = function (app) {
 
     app.post('/api/post/search', (req, res) => {
         const filter = bodyToWhere(req.body);
-        logger.info(JSON.stringify(filter))
+        //logger.info(JSON.stringify(filter))
         Mongoose.Post.find(filter)
             .sort({createdAt: -1})
             .limit(parseInt(req.body.limit) || 10)
