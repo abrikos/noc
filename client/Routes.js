@@ -24,11 +24,13 @@ import Search from "client/pages/search/Search";
 import Partners from "client/pages/partners/Partners";
 import MassMedia from "client/pages/mass-media/MassMedia";
 import Organisations from "client/pages/science-org/Organisations";
+import Gov from "client/pages/gov/Gov";
 
 export default function Routes(props) {
 
     return {
         "/": () => <Home {...props}/>,
+        "/gov": () => <Gov {...props}/>,
         "/science-org": () => <Organisations {...props}/>,
         "/partners": () => <Partners {...props}/>,
         "/mass-media": () => <MassMedia {...props}/>,
