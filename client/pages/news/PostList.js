@@ -12,7 +12,7 @@ export default function (props) {
     const [filter, setFilter] = useState(props.filter);
 
     useEffect(() => {
-        const f = filter ? Object.assign(filter, {}) : {};
+        const f = filter ? Object.assign(filter, {}) : {where:{}};
         f.order = {createdAt: -1};
         f.limit = 12;
         f.skip = 0;
