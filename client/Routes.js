@@ -25,6 +25,7 @@ import Partners from "client/pages/partners/Partners";
 import MassMedia from "client/pages/mass-media/MassMedia";
 import Organisations from "client/pages/science-org/Organisations";
 import Gov from "client/pages/gov/Gov";
+import NewsPage from "client/pages/news/NewsPage";
 
 export default function Routes(props) {
 
@@ -46,7 +47,7 @@ export default function Routes(props) {
         "/intellectual": () => <Intellectual {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
         "/admin/:control/update/:id": (params) => <AdminIndex {...params} {...props}/>,
-        "/news": () => <PostList {...props}/>,
+        "/news": () => <NewsPage {...props}/>,
         "/video": () => <VideoList {...props}/>,
         "/edition": () => <Edition {...props}/>,
         "/static/:path": (params) => <PostView {...params} {...props}/>,

@@ -43,6 +43,7 @@ modelSchema.virtual('imageOne')
 
 modelSchema.virtual('link')
     .get(function () {
+        if(this.isMassMedia) return this.url;
         return `/news/` + this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g, '-') : '')
     });
 
