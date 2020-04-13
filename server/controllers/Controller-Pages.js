@@ -45,6 +45,10 @@ module.exports.controller = function (app) {
         map.push({label: 'Информация', items:[
                 {label: 'О Республике', path: '/about-republic'},
                 {label: 'Об Академии', path: '/about'},
+                {label: 'Научные учереждения', path: '/science-gov'},
+                {label: 'Партнёры', path: '/partners'},
+                {label: 'Правительство Республики Саха (Якутия)', path: '/gov'},
+                {label: 'СМИ о нас', path: '/mass-media'},
                 {label: 'Контакты', path: '/contacts'}
             ], menu: true});
 
