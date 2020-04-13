@@ -23,7 +23,6 @@ module.exports.controller = function (app) {
 
     app.post('/api/post/search', (req, res) => {
         const filter = bodyToWhere(req.body);
-        //logger.info(JSON.stringify(filter))
         Mongoose.Post.find(filter)
             .sort({createdAt: -1})
             .limit(parseInt(req.body.limit) || 10)
@@ -38,6 +37,10 @@ module.exports.controller = function (app) {
         Mongoose.Post.countDocuments(filter)
             .then(count => res.send({count}))
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+    });
+
+    app.post('/api/rubric/list', async (req, res) => {
+        Mongoose.Rubric.find().then(items => res.send(items))
     });
 
     app.post('/api/post/create', passportLib.isAdmin, async (req, res) => {
@@ -110,11 +113,9 @@ module.exports.controller = function (app) {
         Mongoose.Post.findById(req.params.id)
             .populate('token')
             .then(post => {
-                post.header = req.body.header;
-                post.text = req.body.text;
-                post.published = req.body.published;
-                //.replace(/(?:\r\n|\r|\n)/g,'<br/>');
-                //post.published = true;
+                for(const f in req.body){
+                    post[f] = req.body[f]
+                }
                 post.ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
                 post.save();
                 res.send({ok: 200});

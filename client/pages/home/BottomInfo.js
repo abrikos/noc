@@ -14,8 +14,8 @@ export default function BottomInfo(props) {
         </div>
         <div className="col-md-4">
             <h3>ПОЛЕЗНЫЕ ССЫЛКИ</h3>
-            <A href="/ob-akademii">Об Академии</A>
-            <A href="/smi-o-nas">СМИ о нас</A>
+            <A href="/about">Об Академии</A>
+            <A href="/mass-media">СМИ о нас</A>
             <A href="/organisations">Научные учереждения</A>
             <A href="/goverement">Правительство Республики Саха (Якутия)</A>
         </div>

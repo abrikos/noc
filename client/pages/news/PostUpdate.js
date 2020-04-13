@@ -11,6 +11,7 @@ import {faTimes, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 export default function (props) {
     const [post, setPost] = useState({});
+    const [isMassMedia, setIsMassMedia] = useState(false);
     const [updated, setUpdated] = useState(false);
     const [errors, setErrors] = useState({});
     const tokens = props.getCookie(props.cookieName);
@@ -22,6 +23,7 @@ export default function (props) {
 
     function loadPost() {
         props.id && props.api('/post/view/' + props.id, {tokens}).then(p => {
+            setIsMassMedia(p.isMassMedia)
             setPost(p);
         });
     }
@@ -80,7 +82,17 @@ export default function (props) {
                     {/*<InputMask mask="+7 999 9999999" className="form-control"/>*/}
                 </FormGroup>
                 <A href={post.link}>Промотр {post.link}</A>
+                <FormGroup check>
+                    <Label check>
+                        <Input type="checkbox" name="isMassMedia" defaultChecked={post.isMassMedia} onChange={e=>setIsMassMedia(e.target.checked)}/>
+                        СМИ о нас
+                    </Label>
+                </FormGroup>
 
+                {isMassMedia && <FormGroup>
+                    <Label>Ссылка</Label>
+                    <Input name="url" defaultValue={post.url}/>
+                </FormGroup>}
 
                 <FormGroup>
                     <Label>Текст</Label>
@@ -96,7 +108,6 @@ export default function (props) {
                         <Input type="checkbox" name="published" defaultChecked={post.published}/>
                         Опубликовано
                     </Label>
-
                 </FormGroup>
 
                 {/*<Input type="Xhidden" name="options" value={JSON.stringify(cookieJson.options)} readOnly/>

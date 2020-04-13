@@ -8,14 +8,17 @@ const modelSchema = new Schema({
         header: String,
         text: String,
         path: String,
+        url: String,
         editable: Boolean,
         published: Boolean,
+        isMassMedia: Boolean,
         type: {type:String, enum:['static','news']},
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
         preview: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
+
     },
     {
         timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt'},

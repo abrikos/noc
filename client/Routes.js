@@ -21,11 +21,15 @@ import Intellectual from "client/pages/home/intellectual/Intellectual";
 import VideoList from "client/pages/news/VideoList";
 import AboutRepublic from "client/pages/about-republic/AboutRepublic";
 import Search from "client/pages/search/Search";
+import Partners from "client/pages/partners/Partners";
+import MassMedia from "client/pages/mass-media/MassMedia";
 
 export default function Routes(props) {
 
     return {
         "/": () => <Home {...props}/>,
+        "/partners": () => <Partners {...props}/>,
+        "/mass-media": () => <MassMedia {...props}/>,
         "/cabinet": () => <Cabinet {...props}/>,
         "/search": () => <Search {...props}/>,
         "/about-republic": () => <AboutRepublic {...props}/>,
