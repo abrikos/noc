@@ -40,7 +40,7 @@ modelSchema.virtual('imageOne')
 
 modelSchema.virtual('link')
     .get(function () {
-        return `/${this.type}/` + this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g, '-') : '')
+        return `/news/` + this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g, '-') : '')
     });
 
 
