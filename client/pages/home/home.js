@@ -11,7 +11,7 @@ import intell from "./intellectual/home2.jpeg"
 export default function Home(props) {
     const [news, setNews] = useState([]);
     useEffect(() => {
-        props.api('/post/search', {where: {published: true}, limit: 4})
+        props.api('/post/search', {where: {published: true, isMassMedia:false}, limit: 4})
             .then(setNews)
     }, []);
 
