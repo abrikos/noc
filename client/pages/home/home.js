@@ -7,13 +7,14 @@ import FeedbackForm from "client/pages/home/FeedbackForm";
 import "./home.sass"
 import woman from "./research/woman.jpeg"
 import intell from "./intellectual/home2.jpeg"
+import DateFormat from "client/components/DateFormat";
 
 export default function Home(props) {
     const [news, setNews] = useState([]);
     const [newsLast, setNewsLast] = useState();
     useEffect(() => {
         props.api('/post/search', {where: {published: true, isMassMedia: {$ne: true}}, limit: 15})
-            .then(res=> {
+            .then(res => {
                 const last = [];
                 last.push(res.shift());
                 last.push(res.shift());
@@ -24,10 +25,13 @@ export default function Home(props) {
     }, []);
 
     function formatLastNews(i) {
-        return <A href={newsLast[i].link}>
-            <div className="second-news-img"><img src={newsLast[i].previewPath} className="img-fluid"/></div>
-            {newsLast[i].header}
-        </A>
+        return <div className="first-news">
+            <div className="first-news-img">
+                <A href={newsLast[i].link}><img src={newsLast[i].previewPath} className="img-fluid"/></A>
+            </div>
+            <div><DateFormat date={newsLast[i].date}/></div>
+            <A href={newsLast[i].link}>{newsLast[i].header}</A>
+        </div>
     }
 
     return <div className="home">
