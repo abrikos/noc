@@ -9,7 +9,7 @@ const youtubeChannelId = 'UC-ACL2rOnpLvtNYw9HZJQKQ';
 const urlPlayLists = `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.YOUTUBE}&channelId=${youtubeChannelId}&part=id`
 const urlVideos = `https://www.googleapis.com/youtube/v3/playlistItems?key=${process.env.YOUTUBE}&order=date&part=snippet&maxResults=20&playlistId=`
 
-const job = new CronJob('0 * * * * *', async function () {
+const job = new CronJob('0 0 * * * *', async function () {
     playlistParse()
 }, null, true, 'America/Los_Angeles');
 
@@ -29,7 +29,6 @@ function playlistParse(){
                                     if(found) return;
                                     console.log({uid, type:'youtube',name:video.title, description:video.description})
                                     Mongoose.Video.create({uid, type:'youtube',name:video.title, description:video.description})
-
                                 })
                         }
                     })

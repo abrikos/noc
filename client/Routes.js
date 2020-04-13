@@ -18,7 +18,7 @@ import Edition from "client/pages/edition/Edition";
 import About from "client/pages/about/About";
 import Research from "client/pages/home/research/Research";
 import Intellectual from "client/pages/home/intellectual/Intellectual";
-import VideoList from "client/pages/news/VideoList";
+import VideoList from "client/pages/video/VideoList";
 import AboutRepublic from "client/pages/about-republic/AboutRepublic";
 import Search from "client/pages/search/Search";
 import Partners from "client/pages/partners/Partners";
