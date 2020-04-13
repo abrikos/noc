@@ -35,9 +35,10 @@ modelSchema.virtual('date')
         return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss')
     });
 
-modelSchema.virtual('imageOne')
+modelSchema.virtual('previewPath')
     .get(function () {
-        return this.image || this.preview;
+        const image = this.image || this.preview;
+        return image ? image.path : '/noImage.png'
     });
 
 
