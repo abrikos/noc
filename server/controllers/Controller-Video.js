@@ -22,7 +22,6 @@ function playlistParse(){
                     .then(res2=>{
                         for(const u of res2.data.items.reverse()){
                             const video = u.snippet
-                            console.log(video.title)
                             const uid = video.resourceId.videoId;
                             Mongoose.Video.findOne({uid})
                                 .then(found=>{
