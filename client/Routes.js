@@ -23,11 +23,13 @@ import AboutRepublic from "client/pages/about-republic/AboutRepublic";
 import Search from "client/pages/search/Search";
 import Partners from "client/pages/partners/Partners";
 import MassMedia from "client/pages/mass-media/MassMedia";
+import Organisations from "client/pages/science-org/Organisations";
 
 export default function Routes(props) {
 
     return {
         "/": () => <Home {...props}/>,
+        "/science-org": () => <Organisations {...props}/>,
         "/partners": () => <Partners {...props}/>,
         "/mass-media": () => <MassMedia {...props}/>,
         "/cabinet": () => <Cabinet {...props}/>,
