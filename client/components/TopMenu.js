@@ -69,7 +69,7 @@ export default function TopMenu(props) {
                         <a href="https://www.instagram.com/academy_of_sciences" target="_blank" rel="noopener noreferrer" className={'nav-link svg-circle'}><img src={Instagram} alt="Instagram"/></a>
                     </NavItem>
                     <NavItem >
-                        <a href="https://www.youtube.com/channel/UC-ACL2rOnpLvtNYw9HZJQKQ" target="_blank" rel="noopener noreferrer" className={'nav-link svg-circle'}><img src={YouTube} alt="Видео"/></a>
+                        <A href="/video" className={'nav-link svg-circle'}><img src={YouTube} alt="Видео"/></A>
                     </NavItem>
                 </Nav>
             </Collapse>
