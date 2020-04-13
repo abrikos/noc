@@ -1,11 +1,42 @@
 import Mongoose from "server/db/Mongoose";
+import axios from "axios";
 
 const logger = require('logat');
 const passportLib = require('server/lib/passport');
 const fetchVideoInfo = require('youtube-info');
-//const passport = require('passport');
+const CronJob = require('cron').CronJob;
+const youtubeChannelId = 'UC-ACL2rOnpLvtNYw9HZJQKQ';
+const urlPlayLists = `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.YOUTUBE}&channelId=${youtubeChannelId}&part=id`
+const urlVideos = `https://www.googleapis.com/youtube/v3/playlistItems?key=${process.env.YOUTUBE}&order=date&part=snippet&maxResults=20&playlistId=`
 
-//Mongoose.Meeting.find({}).then(console.log)
+const job = new CronJob('0 * * * * *', async function () {
+    playlistParse()
+}, null, true, 'America/Los_Angeles');
+
+function playlistParse(){
+    //await Mongoose.Video.deleteMany()
+    axios(urlPlayLists)
+        .then(res=>{
+            for(const pl of res.data.items){
+                axios(urlVideos+pl.id)
+                    .then(res2=>{
+                        for(const u of res2.data.items.reverse()){
+                            const video = u.snippet
+                            console.log(video.title)
+                            const uid = video.resourceId.videoId;
+                            Mongoose.Video.findOne({uid})
+                                .then(found=>{
+                                    if(found) return;
+                                    console.log({uid, type:'youtube',name:video.title, description:video.description})
+                                    Mongoose.Video.create({uid, type:'youtube',name:video.title, description:video.description})
+
+                                })
+                        }
+                    })
+
+            }
+        })
+}
 
 
 module.exports.controller = function (app) {
