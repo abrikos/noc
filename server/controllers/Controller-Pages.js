@@ -32,7 +32,7 @@ module.exports.controller = function (app) {
         const divisions = await Mongoose.Division.find({path: {$ne: null}});
         map.push({label: 'Структура', items: divisions.filter(d=>!d.noMenu).map(d => ({label: d.name, path: '/division' + d.path})), menu: true});
         const meetings = await Mongoose.Meeting.find({path: {$ne: null}});
-        map.push({label: 'ОУС',  items: meetings.map(d => ({label: d.name, path: '/meeting/' + d.path})), menu: true});
+        map.push({label: 'Ученые советы',  items: meetings.map(d => ({label: d.name, path: '/meeting/' + d.path})), menu: true});
         map.push({label: 'Президиум',  menu: true, items:[
                 {label: 'Аппарат', path: '/apparatus'},
                 {label: 'Секретариат', path: '/division/secretariat'},

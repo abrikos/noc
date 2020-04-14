@@ -71,6 +71,9 @@ export default function TopMenu(props) {
                     <NavItem >
                         <A href="/video" className={'nav-link svg-circle'}><img src={YouTube} alt="Видео"/></A>
                     </NavItem>
+                    <NavItem className="d-flex align-items-center">
+                        <span id="google_translate_element"></span>
+                    </NavItem>
                 </Nav>
             </Collapse>
         </Navbar>
