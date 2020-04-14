@@ -15,7 +15,7 @@ export default function Edition(props) {
         <h1>Издания</h1>
         {data.map(d => <div key={d.id} className="edition-item">
             <div className="edition-image">
-                <img src={d.image.path} alt={d.header}/>
+                <img src={d.photo} alt={d.header}/>
             </div>
             <div className="edition-text">
                 <h3>{d.header}</h3>
