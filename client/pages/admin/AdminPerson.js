@@ -73,6 +73,21 @@ export default function AdminPerson(props) {
                         <FormFeedback>{errors.status}</FormFeedback>
                     </FormGroup>
                     <FormGroup>
+                        <Label>Стстус руководства</Label>
+                        <Input name="supervisorStatus" defaultValue={model.supervisorStatus} invalid={!!errors.supervisorStatus}/>
+                        <FormFeedback>{errors.supervisorStatus}</FormFeedback>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Место в руководстве</Label>
+                        <Input name="supervisorOrder" defaultValue={model.supervisorOrder} invalid={!!errors.supervisorOrder}/>
+                        <FormFeedback>{errors.supervisorOrder}</FormFeedback>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Звание</Label>
+                        <Input name="memberStatus" defaultValue={model.memberStatus} invalid={!!errors.memberStatus}/>
+                        <FormFeedback>{errors.memberStatus}</FormFeedback>
+                    </FormGroup>
+                    <FormGroup>
                         <Label>Подразделение</Label>
                         <Input name="division" defaultValue={model.division && model.division.id} invalid={!!errors.division} type="select">
                             <option></option>
@@ -90,7 +105,7 @@ export default function AdminPerson(props) {
                     </FormGroup>
                 </div>
                 <div className="col-6">
-                    {model.image && <img src={model.image.path} alt={model.fio}/>}
+                    {model.image && <img src={model.photo} alt={model.fio}/>}
                 </div>
             </div>
 
@@ -113,9 +128,10 @@ export default function AdminPerson(props) {
             <select size={20}>
             <option className={!model.id ? 'selected' : ''} onClick={() => setModel({})}>Создать</option>
             {list.map(l => <option key={l.id} className={l.id === model.id ? 'selected' : ''} onClick={() => modelChange(l)}>
+
+                {l.fio || l.id}
                 {l.image && ' 👤 '}
                 {l.voice>=0 && ' 👍 '}
-                {l.fio || l.id}
 
             </option>)}
             </select>

@@ -28,6 +28,12 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
+modelSchema.virtual('photo')
+    .get(function () {
+            return this.image ? this.image.path : '/noImage.png'
+    });
+
+
 export default mongoose.model("Person", modelSchema)
 
 

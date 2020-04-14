@@ -26,7 +26,7 @@ export default function PersonListLarge(props) {
         <div className="supervisors-list">
             {persons.map(p => <div key={p.id} className="supervisor-person">
                 <div className="supervisor-image">
-                    <img src={p.image.path} alt={p.fio}/>
+                    <img src={p.photo} alt={p.fio}/>
                 </div>
 
                 <div className="supervisor-text">
