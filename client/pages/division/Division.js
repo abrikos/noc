@@ -27,7 +27,7 @@ export default function Division(props) {
         <div className="row">
             <div className="col-md-4 division-card">
                 <picture>
-                    <img key={props.page} src={data.chief.image && data.chief.image.path} alt={data.name}/>
+                    <img key={props.page} src={data.chief.photo} alt={data.name}/>
                 </picture>
             </div>
             <div className="col-md-8 text">
