@@ -32,7 +32,7 @@ module.exports.controller = function (app) {
         const divisions = await Mongoose.Division.find({path: {$ne: null}});
         map.push({label: 'Структура', items: divisions.filter(d=>!d.noMenu).map(d => ({label: d.name, path: '/division' + d.path})), menu: true});
         const meetings = await Mongoose.Meeting.find({path: {$ne: null}});
-        map.push({label: 'Ученые советы',  items: meetings.map(d => ({label: d.name, path: '/meeting/' + d.path})), menu: true});
+        map.push({label: 'Ученые советы',  items: [{label: 'О советах', path: '/meeting-about'}].concat(meetings.map(d => ({label: d.name, path: '/meeting/' + d.path}))), menu: true});
         map.push({label: 'Президиум',  menu: true, items:[
                 {label: 'Аппарат', path: '/apparatus'},
                 {label: 'Секретариат', path: '/division/secretariat'},
@@ -41,6 +41,14 @@ module.exports.controller = function (app) {
                 {label: 'Почетные члены', path: '/persons/honor-members'},
                 {label: 'Иностранные члены', path: '/persons/foreign-members'},
             ]});
+        map.push({label: 'Проекты', items:[
+            {label:'История якутии', path:'/project/sakha-history'},
+            {label:'История якутии. Том 1', path:'/project/sakha-history/1'},
+            {label:'История якутии. Том 2', path:'/project/sakha-history/2'},
+            {label:'История якутии. Том 3', path:'/project/sakha-history/3'},
+            {label:'------'},
+            {label:'Переработка мусора', path:'/project/recycle'},
+            ], menu:true})
         map.push({label: 'Издания', path: '/edition', menu:true})
         map.push({label: 'Информация', items:[
                 {label: 'О Республике', path: '/about-republic'},
