@@ -2,6 +2,14 @@ import Editor from "@opuscapita/react-markdown";
 import React, {useEffect, useState} from "react";
 import "./markdown.sass"
 import MarkDown from "react-markdown";
+import PropTypes from "prop-types";
+import {FormFeedback, Input} from "reactstrap";
+MarkdownEditor.propTypes = {
+    value: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    invalid: PropTypes.bool,
+};
+
 
 export default function MarkdownEditor(props) {
     const [value, setValue] = useState(props.value);
@@ -15,8 +23,9 @@ export default function MarkdownEditor(props) {
         if(props.onChange) props.onChange(text)
     }
 
-    return <div>
-        <textarea name={props.name} defaultValue={value} hidden/>
+    return <>
+        <Input name={props.name} value={value} hidden invalid={props.invalid}/>
+
         <div className="row">
             <div className="col-md-6">
                 <Editor
@@ -29,6 +38,6 @@ export default function MarkdownEditor(props) {
         </div>
 
 
-    </div>
+    </>
 
 }

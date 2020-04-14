@@ -16,15 +16,6 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
-    app.post('/api/edition/list', (req, res) => {
-        Mongoose.Edition.find()
-            .populate('image')
-            .then(items => {
-                res.send(items)
-            })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
-    });
-
     app.post('/api/site-map', async (req, res) => {
         const map = [];
         map.push({label: 'Главная', path: '/', menu: true});

@@ -22,6 +22,7 @@ export default function Edition(props) {
                 <div className="text-secondary">{d.year}</div>
                 <div className="text-secondary">{d.format}</div>
                 <MarkDown source={d.text}/>
+                {d.link && <a href={d.link} target="_blank">Скачать</a>}
             </div>
         </div>)}
 

@@ -8,6 +8,7 @@ import AdminPerson from "client/pages/admin/AdminPerson";
 import AdminMeeting from "client/pages/admin/AdminMeeting";
 import {Nav, NavItem} from "reactstrap";
 import AdminNews from "client/pages/admin/AdminNews";
+import AdminEdition from "client/pages/admin/AdminEdition";
 
 export default function AdminIndex(props) {
     const pages = {
@@ -20,6 +21,7 @@ export default function AdminIndex(props) {
         divisions: ['Структура', <AdminDivision  {...props}/>],
         persons: ['Персоны', <AdminPerson  {...props}/>],
         meeting: ['ОУС', <AdminMeeting  {...props}/>],
+        edition: ['Издания', <AdminEdition  {...props}/>],
 
     };
 

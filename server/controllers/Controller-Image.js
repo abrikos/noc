@@ -23,12 +23,11 @@ module.exports.controller = function (app) {
         }
     });
 
-    app.post('/api/image/delete/:id', passportLib.isLogged, async (req, res) => {
+    app.post('/api/image/delete/:id', passportLib.isAdmin, async (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong ID'}))
 
         Mongoose.Image.findById(req.params.id)
             .then(img => {
-                if (!img.user.equals(req.session.userId)) return res.sendStatus(403)
                 img.delete()
                 res.sendStatus(200);
             })
