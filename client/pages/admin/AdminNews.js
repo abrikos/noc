@@ -12,8 +12,9 @@ export default function AdminNews(props) {
     }
 
     return <div className="row">
+        <h1 className="text-danger">Редактирование новостей</h1>
         {!!props.id || <div>
-            <Button onClick={create}>Создать</Button>
+            <Button onClick={create}>Создать новость</Button>
             <PostList isAdmin={true} {...props}/>
         </div>}
 

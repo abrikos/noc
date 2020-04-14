@@ -52,6 +52,21 @@ passport.use('custom', new CustomStrategy(async function (req, done) {
 }));
 
 async function telegram(req, done) {
+    function checkSignature({hash, ...data}) {
+        const TOKEN = process.env.BOT_TOKEN;
+        const secret = crypto.createHash('sha256')
+            .update(TOKEN)
+            .digest();
+        const {returnUrl, ...rest} = data;
+        const checkString = Object.keys(rest)
+            .sort()
+            .map(k => (`${k}=${data[k]}`))
+            .join('\n');
+        const hmac = crypto.createHmac('sha256', secret)
+            .update(checkString)
+            .digest('hex');
+        return hmac === hash;
+    }
     const data = req.query;
     if (checkSignature(data)) {
         return await getUser(data.id, 'telegram', data.first_name, data.photo_url)
@@ -83,21 +98,6 @@ async function getUser(externalId, strategy, name, photo) {
     return user;
 }
 
-function checkSignature({hash, ...data}) {
-    const TOKEN = process.env.BOT_TOKEN;
-    const secret = crypto.createHash('sha256')
-        .update(TOKEN)
-        .digest();
-    const {returnUrl, ...rest} = data;
-    const checkString = Object.keys(rest)
-        .sort()
-        .map(k => (`${k}=${data[k]}`))
-        .join('\n');
-    const hmac = crypto.createHmac('sha256', secret)
-        .update(checkString)
-        .digest('hex');
-    return hmac === hash;
-}
 
 
 passport.serializeUser(function (user, done) {
@@ -111,7 +111,6 @@ passport.deserializeUser(function (user, done) {
 module.exports = {
     initialize: passport.initialize,
     session: passport.session,
-    checkSignature,
 
     isLogged: function (req, res, next) {
 

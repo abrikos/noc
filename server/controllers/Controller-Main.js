@@ -93,12 +93,10 @@ module.exports.controller = function (app) {
     });
 
     app.get('/api/login/:strategy', passport.authenticate('custom'), (req, res, next) => {
-        res.redirect(req.cookies.returnUrl || req.query.returnUrl || '/cabinet')
+        //const redir = req.cookies.returnUrl || req.query.returnUrl || '/admin/news';
+        res.redirect('/admin/news')
     });
 
-    app.post('/api/login/test', passport.authenticate('test'), (req, res) => {
-        res.send({ok: 200})
-    });
 
     app.get('/api/not-logged', (req, res) => {
         res.cookie('returnUrl', req.headers.referer, {maxAge: 900000, httpOnly: true});

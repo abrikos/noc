@@ -33,13 +33,15 @@ module.exports.controller = function (app) {
         map.push({label: 'Структура', items: divisions.filter(d=>!d.noMenu).map(d => ({label: d.name, path: '/division' + d.path})), menu: true});
         const meetings = await Mongoose.Meeting.find({path: {$ne: null}});
         map.push({label: 'Ученые советы',  items: [{label: 'О советах', path: '/meeting-about'}].concat(meetings.map(d => ({label: d.name, path: '/meeting/' + d.path}))), menu: true});
+        map.push({label: 'Члены академии  АН РС(Я)',  menu: true, items:[
+                {label: 'Действительные члены', path: '/persons/real-members'},
+                {label: 'Почетные члены', path: '/persons/honor-members'},
+                {label: 'Иностранные члены', path: '/persons/foreign-members'},
+            ]})
         map.push({label: 'Президиум',  menu: true, items:[
                 {label: 'Аппарат', path: '/apparatus'},
                 {label: 'Секретариат', path: '/division/secretariat'},
                 {label: 'Руководство', path: '/persons/supervisors'},
-                {label: 'Действительные члены', path: '/persons/real-members'},
-                {label: 'Почетные члены', path: '/persons/honor-members'},
-                {label: 'Иностранные члены', path: '/persons/foreign-members'},
             ]});
         map.push({label: 'Проекты', items:[
             {label:'История якутии', path:'/project/sakha-history'},
