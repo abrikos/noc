@@ -6,7 +6,11 @@ export default function Apparatus(props) {
 
     useEffect(() => {
         props.api('/person/list', {isApparat: true})
-            .then(setPersons)
+            .then(res=> {
+                const idx = res.map(r=>r.fio).indexOf('Семенов Юрий Иванович')
+                const boss = res.splice(idx,1);
+                setPersons(boss.concat(res))
+            })
     }, [props.page]);
 
 
