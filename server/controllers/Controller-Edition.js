@@ -40,9 +40,7 @@ module.exports.controller = function (app) {
     });
     app.post('/api/admin/edition/create', passportLib.isAdmin, (req, res) => {
         Mongoose.Edition.create(req.body)
-            .populate(['image','images'])
             .then(r => {
-                console.log(r)
                 res.send(r);
             })
     });

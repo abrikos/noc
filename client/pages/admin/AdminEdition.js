@@ -15,6 +15,7 @@ const fields =[
 ]
 
 export default function (props) {
+    const [edited, setEdited] = useState(false);
     const [list, setList] = useState([]);
     const [model, setModel] = useState({});
     const [errors, setErrors] = useState({});
@@ -51,7 +52,8 @@ export default function (props) {
         if (model.id) {
             props.api(`/admin/${modelName}/${model.id}/update`, form)
                 .then(() => {
-                    getList()
+                    getList();
+                    setEdited(false)
                 })
         } else {
             create(form)
@@ -70,8 +72,9 @@ export default function (props) {
     }
 
     function form(model) {
-        return <form onSubmit={submit} key={model.id}>
-            <Button>{model.id ? 'Сохранить' : 'Создать'}</Button>
+        if(!model.id) return;
+        return <form onSubmit={submit} key={model.id} onChange={()=>setEdited(true)}>
+            {edited && <Button>Сохранить</Button>}
             <div className="row">
                 <div className="col-6">
                     {fields.map(f=><FormGroup key={f.name}>
@@ -86,7 +89,7 @@ export default function (props) {
                     </FormGroup>)}
 
                 </div>
-                {model.id && <div className="col-6">
+                <div className="col-6">
                     {model.photo && <img src={model.photo} alt={model.id} className="img-fluid"/>}
                     <ImageUpload uploadDone={uploadDone} {...props}/>
                     <ImageList
@@ -95,10 +98,9 @@ export default function (props) {
                         images={model.images.filter(i => i.isImage)}
                         editable={true}
                         {...props}/>
-                </div>}
+                </div>
             </div>
-            <Button>{model.id ? 'Сохранить' : 'Создать'}</Button>
-
+            {edited && <Button>Сохранить</Button>}
         </form>
     }
 
