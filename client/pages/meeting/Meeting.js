@@ -7,19 +7,18 @@ export default function Meeting(props) {
     const [data, setData] = useState();
     const [voice, setVoice] = useState(-1);
     const [persons, setPersons] = useState([]);
-    console.log(document.cookie)
 
     useEffect(() => {
         props.api('/meeting/' + props.page)
-            .then(setData)
-        props.api('/person/list', {voice: {$gte: 0}})
-            .then(setPersons)
+            .then(d=>{
+                setData(d)
+                setPersons(d.persons)
+            })
     }, [props.page]);
 
     function selectDivision(voice) {
         setVoice(voice)
-        props.api('/person/list', {voice})
-            .then(setPersons)
+        setPersons(data.persons.filter(p=>p.voice===voice))
     }
 
     if (!data) return <div/>;

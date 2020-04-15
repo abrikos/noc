@@ -23,7 +23,7 @@ function playlistParse(){
                         for(const u of res2.data.items.reverse()){
                             const video = u.snippet
                             const uid = video.resourceId.videoId;
-                            Mongoose.Video.findOne({uid})
+                            Mongoose.video.findOne({uid})
                                 .then(found=>{
                                     if(found) return;
                                     console.log({uid, type:'youtube',name:video.title, description:video.description})
@@ -41,7 +41,7 @@ module.exports.controller = function (app) {
 
 
     app.post('/api/admin/video/create', passportLib.isAdmin, (req, res) => {
-        Mongoose.Video.create({user: req.session.userId})
+        Mongoose.video.create({user: req.session.userId})
             .then(async r => {
                 const found = req.body.link.match(/v=(.*)/);
                 const types = []
@@ -68,7 +68,7 @@ module.exports.controller = function (app) {
 
 
     app.post('/api/admin/video/:id/update', passportLib.isAdmin, (req, res) => {
-        Mongoose.Video.findById(req.params.id)
+        Mongoose.video.findById(req.params.id)
             .then(async r => {
                 if (req.body.link !== r.link) {
                     const found = req.body.link.match(/v=(.*)/);
@@ -84,28 +84,6 @@ module.exports.controller = function (app) {
                 r.save();
                 res.sendStatus(200);
             })
-    });
-
-    app.post('/api/video/list', (req, res) => {
-        Mongoose.Video.find(req.body.where)
-            .sort({createdAt: -1})
-            .limit(parseInt(req.body.limit) || 10)
-            .skip(parseInt(req.body.skip))
-            .then(list => {
-                Mongoose.Video.countDocuments(req.body.where)
-                    .then(count => {
-                        res.send({count, list})
-                    })
-
-            })
-    });
-
-    app.post('/api/video/:id', (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
-        Mongoose.Video.findById(req.params.id)
-            .then(item => {
-                res.send(item)
-            });
     });
 
 };

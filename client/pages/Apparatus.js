@@ -7,9 +7,9 @@ export default function Apparatus(props) {
     useEffect(() => {
         props.api('/person/list', {isApparat: true})
             .then(res=> {
-                const idx = res.map(r=>r.fio).indexOf('Семенов Юрий Иванович')
-                const boss = res.splice(idx,1);
-                setPersons(boss.concat(res))
+                const idx = res.list.map(r=>r.fio).indexOf('Семенов Юрий Иванович')
+                const boss = res.list.splice(idx,1);
+                setPersons(boss.concat(res.list))
             })
     }, [props.page]);
 

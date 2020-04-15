@@ -16,6 +16,9 @@ const modelSchema = new Schema({
         // see http://stackoverflow.com/q/13133911/488666
         toJSON: {virtuals: true}
     });
+modelSchema.statics.population = [{path: 'persons', populate: 'image'}];
+modelSchema.listFields = ['name'];
+modelSchema.formFields = ['name','path','description'];
 
 
 export default mongoose.model("Meeting", modelSchema)

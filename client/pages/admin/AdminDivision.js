@@ -11,12 +11,12 @@ export default function AdminDivision(props) {
 
 
     useEffect(() => {
-        props.api('/person/list').then(setPersons)
+        props.api('/person/list').then(r=>setPersons(r.list))
         getList();
     }, []);
 
     function getList() {
-        props.api('/division/list').then(setList)
+        props.api('/division/list').then(r=>setList(r.list))
     }
 
     function modelChange(m){

@@ -8,7 +8,7 @@ import AdminPerson from "client/pages/admin/AdminPerson";
 import AdminMeeting from "client/pages/admin/AdminMeeting";
 import {Nav, NavItem} from "reactstrap";
 import AdminNews from "client/pages/admin/AdminNews";
-import AdminEdition from "client/pages/admin/AdminEdition";
+import AdminModel from "client/pages/admin/AdminModel";
 
 export default function AdminIndex(props) {
     const pages = {
@@ -18,10 +18,11 @@ export default function AdminIndex(props) {
         //static:['Страницы', <AdminNews type={'static'} {...props}/>],
         //video:['YouTube', <AdminVideo {...props}/>],
         users: ['Пользователи', <AdminUser  {...props}/>],
-        divisions: ['Структура', <AdminDivision  {...props}/>],
-        persons: ['Персоны', <AdminPerson  {...props}/>],
+        division: ['Структура', <AdminModel  {...props}/>],
+        person: ['Персоны', <AdminPerson  {...props}/>],
         meeting: ['ОУС', <AdminMeeting  {...props}/>],
-        edition: ['Издания', <AdminEdition  {...props}/>],
+        edition: ['Издания', <AdminModel  {...props}/>],
+        presidium: ['Пезидиум', <AdminModel  {...props}/>],
 
     };
 

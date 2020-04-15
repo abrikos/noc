@@ -19,7 +19,6 @@ export default function (props) {
     const carousels = {}
     for (const key in dirs) {
         carousels[key] = [];
-        console.log(key)
         for (let i = 1; i <= dirs[key]; i++) {
             carousels[key].push({path: images[`img_${key}_${i}`]})
         }

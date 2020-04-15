@@ -5,7 +5,7 @@ export default function (props) {
     const [meetings, setMeetings] = useState([])
 
     useEffect(()=>{
-        props.api('/meeting/list').then(setMeetings)
+        props.api('/meeting/list').then(r=>setMeetings(r.list))
     },[])
 
     return <div className="static">

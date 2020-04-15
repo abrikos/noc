@@ -28,6 +28,8 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
+modelSchema.statics.population = ['image', 'division'];
+
 modelSchema.virtual('photo')
     .get(function () {
             return this.image ? this.image.path : '/noImage.png'

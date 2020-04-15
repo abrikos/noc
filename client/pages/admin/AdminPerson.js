@@ -11,12 +11,12 @@ export default function AdminPerson(props) {
 
 
     useEffect(() => {
-        props.api('/division/list').then(setDivisions)
+        props.api('/division/list').then(r=>setDivisions(r.list))
         getList();
     }, []);
 
     function getList() {
-        props.api('/person/list').then(setList)
+        props.api('/person/list').then(r=>setList(r.list))
     }
 
     function modelChange(m){

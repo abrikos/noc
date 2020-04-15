@@ -1,14 +1,12 @@
 import User from "server/db/models/Model-User";
-import Rubric from "server/db/models/Model-Rubric";
-import Image from "server/db/models/Model-Image";
-import Post from "server/db/models/Model-Post";
-import Division from "server/db/models/Model-Division";
-import Person from "server/db/models/Model-Person";
-import Meeting from "server/db/models/Model-Meeting";
-import Edition from "server/db/models/Model-Edition";
-import Video from "server/db/models/Model-Vieo";
-import Static from "server/db/models/Model-Static";
-
+import image from "server/db/models/Model-Image";
+import post from "server/db/models/Model-Post";
+import division from "server/db/models/Model-Division";
+import person from "server/db/models/Model-Person";
+import meeting from "server/db/models/Model-Meeting";
+import edition from "server/db/models/Model-Edition";
+import video from "server/db/models/Model-Vieo";
+import presidium from "server/db/models/Model-Presidium";
 
 const mongoose = require("mongoose");
 mongoose.set('useCreateIndex', true);
@@ -36,7 +34,7 @@ const Mongoose = {
     isValidId: function (id) {
         return mongoose.Types.ObjectId.isValid(id)
     },
-    User, Rubric, Image, Post, Division, Person, Meeting, Edition, Video, Static
+    User, image, post, division, person, meeting, edition, video, presidium
 
 };
 export default Mongoose;

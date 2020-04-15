@@ -19,7 +19,7 @@ export default function PostSmall(props) {
         <div className="post-small-content">
             {!post.isMassMedia && <div><A href={link}><DateFormat date={post.date}/></A></div>}
             <A href={link}><h5>{post.header}</h5></A>
-            {post.isMassMedia && <A href={link}>{striptags(post.text)}</A>}
+            {post.isMassMedia && <a href={link} target="_blank" rel="noopener noreferrer">{striptags(post.text)}</a>}
             {!post.isMassMedia && <div  className="post-small-text">
 
                 {post.text && <A href={link}>{striptags(post.text).substr(0, 50)}...</A>}

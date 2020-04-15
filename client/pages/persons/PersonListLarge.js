@@ -16,7 +16,7 @@ export default function PersonListLarge(props) {
         if (!pages[props.type]) return;
         setPersons(null)
         props.api('/person/list', pages[props.type].filter)
-            .then(setPersons)
+            .then(r=>setPersons(r.list))
     }, [props.type]);
 
     if (!pages[props.type]) return <div/>;

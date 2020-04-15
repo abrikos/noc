@@ -13,7 +13,7 @@ export default function AdminMeeting(props) {
     }, []);
 
     function getList() {
-        props.api('/meeting/list').then(setList)
+        props.api('/meeting/list').then(res=>setList(res.list))
     }
 
     function modelChange(m) {

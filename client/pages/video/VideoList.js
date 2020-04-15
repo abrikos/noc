@@ -12,7 +12,6 @@ export default function VideoList(props) {
             .then(res => {
                 setTotalCount(res.count);
                 setModels(res.list)
-                console.log(res)
             })
     }
 

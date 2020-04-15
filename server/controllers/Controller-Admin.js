@@ -9,7 +9,7 @@ const passportLib = require('server/lib/passport');
 module.exports.controller = function (app) {
 
     app.post('/api/admin/division/:id/update', passportLib.isAdmin, (req, res) => {
-        Mongoose.Division.findById(req.params.id)
+        Mongoose.division.findById(req.params.id)
             .then(r => {
                 for(const f of Object.keys(req.body)){
                     r[f] = req.body[f]
@@ -20,7 +20,7 @@ module.exports.controller = function (app) {
     });
 
     app.post('/api/admin/person/:id/update', passportLib.isAdmin, (req, res) => {
-        Mongoose.Person.findById(req.params.id)
+        Mongoose.person.findById(req.params.id)
             .then(r => {
                 for(const f of Object.keys(req.body)){
                     if(req.body[f]) r[f] = req.body[f]

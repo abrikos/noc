@@ -7,29 +7,26 @@ export default function PhoneBook(props) {
     const [persons, setPersons] = useState([]);
 
     useEffect(() => {
-        props.api('/division/list').then(dt => {
-            setData(dt.filter(d => d.persons.filter(p => p.phone || p.email).length));
+        props.api('/division/list',{where:{noPhoneBook:{$ne:true}}}).then(dt => {
+            setData(dt.list.filter(d => d.persons.filter(p => p.phone || p.email).length));
         });
-        props.api('/person/list', {$or: [{phone: {$ne: null}, email: {$ne: null}}]})
-            .then(setPersons)
+        loadPersons({$or: [{phone: {$ne: null}, email: {$ne: null}}]})
     }, [props.page]);
 
-    function selectDivision(e) {
-        props.api('/person/list', {division: e.target.value})
-            .then(setPersons)
-
+    function loadPersons(filter) {
+        props.api('/person/list', filter)
+            .then(res=>setPersons(res.list))
     }
+
 
 
     return <div className="phone-book">
         <h1>Телефонный справочник</h1>
 
-            <Input type="select" onChange={selectDivision}>
+            <Input type="select" onChange={e=>loadPersons({division: e.target.value})}>
                 <option value={''}>Все</option>
                 {data.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </Input>
-
             <PersonListSmall persons={persons}/>
-
     </div>
 }
