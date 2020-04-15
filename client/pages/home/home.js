@@ -34,6 +34,7 @@ export default function Home(props) {
         </div>
     }
 
+    if(!news.length) return <div></div>
     return <div className="home">
         <div className="row">
             {newsLast && <div className="col-sm-4">
