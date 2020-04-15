@@ -22,7 +22,7 @@ export default function (props) {
     }, []);
 
     function loadPost() {
-        props.id && props.api('/post/view/' + props.id, {tokens}).then(p => {
+        props.id && props.api(`/post/${props.id}/view/`, {tokens}).then(p => {
             setIsMassMedia(p.isMassMedia)
             setPost(p);
         });

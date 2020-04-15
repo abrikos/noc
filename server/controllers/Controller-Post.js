@@ -67,21 +67,6 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
-
-    app.post('/api/post/view/:id', (req, res) => {
-        Mongoose.post.findById(req.params.id)
-            .populate(Mongoose.post.population)
-            .then(post => {
-                post.views++;
-                post.save()
-                    .then(p => {
-                        p.editable = req.session.admin;
-                        res.send(p)
-                    })
-            })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
-    });
-
     app.get('/api/post/share/:id', (req, res) => {
         Mongoose.post.findById(req.params.id)
             .populate(Mongoose.post.population)
@@ -103,25 +88,6 @@ module.exports.controller = function (app) {
                 res.sendStatus(200);
             })
     });
-
-    app.post('/api/post/:id/update', passportLib.isAdmin, async (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
-        Mongoose.post.findById(req.params.id)
-            .populate('token')
-            .then(post => {
-                for(const f in req.body){
-                    post[f] = req.body[f]
-                }
-                post.ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-                post.save();
-                res.send({ok: 200});
-                app.locals.socketSend('post-update');
-            })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
-        ;
-
-    });
-
 
 }
 ;

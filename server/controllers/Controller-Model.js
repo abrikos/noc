@@ -34,17 +34,24 @@ module.exports.controller = function (app) {
     app.post('/api/:model/:id/view', (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
-            .then(items => {
-                res.send(items)
+            .then(item => {
+                item.editable = req.session.admin;
+                res.send(item)
             })
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
-    app.post('/api/:model/:id/update', (req, res) => {
+    app.post('/api/:model/:id/update', passportLib.isAdmin, (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
-            .then(items => {
-                res.send(items)
+            .then(item => {
+
+                for(const f in req.body){
+                    item[f] = req.body[f]
+                }
+                item.save()
+                //item.ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+                res.send(item)
             })
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
