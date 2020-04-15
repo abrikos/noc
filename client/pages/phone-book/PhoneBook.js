@@ -10,12 +10,11 @@ export default function PhoneBook(props) {
         props.api('/division/list',{where:{noPhoneBook:{$ne:true}}}).then(dt => {
             setData(dt.list.filter(d => d.persons.filter(p => p.phone || p.email).length));
         });
-        loadPersons({$or: [{phone: {$ne: null}, email: {$ne: null}}]})
+
     }, [props.page]);
 
-    function loadPersons(filter) {
-        props.api('/person/list', filter)
-            .then(res=>setPersons(res.list))
+    function loadPersons(e) {
+        setPersons(data.find(d=>d.id===e.target.value).persons)
     }
 
 
@@ -23,8 +22,8 @@ export default function PhoneBook(props) {
     return <div className="phone-book">
         <h1>Телефонный справочник</h1>
 
-            <Input type="select" onChange={e=>loadPersons({division: e.target.value})}>
-                <option value={''}>Все</option>
+            <Input type="select" onChange={loadPersons}>
+                <option value={''}>Выберите подразделение</option>
                 {data.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </Input>
             <PersonListSmall persons={persons}/>
