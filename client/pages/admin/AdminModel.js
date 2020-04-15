@@ -20,13 +20,15 @@ export default function (props) {
         props.api(`/${modelName}/schema`)
             .then(s => {
                 setSchema(s)
-                getList();
+                getList({order:s.listOrder});
                 if (props.id) props.api(`/${modelName}/${props.id}/view`).then(setModel)
             })
 
     }, [props.id, modelName]);
 
     function getList(filter) {
+        if(schema) filter.order = schema.listOrder;
+        console.log(filter)
         props.api(`/${modelName}/list`, filter).then(res => {
             setList(res.list)
             setTotalCount(res.count)
@@ -102,14 +104,33 @@ export default function (props) {
         getList(f)
     }
 
+    function search(e) {
+        e.preventDefault()
+        const form = props.formToObject(e.target);
+        const filter = {regexp:schema.listFields.map(p=>{
+                    const o = {};
+                    o[p] = form.search
+                    return o
+                })}
+        console.log(filter)
+        getList(filter)
+    }
+
 
     if (!schema) return <div></div>;
     return <div className="row" key={modelName}>
         <div className="col-4">
             <Button onClick={create} color="primary">Добавить {schema.label}</Button>
+            <form  onSubmit={search}>
+                <input name="search"/>
+                <Button>Поиск</Button>
+            </form>
+
             {list.map(l => <A key={l.id} href={`/admin/${modelName}/update/${l.id}`} className={`d-block ${l.id === model.id ? 'bg-success' : ''}`}>
-                {schema.listFields.map(f => l[f]).join(' - ') || l.id}
+                {schema.listFields.map(f => l[f]).join(' - ') || l.id} &nbsp;
+                {l.image && <img src={l.photo} alt={l.id} height={20}/>}
             </A>)}
+            Найдено: {totalCount}
             {!!totalCount && <Pager count={totalCount} filter={{limit:10}} onPageChange={pageChange}/>}
         </div>
         <div className="col-8">

@@ -3,9 +3,6 @@ import Mongoose from "server/db/Mongoose";
 const passportLib = require('server/lib/passport');
 //const passport = require('passport');
 
-//Mongoose.Meeting.find({}).then(console.log)
-
-
 module.exports.controller = function (app) {
 
     function getSchema(name){
@@ -14,6 +11,7 @@ module.exports.controller = function (app) {
             label: schema.label,
             listFields: schema.listFields,
             formFields: schema.formFields,
+            listOrder: schema.listOrder,
             fields: Object.keys(schema.paths).filter(p => schema.formFields.includes(p)).map(key => {
                 const p = schema.paths[key];
                 //const ref = p.options.ref || p.options.type;
@@ -56,14 +54,33 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
+    function bodyToWhere(body) {
+        if (!body.where) body.where = {};
+        for(const f in body.where){
+            if(!body.where[f]) delete body.where[f];
+        }
+        if (body.regexp) {
+            body.where.$or = body.regexp.map(reg=>{
+                const ret = {}
+                for(const k of Object.keys(reg)){
+                    ret[k] = new RegExp(reg[k], 'i')
+                }
+                return ret;
+            })
+            delete body.regexp;
+        }
+        return body.where;
+    }
+
     app.post('/api/:model/list', (req, res) => {
-        Mongoose[req.params.model].find(req.body.where)
+        const filter = bodyToWhere(req.body);
+        Mongoose[req.params.model].find(filter)
             .sort(req.body.order || {createdAt: -1})
             .limit(parseInt(req.body.limit) || 10)
             .skip(parseInt(req.body.skip))
             .populate(Mongoose[req.params.model].population)
             .then(list => {
-                Mongoose[req.params.model].countDocuments(req.body.where)
+                Mongoose[req.params.model].countDocuments(filter)
                     .then(count => {
                         res.send({count, list})
                     })

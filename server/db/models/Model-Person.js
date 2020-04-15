@@ -4,20 +4,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-        fio: String,
-        status: String,
-        rank: String,
-        phone: String,
-        email: String,
-        supervisorStatus: String,
-        supervisorOrder: Number,
-        description: String,
-        voice: Number,
+        fio:{type: String, label:'ФИО', required:true, default:''},
+        status: {type: String, label:'Звание',  default:''},
+        rank: {type: String, label:'Должность',  default:''},
+        phone: {type: String, label:'Телефон',  default:''},
+        email: {type: String, label:'Эл.почта',  default:''},
+        supervisorStatus: {type: String, label:'Статус руководства',  default:''},
+        supervisorOrder: {type: Number, label:'Порядок в руководстве'},
+        description: {type: String, label:'Описание',  default:''},
+        voice: {type: Number, label:'Голос в ОУС'},
         member: Number,
-        memberStatus: String,
-        isApparat: Boolean,
-        division: {type: mongoose.Schema.Types.ObjectId, ref: 'Division'},
+        memberStatus: {type: String, label:'Звание 2'},
+        isApparat: {type: Boolean, label:'В аппарате'},
+        division: {type: mongoose.Schema.Types.ObjectId, ref: 'Division', property:'name'},
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
+        images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
 
     },
     {
@@ -28,11 +29,13 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.statics.population = ['image', 'division'];
-
+modelSchema.statics.population = ['image', 'division', 'images'];
+modelSchema.listOrder = {fio:1};
+modelSchema.listFields = ['fio'];
+modelSchema.formFields = ['fio','status','rank','phone','email','supervisorStatus', 'supervisorOrder', 'description', 'voice', 'member', 'memberStatus', 'isApparat', 'division'];
 modelSchema.virtual('photo')
     .get(function () {
-            return this.image ? this.image.path : '/noImage.png'
+        return this.image ? this.image.path : '/noImage.png'
     });
 
 

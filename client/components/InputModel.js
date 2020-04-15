@@ -13,7 +13,6 @@ export default function InputModel(props) {
     const [list,setList] = useState([])
     useEffect(()=>{
         if(!props.field.options.ref) return;
-        console.log(props.field.options)
         props.api(`/${props.field.options.ref.toLowerCase()}/list`)
             .then(res=>setList(res.list))
     },[])
@@ -28,8 +27,7 @@ export default function InputModel(props) {
     if (props.field.type === 'Array') return 'Array under construction'
     return <FormGroup >
         <Label>{props.field.options.label} </Label>
-        {console.log(props.field.name, props.model[props.field.name])}
-        {props.field.options.ref && list.length>0 && <Input type="select" name={props.field.name} defaultValue={props.model[props.field.name].id}>
+        {props.field.options.ref && list.length>0 && <Input type="select" name={props.field.name} defaultValue={props.model[props.field.name] && props.model[props.field.name].id}>
             {list.map(l=><option key={l.id} value={l.id}>{l[props.field.options.property]}</option>)}
         </Input>}
         {!props.field.options.ref && <Input name={props.field.name} defaultValue={props.model[props.field.name]} invalid={!!props.errors[props.field.name]}/>}
