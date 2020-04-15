@@ -94,7 +94,7 @@ module.exports.controller = function (app) {
 
     app.get('/api/login/:strategy', passport.authenticate('custom'), (req, res, next) => {
         //const redir = req.cookies.returnUrl || req.query.returnUrl || '/admin/news';
-        res.redirect('/admin/news')
+        res.redirect(req.session.admin ? '/admin/news' : '/cabinet')
     });
 
 
