@@ -41,14 +41,15 @@ module.exports.controller = function (app) {
         map.push({label: 'Издания', path: '/edition', menu: true})
         map.push({
             label: 'Информация', items: [
-                {label: 'О Республике', path: '/about-republic'},
                 {label: 'Об Академии', path: '/about'},
+                {label: 'Веб-ресурсы академии', path: '/web-resources'},
                 {label: 'Научные учереждения', path: '/science-org'},
-                {label: 'Партнёры', path: '/partners'},
-                {label: 'Правительство Республики Саха (Якутия)', path: '/gov'},
-                {label: 'СМИ о нас', path: '/mass-media'},
-                {label: 'Веб ресурсы академии', path: '/web-resources'},
                 {label: 'Документы', path: '/documents/all'},
+                {label: 'Партнёры', path: '/partners'},
+                {label: 'СМИ о нас', path: '/mass-media'},
+                {label: 'О Республике', path: '/about-republic'},
+                {label: 'Правительство Республики Саха (Якутия)', path: '/gov'},
+                {label: '------'},
                 {label: 'Контакты', path: '/contacts'},
                 {label: 'Телефонный справочник', path: '/phone-book'}
             ], menu: true
