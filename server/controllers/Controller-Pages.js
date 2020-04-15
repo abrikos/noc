@@ -47,6 +47,7 @@ module.exports.controller = function (app) {
                 {label: 'Партнёры', path: '/partners'},
                 {label: 'Правительство Республики Саха (Якутия)', path: '/gov'},
                 {label: 'СМИ о нас', path: '/mass-media'},
+                {label: 'Веб ресурсы академии', path: '/web-resources'},
                 {label: 'Контакты', path: '/contacts'},
                 {label: 'Телефонный справочник', path: '/phone-book'}
             ], menu: true

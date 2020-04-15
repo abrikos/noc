@@ -30,6 +30,7 @@ import MeetingAbout from "client/pages/meeting/MeetingAbout";
 import SakhaHistory from "client/pages/projects/sakha-history/SakhaHistory";
 import ProjectRecycle from "client/pages/projects/recycle/ProjectRecycle";
 import PresidiumDocuments from "client/pages/presidium/PresidiumDocuments";
+import WebResources from "client/pages/web-resources/WebResources";
 
 export default function Routes(props) {
 
@@ -39,6 +40,7 @@ export default function Routes(props) {
         "/science-org": () => <Organisations {...props}/>,
         "/partners": () => <Partners {...props}/>,
         "/mass-media": () => <MassMedia {...props}/>,
+        "/web-resources": () => <WebResources {...props}/>,
         "/cabinet": () => <Cabinet {...props}/>,
         "/search": () => <Search {...props}/>,
         "/about-republic": () => <AboutRepublic {...props}/>,
