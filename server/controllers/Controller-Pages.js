@@ -25,7 +25,7 @@ module.exports.controller = function (app) {
             label: 'Президиум', menu: true, items: [
                 {label: 'Руководство', path: '/persons/supervisors'},
                 {label: 'Секретариат', path: '/division/secretariat'},
-                {label: 'Документы', path: '/presidium'},
+                {label: 'Документы', path: '/documents/presidium'},
             ]
         });
         map.push({
@@ -48,6 +48,7 @@ module.exports.controller = function (app) {
                 {label: 'Правительство Республики Саха (Якутия)', path: '/gov'},
                 {label: 'СМИ о нас', path: '/mass-media'},
                 {label: 'Веб ресурсы академии', path: '/web-resources'},
+                {label: 'Документы', path: '/documents/all'},
                 {label: 'Контакты', path: '/contacts'},
                 {label: 'Телефонный справочник', path: '/phone-book'}
             ], menu: true

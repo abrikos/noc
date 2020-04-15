@@ -29,7 +29,7 @@ import NewsPage from "client/pages/news/NewsPage";
 import MeetingAbout from "client/pages/meeting/MeetingAbout";
 import SakhaHistory from "client/pages/projects/sakha-history/SakhaHistory";
 import ProjectRecycle from "client/pages/projects/recycle/ProjectRecycle";
-import PresidiumDocuments from "client/pages/presidium/PresidiumDocuments";
+import Documents from "client/pages/documents/Documents";
 import WebResources from "client/pages/web-resources/WebResources";
 
 export default function Routes(props) {
@@ -60,7 +60,7 @@ export default function Routes(props) {
         "/news/:id": (params) => <PostView {...params} {...props}/>,
         "/news/:id/:path": (params) => <PostView {...params} {...props}/>,
 
-        "/presidium": () => <PresidiumDocuments {...props}/>,
+        "/documents/:type": (params) => <Documents {...params} {...props}/>,
         "/project/recycle": () => <ProjectRecycle {...props}/>,
         "/project/sakha-history": () => <SakhaHistory {...props}/>,
         "/project/sakha-history/:tom": (params) => <SakhaHistory {...params} {...props}/>,

@@ -6,7 +6,7 @@ import person from "server/db/models/Model-Person";
 import meeting from "server/db/models/Model-Meeting";
 import edition from "server/db/models/Model-Edition";
 import video from "server/db/models/Model-Vieo";
-import presidium from "server/db/models/Model-Presidium";
+import document from "server/db/models/Model-Document";
 
 const mongoose = require("mongoose");
 mongoose.set('useCreateIndex', true);
@@ -34,7 +34,7 @@ const Mongoose = {
     isValidId: function (id) {
         return mongoose.Types.ObjectId.isValid(id)
     },
-    User, image, post, division, person, meeting, edition, video, presidium
+    User, image, post, division, person, meeting, edition, video, document
 
 };
 export default Mongoose;

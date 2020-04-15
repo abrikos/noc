@@ -6,8 +6,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-        header: String,
-        link: String,
+        header: {type:String, label:'Название', required:true, default:'Новый документ'},
+        link: {type:String, label:'Ссылка', required:true, default:'ссылка'},
+        isPresidium: {type:Boolean, label:'Президиум'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
     },
@@ -20,8 +21,9 @@ const modelSchema = new Schema({
     });
 
 modelSchema.statics.population = ['image', 'images'];
+modelSchema.label = 'Документ';
 modelSchema.listFields = ['header','date'];
-modelSchema.formFields = ['header','link', 'createdAt'];
+modelSchema.formFields = ['header','link', 'createdAt', 'isPresidium'];
 
 
 modelSchema.virtual('date')
@@ -34,6 +36,6 @@ modelSchema.virtual('photo')
         return this.image ? this.image.path : '/noImage.png'
     });
 
-export default mongoose.model("Presidium", modelSchema)
+export default mongoose.model("Document", modelSchema)
 
 

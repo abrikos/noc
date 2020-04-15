@@ -4,9 +4,9 @@ export default function (props) {
     const [list,setList] = useState([])
 
     useEffect(()=>{
-        props.api('/presidium/list')
+        props.api('/document/list',{where:{isPresidium:props.type==='presidium'}})
             .then(r=>setList(r.list))
-    },[])
+    },[props.type])
     return <div>
         <h1>Документы Президиума</h1>
         <ul>

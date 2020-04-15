@@ -22,7 +22,7 @@ export default function AdminIndex(props) {
         person: ['Персоны', <AdminPerson  {...props}/>],
         meeting: ['ОУС', <AdminMeeting  {...props}/>],
         edition: ['Издания', <AdminModel  {...props}/>],
-        presidium: ['Пезидиум', <AdminModel  {...props}/>],
+        document: ['Документы', <AdminModel  {...props}/>],
 
     };
 
