@@ -8,7 +8,7 @@ export default function (props) {
             .then(r=>setList(r.list))
     },[props.type])
     return <div>
-        <h1>Документы Президиума</h1>
+        <h1>Документы {props.type==='presidium' && 'Президиума'}</h1>
         <ul>
             {list.map(l=><li key={l.id}><a href={l.link} target="_blank" rel="noopener noreferrer">{l.header} - {l.date}</a></li>)}
         </ul>
