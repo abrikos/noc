@@ -28,6 +28,10 @@ export default function InputModel(props) {
 
 
     let input = <Input name={props.field.name} defaultValue={props.model[props.field.name]} invalid={!!props.errors[props.field.name]}/>;
+    if(props.field.options.select) input = <Input name={props.field.name} defaultValue={props.model[props.field.name]} invalid={!!props.errors[props.field.name]} type="select">
+        <option></option>
+        {props.field.options.select.map((v,i)=><option key={i} value={i}>{v}</option>)}
+    </Input>
 
     if (props.field.type === 'Boolean') input = <input type="checkbox" name={props.field.name} defaultChecked={props.model[props.field.name]} className="m-2"/>
 

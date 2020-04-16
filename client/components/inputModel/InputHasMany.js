@@ -11,7 +11,6 @@ export default function (props) {
     const toggle = () => setDropdownOpen(prevState => !prevState);
     const list = props.list;
     useEffect(()=>{
-        console.log(props.value)
         setValue(props.value)
     },[])
 
@@ -38,7 +37,6 @@ export default function (props) {
             {value.map((item,i)=><option key={i} value={item.id} > {item[props.field.options.property]} </option>)}
         </select>
         <div className="items-attached">
-            {console.log(props.field.options.ref.toLowerCase())}
             {value.map((item,i)=><span key={i} className="has-many-item">
                 <A href={`/admin/${props.field.options.ref.toLowerCase()}/${item.id}/update`}>{item[props.field.options.property]}</A>
                 {!props.field.options.readOnly && <span onClick={()=>remove(item.id)} className="hasMany-remove">

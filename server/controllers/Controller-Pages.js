@@ -60,6 +60,10 @@ module.exports.controller = function (app) {
         res.send(map)
     });
 
+    app.post('/api/meeting/voices',(req,res)=>{
+
+        res.send(Mongoose.person.schema.paths.voice.options.select)
+    })
 
 /*
     app.post('/api/meeting/:path', (req, res) => {

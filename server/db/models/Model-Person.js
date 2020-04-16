@@ -18,7 +18,7 @@ const modelSchema = new Schema({
         supervisorStatus: {type: String, label: 'Статус руководства', default: ''},
         supervisorOrder: {type: Number, label: 'Порядок в руководстве'},
         description: {type: String, label: 'Описание', default: '', control: 'markdown'},
-        voice: {type: Number, label: 'Голос в ОУС'},
+        voice: {type: Number, label: 'Голос в ОУС', select: ["Действительные члены АН РС(Я)", "С правом решающего голоса", "С правом совещательного голоса"]},
         member: Number,
         memberStatus: {type: String, label: 'Звание 2'},
         isApparat: {type: Boolean, label: 'В аппарате'},
@@ -59,9 +59,9 @@ modelSchema.virtual('fio')
 
 modelSchema.virtual('divisions', {
     ref: 'Division',
-    label:'Подразделения',
-    property:'name',
-    readOnly:true,
+    label: 'Подразделения',
+    property: 'name',
+    readOnly: true,
     localField: '_id',
     foreignField: 'persons',
     justOne: false // set true for one-to-one relationship
@@ -69,8 +69,8 @@ modelSchema.virtual('divisions', {
 
 modelSchema.virtual('meetingsChief', {
     ref: 'Meeting',
-    label:'Председатель ОУС',
-    property:'name',
+    label: 'Председатель ОУС',
+    property: 'name',
     localField: '_id',
     foreignField: 'chief',
     justOne: false // set true for one-to-one relationship
@@ -78,8 +78,8 @@ modelSchema.virtual('meetingsChief', {
 
 modelSchema.virtual('meetings', {
     ref: 'Meeting',
-    label:'ОУС',
-    property:'name',
+    label: 'ОУС',
+    property: 'name',
     localField: '_id',
     foreignField: 'persons',
     justOne: false // set true for one-to-one relationship

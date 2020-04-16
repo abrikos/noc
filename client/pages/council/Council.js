@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Input, Nav, NavItem} from "reactstrap";
-import meetingVoices from "client/meeting-voices";
 import PersonListSmall from "client/pages/persons/PersonListSmall";
 
 export default function Council(props) {
     const [data, setData] = useState();
     const [voice, setVoice] = useState(-1);
     const [persons, setPersons] = useState([]);
+    const [meetingVoices, setMeetingVoices] = useState([]);
 
     useEffect(() => {
+        props.api(`/meeting/voices`).then(setMeetingVoices)
         props.api(`/meeting/${props.id}/view`)
             .then(d=>{
                 setData(d)
