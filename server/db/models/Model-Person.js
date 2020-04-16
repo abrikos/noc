@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
         fio:{type: String, label:'ФИО', required:true, default:'new person'},
-        status: {type: String, label:'Звание',  default:''},
-        rank: {type: String, label:'Должность',  default:''},
+        status: {type: String, label:'Должность',  default:''},
+        rank: {type: String, label:'Звание',  default:''},
         phone: {type: String, label:'Телефон',  default:''},
         email: {type: String, label:'Эл.почта',  default:''},
         education: {type: String, label:'Образование'},
