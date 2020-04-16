@@ -21,18 +21,19 @@ export default function (props) {
         props.api(`/${modelName}/schema`)
             .then(s => {
                 setModel(null)
-                setSchema(s)
-                setFilter({order:s.listOrder})
-                getList();
+                setSchema(s);
+                setFilter(s)
+                const f = {limit:10}
+                f.order = s.listOrder;
+                getList(f);
                 if (props.id) props.api(`/${modelName}/${props.id}/view`).then(setModel)
             })
 
     }, [props.id, modelName]);
 
-    function getList() {
-        if(schema) filter.order = schema.listOrder;
-        if(!filter.limit) filter.limit = 10;
-        props.api(`/${modelName}/list`, filter).then(res => {
+    function getList(f) {
+        setFilter(f)
+        props.api(`/${modelName}/list`, f).then(res => {
             setList(res.list)
             setTotalCount(res.count)
         })
@@ -53,13 +54,12 @@ export default function (props) {
         for (const f of schema.fields) {
             if (f.options.required && !form[f.name]) err[f.name] = f.label + ' обязательно';
         }
-        console.log(err)
         if (Object.keys(err).length) return setErrors(err);
         setErrors({});
         if (model.id) {
             props.api(`/admin/${modelName}/${model.id}/update`, form)
                 .then(() => {
-                    getList();
+                    getList(filter);
                     setEdited(false)
                 })
         } else {
@@ -104,27 +104,26 @@ export default function (props) {
     }
 
     function pageChange(f) {
-        setFilter(f)
-        getList()
+        getList(f)
     }
 
     function search(e) {
         e.preventDefault()
         const form = props.formToObject(e.target);
-        const filter = {regexp:schema.listFields.map(p=>{
+        const f = {...filter}
+        f.regexp = schema.listFields.map(p=>{
                     const o = {};
                     o[p] = form.search
                     return o
-                })}
-        setFilter(filter)
-        getList()
+                })
+        getList(f)
     }
 
     function deleteModel() {
         if(!window.confirm(`Удалить ${schema.label}?`)) return;
         props.api(`/admin/${modelName}/${model.id}/delete`).then(()=> {
             setModel(null)
-            getList()
+            getList(filter)
         })
     }
 
@@ -135,6 +134,7 @@ export default function (props) {
             <form  onSubmit={search}>
                 <input name="search"/>
                 <Button>Поиск</Button>
+                <Button type="cancel">Х</Button>
             </form>
 
             {list.map(l => <A key={l.id} href={`/admin/${modelName}/update/${l.id}`} className={`d-block ${model && l.id === model.id ? 'bg-success' : ''}`}>
@@ -142,7 +142,7 @@ export default function (props) {
                 {l.image && <img src={l.photo} alt={l.id} height={20}/>}
             </A>)}
             Найдено: {totalCount}
-            {!!totalCount && <Pager count={totalCount} filter={{limit:10}} onPageChange={pageChange}/>}
+            {!!totalCount && <Pager count={totalCount} filter={filter} onPageChange={pageChange}/>}
         </div>
         <div className="col-8">
             {form(model)}

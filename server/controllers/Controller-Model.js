@@ -75,6 +75,7 @@ module.exports.controller = function (app) {
 
     app.post('/api/:model/list', (req, res) => {
         const filter = bodyToWhere(req.body);
+        console.log(req.body)
         Mongoose[req.params.model].find(filter)
             .sort(req.body.order || {createdAt: -1})
             .limit(parseInt(req.body.limit))
