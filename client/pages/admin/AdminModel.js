@@ -121,6 +121,7 @@ export default function (props) {
     }
 
     function deleteModel() {
+        if(!window.confirm(`Удалить ${schema.label}?`)) return;
         props.api(`/admin/${modelName}/${model.id}/delete`).then(()=> {
             setModel(null)
             getList()
