@@ -12,6 +12,7 @@ const urlVideos = `https://www.googleapis.com/youtube/v3/playlistItems?key=${pro
 const job = new CronJob('0 0 * * * *', async function () {
     playlistParse()
 }, null, true, 'America/Los_Angeles');
+playlistParse()
 
 function playlistParse(){
     //await Mongoose.Video.deleteMany()
@@ -26,7 +27,7 @@ function playlistParse(){
                             Mongoose.video.findOne({uid})
                                 .then(found=>{
                                     if(found) return;
-                                    Mongoose.Video.create({uid, type:'youtube',name:video.title, description:video.description})
+                                    Mongoose.video.create({uid, type:'youtube',name:video.title, description:video.description})
                                 })
                         }
                     })
@@ -58,7 +59,7 @@ module.exports.controller = function (app) {
     });
 
     app.post('/api/admin/video/:id/delete', passportLib.isAdmin, (req, res) => {
-        Mongoose.Video.findById(req.params.id)
+        Mongoose.video.findById(req.params.id)
             .then(r => {
                 r.delete();
                 res.sendStatus(200);
