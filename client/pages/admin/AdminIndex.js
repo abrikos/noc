@@ -7,6 +7,7 @@ import AdminMeeting from "client/pages/admin/AdminMeeting";
 import {Nav, NavItem} from "reactstrap";
 import AdminNews from "client/pages/admin/AdminNews";
 import AdminModel from "client/pages/admin/AdminModel";
+import "./admin.sass"
 
 export default function AdminIndex(props) {
     const pages = {

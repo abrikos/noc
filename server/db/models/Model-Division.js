@@ -22,6 +22,7 @@ const modelSchema = new Schema({
 
 modelSchema.label = 'Подразделение';
 modelSchema.listFields = ['name'];
+modelSchema.listOrder = {name:1};
 modelSchema.formFields = ['name','noMenu','noPhoneBook','chief','description'];
 modelSchema.statics.population = [{path: 'chief', populate: 'image'},{path: 'persons', populate: 'image'},'images'];
 

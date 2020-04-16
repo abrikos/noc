@@ -13,7 +13,9 @@ export default function InputModel(props) {
     const [list,setList] = useState([])
     useEffect(()=>{
         if(!props.field.options.ref) return;
-        props.api(`/${props.field.options.ref.toLowerCase()}/list`)
+        const filter ={order:{}}
+        filter.order[props.field.options.property] = 1;
+        props.api(`/${props.field.options.ref.toLowerCase()}/list`,filter)
             .then(res=>setList(res.list))
     },[])
     if (props.field.type === 'Boolean') return <FormGroup check>

@@ -79,30 +79,6 @@ export default function (props) {
     }
 
 
-    function form(model) {
-        if (!model) return;
-        return <form onSubmit={submit} key={model.id} onChange={() => setEdited(true)}>
-            {edited && <Button>Сохранить</Button>}
-            <div className="row">
-                <div className="col-6">
-                    {schema.fields.map(f => <InputModel key={f.name} model={model} field={f} errors={errors} {...props}/>)}
-
-                </div>
-                <div className="col-6">
-                    {model.photo && <img src={model.photo} alt={model.id} className="img-fluid"/>}
-                    <ImageUpload uploadDone={uploadDone} {...props}/>
-                    <ImageList
-                        key={model.images.length}
-                        setPreview={setPreview}
-                        images={model.images.filter(i => i.isImage)}
-                        editable={true}
-                        {...props}/>
-                </div>
-            </div>
-            {edited && <Button>Сохранить</Button>}
-        </form>
-    }
-
     function pageChange(f) {
         getList(f)
     }
@@ -129,7 +105,7 @@ export default function (props) {
 
     if (!schema) return <div></div>;
     return <div className="row" key={modelName}>
-        <div className="col-4">
+        {!model && <div>
             <Button onClick={create} color="primary">Добавить {schema.label}</Button>
             <form  onSubmit={search}>
                 <input name="search"/>
@@ -143,11 +119,31 @@ export default function (props) {
             </A>)}
             Найдено: {totalCount}
             {!!totalCount && <Pager count={totalCount} filter={filter} onPageChange={pageChange}/>}
-        </div>
-        <div className="col-8">
-            {form(model)}
-            {model && <Button onClick={deleteModel} color="danger">Удалить</Button>}
-        </div>
+        </div>}
+        {model && <div>
+            <Button onClick={()=>setModel(null)} color="warning">Закрыть</Button>
+            <div className="row">
+                <div className="col-2">
+                    {model.photo && <img src={model.photo} alt={model.id} className="img-fluid"/>}
+                    <ImageUpload uploadDone={uploadDone} {...props}/>
+                    <ImageList
+                        key={model.images.length}
+                        setPreview={setPreview}
+                        images={model.images.filter(i => i.isImage)}
+                        editable={true}
+                        {...props}/>
+                </div>
+                <div className="col-10">
+                    <form onSubmit={submit} key={model.id} onChange={() => setEdited(true)} className="form-model">
+                        {edited && <Button>Сохранить</Button>}
+                        {schema.fields.map(f => <InputModel key={f.name} model={model} field={f} errors={errors} {...props}/>)}
+                        {edited && <Button>Сохранить</Button>}
+                    </form>
+                </div>
+            </div>
+
+            <Button onClick={deleteModel} color="danger">Удалить</Button>
+        </div>}
 
     </div>
 }
