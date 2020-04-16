@@ -1,5 +1,7 @@
 //import moment from "moment";
 
+import transliterate from "transliterate";
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -23,7 +25,7 @@ const modelSchema = new Schema({
 modelSchema.label = 'Подразделение';
 modelSchema.listFields = ['name'];
 modelSchema.listOrder = {name:1};
-modelSchema.formFields = ['name','noMenu','noPhoneBook','chief','description'];
+modelSchema.virtualFields = [{name:'persons',label:'Сотрудники',property:'fio'}];
 modelSchema.statics.population = [{path: 'chief', populate: 'image'},{path: 'persons', populate: 'image'},'images'];
 
 modelSchema.virtual('persons', {
@@ -32,6 +34,12 @@ modelSchema.virtual('persons', {
     foreignField: 'division',
     justOne: false // set true for one-to-one relationship
 });
+
+modelSchema.virtual('link')
+    .get(function () {
+        return `/division/` + this.id + '/' + (this.name ? transliterate(this.name).replace(/[^a-zA-Z0-9]/g, '-') : '')
+    });
+
 
 export default mongoose.model("Division", modelSchema)
 
