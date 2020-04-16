@@ -6,9 +6,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-        name: {type:String, label:'Название'},
-        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Персоны'}],
-        description:  {type:String, label:'Описание'},
+        name: {type: String, label: 'Название'},
+        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Председатель', property: 'fioShort'},
+        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Персоны', property: 'fioShort'}],
+        description: {type: String, label: 'Описание'},
     },
     {
         //timestamps: {createdAt: 'createdAt'},
@@ -17,8 +18,15 @@ const modelSchema = new Schema({
         // see http://stackoverflow.com/q/13133911/488666
         toJSON: {virtuals: true}
     });
-modelSchema.statics.population = [{path: 'persons', populate: 'image'}];
-modelSchema.listFields = ['name'];
+modelSchema.statics.population = [{path: 'persons', populate: 'image'},{path:'chief', populate:'image'}];
+modelSchema.formOptions = {
+    label: 'Ученый совет',
+    listOrder: {name: 1},
+    listFields: ['name'],
+    searchFields: ['name'],
+    hasMany: ['persons']
+}
+
 
 modelSchema.virtual('link')
     .get(function () {

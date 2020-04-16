@@ -5,15 +5,11 @@ const passportLib = require('server/lib/passport');
 
 module.exports.controller = function (app) {
 
-    const x = Object.keys(Mongoose.division.schema.virtuals)
-    console.log(x)
 
     function getSchema(name) {
         const schema = Mongoose[name].schema;
         return {
-            label: schema.label,
-            listFields: schema.listFields,
-            listOrder: schema.listOrder,
+            formOptions: schema.formOptions,
             fields: Object.keys(schema.paths)
                 .filter(key => schema.paths[key].options.label)
                 .map(key => {
@@ -25,16 +21,22 @@ module.exports.controller = function (app) {
                         options: p.options
                     }
                 })
-                .concat(schema.virtualFields.map(f=>{
-                    const ret =  {
-                        name:f.name,
-                        type:'hasMany',
-                        options:schema.virtuals[f.name].options
+                .concat(schema.formOptions.virtualFields ? schema.formOptions.virtualFields.map(f => {
+                    const ret = {
+                        name: f,
+                        type: 'virtual',
+                        options: schema.virtuals[f].options
                     }
-                    ret.options.label = f.label;
-                    ret.options.property = f.property;
                     return ret;
-                }))
+                }) : [])
+                .concat(schema.formOptions.hasMany ? schema.formOptions.hasMany.map(f => {
+                    const ret = {
+                        name: f,
+                        type: 'hasMany',
+                        options: schema.paths[f].options.type[0]
+                    }
+                    return ret;
+                }) : [])
         }
     }
 
@@ -48,21 +50,6 @@ module.exports.controller = function (app) {
             .populate(Mongoose[req.params.model].population)
             .then(item => {
                 item.editable = req.session.admin;
-                res.send(item)
-            })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
-    });
-
-    app.post('/api/:model/:id/update', passportLib.isAdmin, (req, res) => {
-        Mongoose[req.params.model].findById(req.params.id)
-            .populate(Mongoose[req.params.model].population)
-            .then(item => {
-
-                for (const f in req.body) {
-                    item[f] = req.body[f]
-                }
-                item.save()
-                //item.ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
                 res.send(item)
             })
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
@@ -87,6 +74,7 @@ module.exports.controller = function (app) {
     }
 
     app.post('/api/:model/list', (req, res) => {
+        console.log(req.body)
         const filter = bodyToWhere(req.body);
 
         Mongoose[req.params.model].find(filter)
@@ -106,9 +94,39 @@ module.exports.controller = function (app) {
 
     app.post('/api/admin/:model/:id/update', passportLib.isAdmin, (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
-            .then(r => {
+            .populate(Mongoose[req.params.model].population)
+            .then(async r => {
+                const schema = getSchema(req.params.model);
                 for (const f of Object.keys(req.body)) {
-                    r[f] = req.body[f]
+                    const field = schema.fields.find(fld => fld.name === f);
+                    if(!field) continue;
+                    if (field.type === 'virtual') {
+                        console.log(f)
+                        console.log('MODEL',r[f].map(r=>r.id))
+                        console.log('BODY',req.body[f])
+                        const schemaRel = getSchema(field.options.ref.toLowerCase());
+                        const fieldRel = schemaRel.fields.find(fld => fld.name === field.options.foreignField);
+                        for (const id of req.body[f]) {
+                            const model = await Mongoose[field.options.ref.toLowerCase()].findById(id)
+                            const fieldToUpdate = fieldRel.name;
+                            if (fieldRel.type === 'hasMany') {
+
+                                if(!model[fieldToUpdate].includes(req.params.id)) {
+                                    model[fieldToUpdate].push(req.params.id)
+                                }
+
+                                //push
+                            }
+                            if (fieldRel.type === 'ObjectID') {
+                                //set
+                                model[fieldToUpdate] = req.params.id
+                            }
+                            await model.save()
+                        }
+                    } else {
+                        r[f] = req.body[f]
+                    }
+
                 }
                 r.save();
                 res.sendStatus(200);

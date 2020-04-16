@@ -57,6 +57,7 @@ export default function (props) {
         if (Object.keys(err).length) return setErrors(err);
         setErrors({});
         if (model.id) {
+            console.log(form)
             props.api(`/admin/${modelName}/${model.id}/update`, form)
                 .then(() => {
                     getList(filter);
@@ -87,7 +88,7 @@ export default function (props) {
         e.preventDefault()
         const form = props.formToObject(e.target);
         const f = {...filter}
-        f.regexp = schema.listFields.map(p=>{
+        f.regexp = schema.formOptions.listFields.map(p=>{
                     const o = {};
                     o[p] = form.search
                     return o
@@ -96,7 +97,7 @@ export default function (props) {
     }
 
     function deleteModel() {
-        if(!window.confirm(`Удалить ${schema.label}?`)) return;
+        if(!window.confirm(`Удалить ${schema.formOptions.label}?`)) return;
         props.api(`/admin/${modelName}/${model.id}/delete`).then(()=> {
             setModel(null)
             getList(filter)
@@ -106,41 +107,53 @@ export default function (props) {
     if (!schema) return <div></div>;
     return <div className="row" key={modelName}>
         {!model && <div>
-            <Button onClick={create} color="primary">Добавить {schema.label}</Button>
+            <Button onClick={create} color="primary">Добавить {schema.formOptions.label}</Button>
             <form  onSubmit={search}>
                 <input name="search"/>
                 <Button>Поиск</Button>
                 <Button type="cancel">Х</Button>
             </form>
+            <table className="table table-striped">
+                <tbody>
+                {list.map(l => <tr key={l.id}>
+                    <td>
+                        <A key={l.id} href={`/admin/${modelName}/${l.id}/update`} className={`d-block ${model && l.id === model.id ? 'bg-success' : ''}`}>
+                            {schema.formOptions.listFields.map(f => l[f]).join(' - ') || l.id}</A>
+                    </td>
+                    <td>
+                        {l.image && <img src={l.photo} alt={l.id} height={20}/>}
+                    </td>
+                </tr>)}
+                </tbody>
+            </table>
 
-            {list.map(l => <A key={l.id} href={`/admin/${modelName}/${l.id}/update`} className={`d-block ${model && l.id === model.id ? 'bg-success' : ''}`}>
-                {schema.listFields.map(f => l[f]).join(' - ') || l.id} &nbsp;
-                {l.image && <img src={l.photo} alt={l.id} height={20}/>}
-            </A>)}
             Найдено: {totalCount}
             {!!totalCount && <Pager count={totalCount} filter={filter} onPageChange={pageChange}/>}
         </div>}
         {model && <div>
-            <Button onClick={()=>setModel(null)} color="warning">Закрыть</Button>
+            <Button onClick={()=>navigate(`/admin/${modelName}`)} color="warning">Закрыть</Button>
             <div className="row">
-                <div className="col-2">
-                    {model.photo && <img src={model.photo} alt={model.id} className="img-fluid"/>}
-                    <ImageUpload uploadDone={uploadDone} {...props}/>
-                    <ImageList
-                        key={model.images.length}
-                        setPreview={setPreview}
-                        images={model.images.filter(i => i.isImage)}
-                        editable={true}
-                        {...props}/>
-                </div>
                 <div className="col-10">
                     <form onSubmit={submit} key={model.id} onChange={() => setEdited(true)} className="form-model">
                         {edited && <Button>Сохранить</Button>}
-                        {schema.fields.map(f => <InputModel key={f.name} model={model} field={f} errors={errors} {...props}/>)}
+                        <div className="admin-form-fields">
+                            {schema.fields.map(f => <InputModel key={f.name} modelName={modelName} model={model} field={f} errors={errors} {...props}/>)}
+                        </div>
                         {edited && <Button>Сохранить</Button>}
                     </form>
 
                 </div>
+                <div className="col-2">
+                    {model.photo && <img src={model.photo} alt={model.id} className="img-fluid"/>}
+                    <ImageUpload uploadDone={uploadDone} {...props}/>
+                    {model.images && <ImageList
+                        key={model.images.length}
+                        setPreview={setPreview}
+                        images={model.images.filter(i => i.isImage)}
+                        editable={true}
+                        {...props}/>}
+                </div>
+
             </div>
 
             <Button onClick={deleteModel} color="danger">Удалить</Button>

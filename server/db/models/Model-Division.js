@@ -12,6 +12,7 @@ const modelSchema = new Schema({
         noPhoneBook: {type: Boolean, label: 'Не показывать в тел.книге'},
         chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', property:'fioShort', label:'Руководитель'},
         description: {type: String, label: 'Описание', control:'markdown'},
+        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label:'Сотрудники', property:'fioShort'}],
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image', label:'Файлы'}],
     },
     {
@@ -22,18 +23,18 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.label = 'Подразделение';
-modelSchema.listFields = ['name'];
-modelSchema.listOrder = {name:1};
-modelSchema.virtualFields = [{name:'persons',label:'Сотрудники',property:'fioShort'}];
+
 modelSchema.statics.population = [{path: 'chief', populate: 'image'},{path: 'persons', populate: 'image'},'images'];
 
-modelSchema.virtual('persons', {
-    ref: 'Person',
-    localField: '_id',
-    foreignField: 'division',
-    justOne: false // set true for one-to-one relationship
-});
+modelSchema.formOptions = {
+    label: 'Подразделение',
+    listOrder: {name: 1},
+    listFields: ['name'],
+    searchFields: ['name'],
+    hasMany: ['persons']
+}
+
+
 
 modelSchema.virtual('link')
     .get(function () {

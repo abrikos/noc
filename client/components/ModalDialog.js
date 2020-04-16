@@ -25,7 +25,7 @@ export function ModalDialog(props) {
                 <Button color="secondary" onClick={toggle}>Закрыть</Button>
             </ModalFooter>
         </Modal>
-        <Button onClick={toggle}>{props.buttonText}</Button>
+        <a href="#" onClick={toggle}>{props.buttonText}</a>
     </div>
 
 }

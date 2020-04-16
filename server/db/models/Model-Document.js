@@ -21,9 +21,12 @@ const modelSchema = new Schema({
     });
 
 modelSchema.statics.population = ['image', 'images'];
-modelSchema.label = 'Документ';
-modelSchema.listFields = ['header','date'];
-modelSchema.formFields = ['header','link', 'createdAt', 'isPresidium'];
+modelSchema.formOptions = {
+    label: 'Документ',
+    listFields: ['header','date'],
+    searchFields: ['header'],
+}
+
 
 
 modelSchema.virtual('date')

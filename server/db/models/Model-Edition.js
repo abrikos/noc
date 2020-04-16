@@ -21,9 +21,13 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 modelSchema.statics.population = ['image', 'images'];
-modelSchema.listFields = ['header'];
-modelSchema.listOrder = {order:-1};
-modelSchema.formFields = ['header','order','link','year','format','text'];
+modelSchema.formOptions = {
+    label: 'Издание',
+    listOrder: {order: -1},
+    listFields: ['header'],
+    searchFields: ['header'],
+}
+
 
 modelSchema.virtual('photo')
     .get(function () {
