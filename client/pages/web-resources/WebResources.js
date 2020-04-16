@@ -2,6 +2,7 @@ import React from "react";
 
 export default function (props) {
     return <div>
+        <h1>Веб-ресурсы Академии Наук РС(Я)</h1>
         <ul>
             <li><a href="http://mammothportal.org" target="_blank" rel="noopener noreferrer">Мамонтовая фауна</a></li>
             <li><a href="http://portal.mammothportal.org" target="_blank" rel="noopener noreferrer">Портал мамонтовой фауны</a></li>

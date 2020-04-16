@@ -21,7 +21,7 @@ export function ModalDialog(props) {
                 {props.body}
             </ModalBody>
             <ModalFooter>
-                {props.controls.map((c,i)=><span key={i}>{c}</span>)}
+                {props.controls && props.controls.map((c,i)=><span key={i}>{c}</span>)}
                 <Button color="secondary" onClick={toggle}>Закрыть</Button>
             </ModalFooter>
         </Modal>
