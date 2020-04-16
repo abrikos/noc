@@ -7,7 +7,7 @@ export default function PersonListLarge(props) {
     const [persons, setPersons] = useState();
     const pages = {
         supervisors: {title: 'Руководство АН РС(Я)', filter: {where: {supervisorOrder: {$gt: 0}}, order: {supervisorOrder: 1}}},
-        'real-members': {title: 'Действительные члены АН РС(Я)', filter: {where: {member: 0}}},
+        'real-members': {title: 'Действительные члены АН РС(Я)', filter: {where: {member: {$eq:0}}}},
         'honor-members': {title: 'Почетные члены АН РС(Я)', filter: {where: {member: 1}}},
         'foreign-members': {title: 'Иностранные члены АН РС(Я)', filter: {where: {member: 2}}}
     };
