@@ -15,7 +15,7 @@ export default function DateFormat(props) {
             result = `вчера ${date.format('HH:mm')}`;
             break;
         default:
-            result = date.format('DD.MM.YYYY HH:mm')
+            result = date.format('DD.MM.YYYY')
     }
     return <span className="date">{result}</span>
 }
