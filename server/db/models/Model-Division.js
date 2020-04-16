@@ -10,7 +10,7 @@ const modelSchema = new Schema({
         path: {type: String, label: 'Путь'},
         noMenu: {type: Boolean, label: 'Не показывать в меню'},
         noPhoneBook: {type: Boolean, label: 'Не показывать в тел.книге'},
-        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', property:'fio', label:'Руководитель'},
+        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', property:'fioShort', label:'Руководитель'},
         description: {type: String, label: 'Описание', control:'markdown'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image', label:'Файлы'}],
     },
@@ -25,7 +25,7 @@ const modelSchema = new Schema({
 modelSchema.label = 'Подразделение';
 modelSchema.listFields = ['name'];
 modelSchema.listOrder = {name:1};
-modelSchema.virtualFields = [{name:'persons',label:'Сотрудники',property:'fio'}];
+modelSchema.virtualFields = [{name:'persons',label:'Сотрудники',property:'fioShort'}];
 modelSchema.statics.population = [{path: 'chief', populate: 'image'},{path: 'persons', populate: 'image'},'images'];
 
 modelSchema.virtual('persons', {

@@ -113,7 +113,7 @@ export default function (props) {
                 <Button type="cancel">Х</Button>
             </form>
 
-            {list.map(l => <A key={l.id} href={`/admin/${modelName}/update/${l.id}`} className={`d-block ${model && l.id === model.id ? 'bg-success' : ''}`}>
+            {list.map(l => <A key={l.id} href={`/admin/${modelName}/${l.id}/update`} className={`d-block ${model && l.id === model.id ? 'bg-success' : ''}`}>
                 {schema.listFields.map(f => l[f]).join(' - ') || l.id} &nbsp;
                 {l.image && <img src={l.photo} alt={l.id} height={20}/>}
             </A>)}

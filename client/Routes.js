@@ -53,7 +53,7 @@ export default function Routes(props) {
         "/research": () => <Research {...props}/>,
         "/intellectual": () => <Intellectual {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
-        "/admin/:control/update/:id": (params) => <AdminIndex {...params} {...props}/>,
+        "/admin/:control/:id/update": (params) => <AdminIndex {...params} {...props}/>,
         "/news": () => <NewsPage {...props}/>,
         "/video": () => <VideoList {...props}/>,
         "/edition": () => <Edition {...props}/>,

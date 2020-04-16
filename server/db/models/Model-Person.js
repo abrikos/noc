@@ -38,10 +38,16 @@ const modelSchema = new Schema({
 
 modelSchema.statics.population = ['image', 'division', 'images'];
 modelSchema.listOrder = {fio:1};
-modelSchema.listFields = ['fio'];
+modelSchema.listFields = ['fioShort'];
+
 modelSchema.virtual('photo')
     .get(function () {
         return this.image ? this.image.path : '/noImage.png'
+    });
+
+modelSchema.virtual('fioShort')
+    .get(function () {
+        return `${this.fname} ${this.mname[0]}. ${this.lname && this.lname[0]+'.'}`
     });
 
 
