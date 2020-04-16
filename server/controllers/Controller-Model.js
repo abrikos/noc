@@ -74,9 +74,7 @@ module.exports.controller = function (app) {
     }
 
     app.post('/api/:model/list', (req, res) => {
-        console.log(req.body)
         const filter = bodyToWhere(req.body);
-
         Mongoose[req.params.model].find(filter)
             .sort(req.body.order || {createdAt: -1})
             .limit(parseInt(req.body.limit))
@@ -99,28 +97,20 @@ module.exports.controller = function (app) {
                 const schema = getSchema(req.params.model);
                 for (const f of Object.keys(req.body)) {
                     const field = schema.fields.find(fld => fld.name === f);
-                    if(!field) continue;
+                    if (!field) continue;
                     if (field.type === 'virtual') {
-                        console.log(f)
-                        console.log('MODEL',r[f].map(r=>r.id))
-                        console.log('BODY',req.body[f])
                         const schemaRel = getSchema(field.options.ref.toLowerCase());
                         const fieldRel = schemaRel.fields.find(fld => fld.name === field.options.foreignField);
+                        const fieldToUpdate = fieldRel.name;
+                        for (const id of r[f].map(r => r.id).filter(r => !req.body[f].includes(r))) {
+                            //DELETE
+                            const model = await Mongoose[field.options.ref.toLowerCase()].findById(id)
+                            model[fieldToUpdate] = model[fieldToUpdate].filter(r => !r.equals(req.params.id))
+                            await model.save()
+                        }
                         for (const id of req.body[f]) {
                             const model = await Mongoose[field.options.ref.toLowerCase()].findById(id)
-                            const fieldToUpdate = fieldRel.name;
-                            if (fieldRel.type === 'hasMany') {
-
-                                if(!model[fieldToUpdate].includes(req.params.id)) {
-                                    model[fieldToUpdate].push(req.params.id)
-                                }
-
-                                //push
-                            }
-                            if (fieldRel.type === 'ObjectID') {
-                                //set
-                                model[fieldToUpdate] = req.params.id
-                            }
+                            model[fieldToUpdate] = req.params.id
                             await model.save()
                         }
                     } else {
