@@ -16,7 +16,7 @@ export default function TopMenu(props) {
     }
 
     return (
-        <Navbar light expand="md">
+        <Navbar light expand="md" className="top-menu">
             <NavbarBrand href='#' onClick={e => navigate('/')} className='mr-auto site-logo'>
                 <img src={logo} alt="logo" className="logo"/>
             </NavbarBrand>
@@ -61,7 +61,7 @@ export default function TopMenu(props) {
                         </UncontrolledDropdown>*/}
 
                 </Nav>
-                <Nav>
+                <Nav className="right-menu">
                     <NavItem >
                         <A href="/search" className={'nav-link'}><span role="img" aria-label="Search">🔍</span></A>
                     </NavItem>
