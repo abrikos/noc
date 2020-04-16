@@ -26,7 +26,6 @@ function playlistParse(){
                             Mongoose.video.findOne({uid})
                                 .then(found=>{
                                     if(found) return;
-                                    console.log({uid, type:'youtube',name:video.title, description:video.description})
                                     Mongoose.Video.create({uid, type:'youtube',name:video.title, description:video.description})
                                 })
                         }

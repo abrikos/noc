@@ -12,7 +12,7 @@ module.exports.controller = function (app) {
             listFields: schema.listFields,
             formFields: schema.formFields,
             listOrder: schema.listOrder,
-            fields: Object.keys(schema.paths).filter(p => schema.formFields.includes(p)).map(key => {
+            fields: schema.formFields.map(key => {
                 const p = schema.paths[key];
                 //const ref = p.options.ref || p.options.type;
                 return {

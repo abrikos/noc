@@ -35,7 +35,7 @@ const modelSchema = new Schema({
 modelSchema.statics.population = ['image', 'division', 'images'];
 modelSchema.listOrder = {fio:1};
 modelSchema.listFields = ['fio'];
-modelSchema.formFields = ['fio','status','rank','phone','email','supervisorStatus', 'supervisorOrder', 'description', 'voice',  'memberStatus', 'isApparat', 'division'];
+modelSchema.formFields = ['fio', 'education', 'awards', 'publications', 'status','rank','phone','email','supervisorStatus', 'supervisorOrder', 'description', 'voice',  'memberStatus', 'isApparat', 'division'];
 modelSchema.virtual('photo')
     .get(function () {
         return this.image ? this.image.path : '/noImage.png'
