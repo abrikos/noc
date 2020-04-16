@@ -151,12 +151,20 @@ export default function App() {
             const obj = {};
             for (const a of form.elements) {
                 if(!a.name) continue;
+                console.log(a.type)
                 const isArray = a.name.match(/(.*)\[(.*)\]/)
                 if (isArray) {
                     if (!obj[isArray[1]]) obj[isArray[1]] = [];
                     obj[isArray[1]].push({key: isArray[2], value: a.value})
                 } else if (a.type === 'checkbox') {
                     obj[a.name] = a.checked
+                } else if (a.type === 'select-multiple') {
+                    const vals = []
+                    for(const o of a.options){
+                        if(!o.selected) continue;
+                        vals.push(o.value)
+                    }
+                    obj[a.name] = vals
                 } else {
                     obj[a.name] = a.value
                 }
