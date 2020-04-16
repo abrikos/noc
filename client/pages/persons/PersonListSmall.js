@@ -6,7 +6,7 @@ import noPhoto from "client/images/nouser.png"
 
 export default function PersonListSmall(props) {
     return <div className="persons-list">
-        {props.persons.map(p => <span className="person-card">
+        {props.persons.map(p => <span className="person-card" key={p.id}>
             <strong>{p.fio}</strong>
             <div className="row">
                 <div className="col-4">
