@@ -76,7 +76,7 @@ module.exports.controller = function (app) {
         const filter = bodyToWhere(req.body);
         Mongoose[req.params.model].find(filter)
             .sort(req.body.order || {createdAt: -1})
-            .limit(parseInt(req.body.limit) || 10)
+            .limit(parseInt(req.body.limit))
             .skip(parseInt(req.body.skip))
             .populate(Mongoose[req.params.model].population)
             .then(list => {
@@ -96,6 +96,13 @@ module.exports.controller = function (app) {
                     r[f] = req.body[f]
                 }
                 r.save();
+                res.sendStatus(200);
+            })
+    });
+    app.post('/api/admin/:model/:id/delete', passportLib.isAdmin, (req, res) => {
+        Mongoose[req.params.model].findById(req.params.id)
+            .then(r => {
+                r.delete();
                 res.sendStatus(200);
             })
     });

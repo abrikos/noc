@@ -9,6 +9,7 @@ const modelSchema = new Schema({
         format: {type:String, label:'Формат'},
         text: {type:String, label:'Описание', control:'markdown'},
         link: {type:String, label:'Ссылка'},
+        order: {type:Number, label:'Порядок'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
     },
@@ -21,7 +22,9 @@ const modelSchema = new Schema({
     });
 modelSchema.statics.population = ['image', 'images'];
 modelSchema.listFields = ['header'];
-modelSchema.formFields = ['header','link','year','format','text'];
+modelSchema.listOrder = {order:-1};
+modelSchema.formFields = ['header','order','link','year','format','text'];
+
 modelSchema.virtual('photo')
     .get(function () {
         return this.image ? this.image.path : '/noImage.png'

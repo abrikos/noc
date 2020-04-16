@@ -16,7 +16,7 @@ export default function AdminIndex(props) {
         //static:['Страницы', <AdminNews type={'static'} {...props}/>],
         //video:['YouTube', <AdminVideo {...props}/>],
         users: ['Пользователи', <AdminUser  {...props}/>],
-        division: ['Структура', <AdminModel  {...props}/>],
+        division: ['Подразделения', <AdminModel  {...props}/>],
         person: ['Персоны', <AdminModel  {...props}/>],
         meeting: ['ОУС', <AdminMeeting  {...props}/>],
         edition: ['Издания', <AdminModel  {...props}/>],

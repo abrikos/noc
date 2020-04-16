@@ -12,23 +12,26 @@ export default function (props) {
     const [schema, setSchema] = useState();
     const [totalCount, setTotalCount] = useState(0);
     const [list, setList] = useState([]);
-    const [model, setModel] = useState({});
+    const [model, setModel] = useState();
     const [errors, setErrors] = useState({});
+    const [filter, setFilter] = useState({});
     const modelName = props.control;
 
     useEffect(() => {
         props.api(`/${modelName}/schema`)
             .then(s => {
+                setModel(null)
                 setSchema(s)
-                getList({order:s.listOrder});
+                setFilter({order:s.listOrder})
+                getList();
                 if (props.id) props.api(`/${modelName}/${props.id}/view`).then(setModel)
             })
 
     }, [props.id, modelName]);
 
-    function getList(filter) {
+    function getList() {
         if(schema) filter.order = schema.listOrder;
-        console.log(filter)
+        if(!filter.limit) filter.limit = 10;
         props.api(`/${modelName}/list`, filter).then(res => {
             setList(res.list)
             setTotalCount(res.count)
@@ -77,7 +80,7 @@ export default function (props) {
 
 
     function form(model) {
-        if (!model.id) return;
+        if (!model) return;
         return <form onSubmit={submit} key={model.id} onChange={() => setEdited(true)}>
             {edited && <Button>Сохранить</Button>}
             <div className="row">
@@ -101,7 +104,8 @@ export default function (props) {
     }
 
     function pageChange(f) {
-        getList(f)
+        setFilter(f)
+        getList()
     }
 
     function search(e) {
@@ -112,10 +116,16 @@ export default function (props) {
                     o[p] = form.search
                     return o
                 })}
-        console.log(filter)
-        getList(filter)
+        setFilter(filter)
+        getList()
     }
 
+    function deleteModel() {
+        props.api(`/admin/${modelName}/${model.id}/delete`).then(()=> {
+            setModel(null)
+            getList()
+        })
+    }
 
     if (!schema) return <div></div>;
     return <div className="row" key={modelName}>
@@ -126,7 +136,7 @@ export default function (props) {
                 <Button>Поиск</Button>
             </form>
 
-            {list.map(l => <A key={l.id} href={`/admin/${modelName}/update/${l.id}`} className={`d-block ${l.id === model.id ? 'bg-success' : ''}`}>
+            {list.map(l => <A key={l.id} href={`/admin/${modelName}/update/${l.id}`} className={`d-block ${model && l.id === model.id ? 'bg-success' : ''}`}>
                 {schema.listFields.map(f => l[f]).join(' - ') || l.id} &nbsp;
                 {l.image && <img src={l.photo} alt={l.id} height={20}/>}
             </A>)}
@@ -135,6 +145,7 @@ export default function (props) {
         </div>
         <div className="col-8">
             {form(model)}
+            {model && <Button onClick={deleteModel} color="danger">Удалить</Button>}
         </div>
 
     </div>
