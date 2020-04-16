@@ -5,6 +5,9 @@ const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
         fio:{type: String, label:'ФИО', required:true, default:'new person'},
+        fname:{type: String, label:'Фамилия', required:true, default:'Фам'},
+        mname:{type: String, label:'Имя', required:true, default:'Им'},
+        lname:{type: String, label:'Отчество'},
         status: {type: String, label:'Должность',  default:''},
         rank: {type: String, label:'Звание',  default:''},
         phone: {type: String, label:'Телефон',  default:''},
