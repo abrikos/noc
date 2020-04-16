@@ -12,6 +12,7 @@ const modelSchema = new Schema({
         education: {type: String, label:'Образование'},
         awards: {type: String, label:'Награды'},
         publications: {type: String, label:'Публикации', control:'markdown'},
+        interest: {type: String, label:'Научные интересы'},
         supervisorStatus: {type: String, label:'Статус руководства',  default:''},
         supervisorOrder: {type: Number, label:'Порядок в руководстве'},
         description: {type: String, label:'Описание',  default:'', control:'markdown'},
@@ -35,7 +36,6 @@ const modelSchema = new Schema({
 modelSchema.statics.population = ['image', 'division', 'images'];
 modelSchema.listOrder = {fio:1};
 modelSchema.listFields = ['fio'];
-modelSchema.formFields = ['fio', 'education', 'awards', 'publications', 'status','rank','phone','email','supervisorStatus', 'supervisorOrder', 'description', 'voice',  'memberStatus', 'isApparat', 'division'];
 modelSchema.virtual('photo')
     .get(function () {
         return this.image ? this.image.path : '/noImage.png'

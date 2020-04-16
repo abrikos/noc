@@ -10,9 +10,10 @@ module.exports.controller = function (app) {
         return {
             label: schema.label,
             listFields: schema.listFields,
-            formFields: schema.formFields,
             listOrder: schema.listOrder,
-            fields: schema.formFields.map(key => {
+            fields: Object.keys(schema.paths)
+                .filter(key=>schema.paths[key].options.label)
+                .map(key => {
                 const p = schema.paths[key];
                 //const ref = p.options.ref || p.options.type;
                 return {
