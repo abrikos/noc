@@ -26,6 +26,7 @@ export default function (props) {
     const radius = 0;
     const style = {backgroundImage: `url(${river})`, backgroundPositionY: -200, height: 400, borderBottomLeftRadius: radius, borderBottomRightRadius: radius, marginBottom: 100}
     return <div className="about-republic static-page">
+        <h1>О Республике Саха (Якутия)</h1>
         <div style={style} className="d-flex flex-column justify-content-end">
             <img src={coat} width={300} height={300} className="mx-auto" style={{position: 'relative', top: 100}} alt="Coat"/>
         </div>

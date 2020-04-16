@@ -19,8 +19,8 @@ import noImage from "client/images/noImage.png"
 import "./organisations.sass"
 
 export default function (props) {
-    console.log('zzzzzzzzzzzzzzzz')
     return <div className="science-org">
+        <h1>Научные учереждения РС(Я)</h1>
         <div className="uk-grid-margin"><a className="el-item uk-card uk-card-hover uk-card-small uk-card-body uk-margin-remove-first-child uk-display-block uk-link-toggle uk-scrollspy-inview uk-animation-slide-top-medium" href="http://prez.ysn.ru" target="_blank" rel="noopener noreferrer" uk-scrollspy-class="uk-animation-slide-top-medium" >
             <div className="uk-child-width-expand uk-flex-middle uk-grid" uk-grid="">
                 <div className="uk-width-1-3@m uk-first-column"><img src={i1} alt="i1"/></div>
