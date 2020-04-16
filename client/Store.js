@@ -150,6 +150,7 @@ export default function App() {
 
             const obj = {};
             for (const a of form.elements) {
+                if(!a.name) continue;
                 const isArray = a.name.match(/(.*)\[(.*)\]/)
                 if (isArray) {
                     if (!obj[isArray[1]]) obj[isArray[1]] = [];
