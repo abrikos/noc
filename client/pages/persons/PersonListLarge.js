@@ -6,7 +6,7 @@ import Loader from "client/components/Loader";
 export default function PersonListLarge(props) {
     const [persons, setPersons] = useState();
     const pages = {
-        supervisors: {title: 'Руководство АН РС(Я)', filter: {where: {supervisorStatus: {$ne: null}}, order: {supervisorOrder: 1}}},
+        supervisors: {title: 'Руководство АН РС(Я)', filter: {where: {$and:[{supervisorStatus: {$ne: null}},{supervisorStatus: {$ne: ''}}]}, order: {supervisorOrder: 1}}},
         'real-members': {title: 'Действительные члены АН РС(Я)', filter: {where: {member: 0}}},
         'honor-members': {title: 'Почетные члены АН РС(Я)', filter: {where: {member: 1}}},
         'foreign-members': {title: 'Иностранные члены АН РС(Я)', filter: {where: {member: 2}}}
