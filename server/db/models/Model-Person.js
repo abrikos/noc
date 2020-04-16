@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-        fio:{type: String, label:'ФИО', required:true, default:''},
+        fio:{type: String, label:'ФИО', required:true, default:'new person'},
         status: {type: String, label:'Звание',  default:''},
         rank: {type: String, label:'Должность',  default:''},
         phone: {type: String, label:'Телефон',  default:''},
