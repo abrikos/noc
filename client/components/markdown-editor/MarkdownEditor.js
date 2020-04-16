@@ -18,27 +18,15 @@ export default function MarkdownEditor(props) {
         setValue(props.value)
     }, [props.value])
 
-    function handleChange(text) {
-        setValue(text)
-        if (props.onChange) props.onChange(text)
+    function handleChange(e) {
+
+        setValue(e.target.value)
+        if (props.onChange) props.onChange(e.target.value)
     }
 
     return <>
-
-
-        <div className="row">
-            <div className="col-md-6">
-                <Input name={props.name} defaultValue={value} invalid={props.invalid} type="textarea" style={{height: '100%'}}/>
-                {/*<Editor
-                    value={props.value}
-                    locale='ru'
-                    onChange={handleChange}
-                />*/}
-            </div>
-            <div className="col-md-6"><MarkDown source={value}/></div>
-        </div>
-
-
+        <Input name={props.name} defaultValue={value} invalid={props.invalid} type="textarea" rows={10} onChange={handleChange}/>
+        <MarkDown source={value}/>
     </>
 
 }
