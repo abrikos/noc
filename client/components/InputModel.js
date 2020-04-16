@@ -19,7 +19,7 @@ export default function InputModel(props) {
     if (props.field.type === 'Boolean') return <FormGroup check>
         <Label check> <Input type="checkbox" name={props.field.name} defaultChecked={props.model[props.field.name]}/> {props.field.options.label}   </Label>
     </FormGroup>
-    if (props.field.control === 'markdown') return <FormGroup>
+    if (props.field.options.control === 'markdown') return <FormGroup>
         <Label>{props.field.options.label} </Label>
         <MarkdownEditor invalid={!!props.errors[props.field.name]} name={props.field.name} value={props.model[props.field.name]}/><FormFeedback>{props.errors[props.field.name]}</FormFeedback>
     </FormGroup>
