@@ -31,6 +31,7 @@ import SakhaHistory from "client/pages/projects/sakha-history/SakhaHistory";
 import ProjectRecycle from "client/pages/projects/recycle/ProjectRecycle";
 import Documents from "client/pages/documents/Documents";
 import WebResources from "client/pages/web-resources/WebResources";
+import PresidiumCouncil from "client/pages/presidium/PresidiumCouncil";
 
 export default function Routes(props) {
 
@@ -56,6 +57,7 @@ export default function Routes(props) {
         "/news": () => <NewsPage {...props}/>,
         "/video": () => <VideoList {...props}/>,
         "/edition": () => <Edition {...props}/>,
+        "/presidium/council": () => <PresidiumCouncil {...props}/>,
         "/static/:path": (params) => <PostView {...params} {...props}/>,
         "/news/:id": (params) => <PostView {...params} {...props}/>,
         "/news/:id/:path": (params) => <PostView {...params} {...props}/>,
@@ -69,8 +71,8 @@ export default function Routes(props) {
         "/site-map": () => <SiteMap {...props}/>,
         "/static/:page": (params) => <Static {...params} {...props}/>,
         "/division/:page": (params) => <Division {...params} {...props}/>,
-        "/meeting/:page": (params) => <Meeting {...params} {...props}/>,
-        "/meeting-about": (params) => <MeetingAbout {...params} {...props}/>,
+        "/council/:page": (params) => <Meeting {...params} {...props}/>,
+        "/council-about": (params) => <MeetingAbout {...params} {...props}/>,
         "/search/:code": (params) => <SearchResult {...params} {...props}/>,
     };
 }
