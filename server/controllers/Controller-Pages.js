@@ -11,9 +11,9 @@ module.exports.controller = function (app) {
         map.push({label: 'Главная', path: '/', menu: true});
         map.push({label: 'Новости', path: '/news', menu: true});
         const divisions = await Mongoose.division.find({path: {$ne: null}});
-        map.push({label: 'Структура', items: divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: '/division' + d.path})), menu: true});
+        map.push({label: 'Структура', items: divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: d.link})), menu: true});
         const meetings = await Mongoose.meeting.find({path: {$ne: null}});
-        map.push({label: 'Ученые советы', items: [{label: 'О советах', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: '/council/' + d.path}))), menu: true});
+        map.push({label: 'Ученые советы', items: [{label: 'О советах', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: d.link}))), menu: true});
         map.push({
             label: 'Члены академии  АН РС(Я)', menu: true, items: [
                 {label: 'Действительные члены', path: '/persons/real-members'},
@@ -24,7 +24,7 @@ module.exports.controller = function (app) {
         map.push({
             label: 'Президиум', menu: true, items: [
                 {label: 'Руководство', path: '/persons/supervisors'},
-                {label: 'Ученый совет', path: '/presidium/council'},
+                {label: 'Состав', path: '/presidium/council'},
                 {label: 'Секретариат', path: '/division/secretariat'},
                 {label: 'Документы', path: '/documents/presidium'},
             ]
@@ -61,6 +61,7 @@ module.exports.controller = function (app) {
     });
 
 
+/*
     app.post('/api/meeting/:path', (req, res) => {
 
         Mongoose.meeting.findOne({path: req.params.path})
@@ -90,4 +91,5 @@ module.exports.controller = function (app) {
             res.sendStatus(404)
         }
     });
+*/
 }

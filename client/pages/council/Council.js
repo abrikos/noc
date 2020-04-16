@@ -3,22 +3,22 @@ import {Input, Nav, NavItem} from "reactstrap";
 import meetingVoices from "client/meeting-voices";
 import PersonListSmall from "client/pages/persons/PersonListSmall";
 
-export default function Meeting(props) {
+export default function Council(props) {
     const [data, setData] = useState();
     const [voice, setVoice] = useState(-1);
     const [persons, setPersons] = useState([]);
 
     useEffect(() => {
-        props.api('/meeting/' + props.page)
+        props.api(`/meeting/${props.id}/view`)
             .then(d=>{
                 setData(d)
                 setPersons(d.persons)
             })
-    }, [props.page]);
+    }, [props.id]);
 
     function selectDivision(voice) {
-        setVoice(voice)
-        setPersons(data.persons.filter(p=>p.voice===voice))
+        setVoice(voice*1)
+        setPersons(data.persons.filter(p=>p.voice===voice*1))
     }
 
     if (!data) return <div/>;

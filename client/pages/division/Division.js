@@ -8,8 +8,8 @@ export default function Division(props) {
 
     useEffect(()=>{
         setData(null)
-        props.api('/division/'+props.page).then(setData)
-    },[props.page]);
+        props.api(`/division/${props.id}/view`).then(setData)
+    },[props.id]);
 
     if(!data) return <Loader/>;
     return <div className="division" key={props.page}>

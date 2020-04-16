@@ -5,23 +5,36 @@ const passportLib = require('server/lib/passport');
 
 module.exports.controller = function (app) {
 
-    function getSchema(name){
+    const x = Object.keys(Mongoose.division.schema.virtuals)
+    console.log(x)
+
+    function getSchema(name) {
         const schema = Mongoose[name].schema;
         return {
             label: schema.label,
             listFields: schema.listFields,
             listOrder: schema.listOrder,
             fields: Object.keys(schema.paths)
-                .filter(key=>schema.paths[key].options.label)
+                .filter(key => schema.paths[key].options.label)
                 .map(key => {
-                const p = schema.paths[key];
-                //const ref = p.options.ref || p.options.type;
-                return {
-                    name: p.path,
-                    type: p.instance,
-                    options:p.options
-                }
-            })
+                    const p = schema.paths[key];
+                    //const ref = p.options.ref || p.options.type;
+                    return {
+                        name: p.path,
+                        type: p.instance,
+                        options: p.options
+                    }
+                })
+                .concat(schema.virtualFields.map(f=>{
+                    const ret =  {
+                        name:f.name,
+                        type:'hasMany',
+                        options:schema.virtuals[f.name].options
+                    }
+                    ret.options.label = f.label;
+                    ret.options.property = f.property;
+                    return ret;
+                }))
         }
     }
 
@@ -45,7 +58,7 @@ module.exports.controller = function (app) {
             .populate(Mongoose[req.params.model].population)
             .then(item => {
 
-                for(const f in req.body){
+                for (const f in req.body) {
                     item[f] = req.body[f]
                 }
                 item.save()
@@ -57,13 +70,13 @@ module.exports.controller = function (app) {
 
     function bodyToWhere(body) {
         if (!body.where) body.where = {};
-        for(const f in body.where){
-            if(!body.where[f]) delete body.where[f];
+        for (const f in body.where) {
+            if (!body.where[f]) delete body.where[f];
         }
         if (body.regexp) {
-            body.where.$or = body.regexp.map(reg=>{
+            body.where.$or = body.regexp.map(reg => {
                 const ret = {}
-                for(const k of Object.keys(reg)){
+                for (const k of Object.keys(reg)) {
                     ret[k] = new RegExp(reg[k], 'i')
                 }
                 return ret;
@@ -74,7 +87,6 @@ module.exports.controller = function (app) {
     }
 
     app.post('/api/:model/list', (req, res) => {
-        console.log(req.params.model, req.body)
         const filter = bodyToWhere(req.body);
 
         Mongoose[req.params.model].find(filter)
@@ -123,7 +135,7 @@ module.exports.controller = function (app) {
                 model.images = model.images.concat(req.body.images);
 
                 model.save()
-                model.populate(['image', 'images']).execPopulate((e, m) => {
+                model.populate(Mongoose[req.params.model].population).execPopulate((e, m) => {
                     res.send(m)
                 })
 
@@ -134,11 +146,10 @@ module.exports.controller = function (app) {
     app.post('/api/admin/:model/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose[req.params.model].findById(req.params.id)
-            .populate(['image', 'images'])
             .then(model => {
                 model.image = req.params.image;
                 model.save();
-                model.populate(['image', 'images']).execPopulate((e, m) => {
+                model.populate(Mongoose[req.params.model].population).execPopulate((e, m) => {
                     res.send(m)
                 })
             })

@@ -3,7 +3,7 @@ import {Button} from "reactstrap";
 import {A, navigate} from "hookrouter";
 import ImageUpload from "client/components/image-list/ImageUpload";
 import ImageList from "client/components/image-list/ImageList";
-import InputModel from "client/components/InputModel";
+import InputModel from "client/components/inputModel/InputModel";
 import Pager from "client/components/Pager";
 
 
@@ -139,6 +139,7 @@ export default function (props) {
                         {schema.fields.map(f => <InputModel key={f.name} model={model} field={f} errors={errors} {...props}/>)}
                         {edited && <Button>Сохранить</Button>}
                     </form>
+
                 </div>
             </div>
 
