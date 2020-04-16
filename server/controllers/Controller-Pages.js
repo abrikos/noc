@@ -4,15 +4,17 @@ const fs = require('fs');
 
 module.exports.controller = function (app) {
 
-    //Mongoose.Person.find({member:0}).populate('division').then(console.log)
+    Mongoose.person.find({member:0, voice:0})
+        .populate(Mongoose.council.population)
+        .then(console.log)
 
     app.post('/api/site-map', async (req, res) => {
         const map = [];
         map.push({label: 'Главная', path: '/', menu: true});
         map.push({label: 'Новости', path: '/news', menu: true});
         const divisions = await Mongoose.division.find({path: {$ne: null}});
-        map.push({label: 'Структура', items: divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: d.link})), menu: true});
-        const meetings = await Mongoose.meeting.find({path: {$ne: null}});
+        map.push({label: 'Структура', items: [{label: 'Руководство', path: '/persons/supervisors'}, {label: 'Аппарат', path: '/apparatus'}].concat(divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: d.link}))), menu: true});
+        const meetings = await Mongoose.council.find();
         map.push({label: 'Ученые советы', items: [{label: 'О советах', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: d.link}))), menu: true});
         map.push({
             label: 'Члены академии  АН РС(Я)', menu: true, items: [
@@ -60,40 +62,40 @@ module.exports.controller = function (app) {
         res.send(map)
     });
 
-    app.post('/api/meeting/voices',(req,res)=>{
+    app.post('/api/council/voices', (req, res) => {
 
         res.send(Mongoose.person.schema.paths.voice.options.select)
     })
 
-/*
-    app.post('/api/meeting/:path', (req, res) => {
+    /*
+        app.post('/api/meeting/:path', (req, res) => {
 
-        Mongoose.meeting.findOne({path: req.params.path})
-            .populate([{path: 'persons', populate: 'image'}])
-            .then(item => {
-                res.send(item)
-            })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
-    });
+            Mongoose.meeting.findOne({path: req.params.path})
+                .populate([{path: 'persons', populate: 'image'}])
+                .then(item => {
+                    res.send(item)
+                })
+                .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+        });
 
 
-    app.post('/api/division/:page', (req, res) => {
-        Mongoose.division.findOne({path: '/' + req.params.page})
-            .populate([{path: 'chief', populate: 'image'}])
-            .then(model => {
-                res.send(model)
-            })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
-    });
+        app.post('/api/division/:page', (req, res) => {
+            Mongoose.division.findOne({path: '/' + req.params.page})
+                .populate([{path: 'chief', populate: 'image'}])
+                .then(model => {
+                    res.send(model)
+                })
+                .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+        });
 
-    app.post('/api/static/:page', async (req, res) => {
-        const file = 'client/static/' + req.params.page + '.html';
-        try {
-            const html = fs.readFileSync(file, 'utf8');
-            res.send({html})
-        } catch (e) {
-            res.sendStatus(404)
-        }
-    });
-*/
+        app.post('/api/static/:page', async (req, res) => {
+            const file = 'client/static/' + req.params.page + '.html';
+            try {
+                const html = fs.readFileSync(file, 'utf8');
+                res.send({html})
+            } catch (e) {
+                res.sendStatus(404)
+            }
+        });
+    */
 }

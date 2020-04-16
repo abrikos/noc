@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react";
 import {A} from "hookrouter"
 
 export default function (props) {
-    const [meetings, setMeetings] = useState([])
+    const [councils, setCouncils] = useState([])
 
     useEffect(()=>{
-        props.api('/meeting/list').then(r=>setMeetings(r.list))
+        props.api('/council/list').then(r=>setCouncils(r.list))
     },[])
 
     return <div className="static">
@@ -25,7 +25,7 @@ export default function (props) {
 
         <p>В настоящее время в Академии наук Якутии функционируют пять ОУСов:</p>
         <ul>
-            {meetings.map(m=><li key={m.id}><A href={`/meeting/${m.path}`}>{m.name}</A></li>)}
+            {councils.map(m=><li key={m.id}><A href={m.link}>{m.name}</A></li>)}
         </ul>
     </div>
 }

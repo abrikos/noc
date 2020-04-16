@@ -55,7 +55,7 @@ export default function InputModel(props) {
 
     return <div  className="input-model">
         <FormGroup>
-        <Label>{props.field.options.label|| props.field.name} </Label>
+        <Label>{props.field.options.label|| props.field.name} {props.field.name}</Label>
         {input}
         <FormFeedback>{props.errors[props.field.name]}</FormFeedback>
     </FormGroup>

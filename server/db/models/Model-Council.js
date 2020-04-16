@@ -29,7 +29,7 @@ modelSchema.formOptions = {
 
 modelSchema.virtual('adminLink')
     .get(function () {
-        return`/admin/meeting/${this.id}/update`
+        return`/admin/council/${this.id}/update`
     });
 
 
@@ -39,6 +39,6 @@ modelSchema.virtual('link')
     });
 
 
-export default mongoose.model("Meeting", modelSchema)
+export default mongoose.model("Council", modelSchema)
 
 

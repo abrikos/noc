@@ -16,7 +16,7 @@ export default function PostView(props) {
 
     useEffect(() => {
 
-        props.api('/post/view/' + props.id)
+        props.api(`/post/${props.id}/view`)
             .then(res => {
                 if (!res.id) return setError({error: 404, message: 'Новость не найдена'});
                 setPost(res);

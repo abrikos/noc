@@ -110,8 +110,10 @@ module.exports.controller = function (app) {
                         }
                         for (const id of req.body[f]) {
                             const model = await Mongoose[field.options.ref.toLowerCase()].findById(id)
-                            model[fieldToUpdate] = req.params.id
-                            await model.save()
+                            if(!model[fieldToUpdate].includes(req.params.id)) {
+                                model[fieldToUpdate].push(req.params.id)
+                                await model.save()
+                            }
                         }
                     } else {
                         r[f] = req.body[f]

@@ -16,6 +16,6 @@ export default function Apparatus(props) {
 
     return <div className="phone-book">
         <h1>Аппарат АН РС(Я)</h1>
-        <PersonListSmall persons={persons}/>
+        <PersonListSmall persons={persons} {...props}/>
     </div>
 }

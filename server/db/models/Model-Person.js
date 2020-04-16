@@ -19,7 +19,8 @@ const modelSchema = new Schema({
         supervisorOrder: {type: Number, label: 'Порядок в руководстве'},
         description: {type: String, label: 'Описание', default: '', control: 'markdown'},
         voice: {type: Number, label: 'Голос в ОУС', select: ["Действительные члены АН РС(Я)", "С правом решающего голоса", "С правом совещательного голоса"]},
-        member: Number,
+        member: {type: Number, label: 'Членство в АН', select: ["Действительные члены АН РС(Я)", "С правом решающего голоса", "С правом совещательного голоса"]},
+
         memberStatus: {type: String, label: 'Звание 2'},
         isApparat: {type: Boolean, label: 'В аппарате'},
         //divisions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Division', property: 'name', label: 'Подразделение'}],
@@ -35,11 +36,11 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.statics.population = ['image', 'divisions', 'meetings', 'images', 'meetingsChief'];
+modelSchema.statics.population = ['image', 'divisions', 'councils', 'images', 'councilsChief'];
 modelSchema.formOptions = {
     listOrder: {fio: 1},
     listFields: ['fioShort'],
-    virtualFields: ['divisions', 'meetings', 'meetingsChief'],
+    virtualFields: ['divisions', 'councils', 'councilsChief'],
     searchFields: ['fname', 'lname', 'mname']
 }
 modelSchema.virtual('photo')
@@ -57,6 +58,11 @@ modelSchema.virtual('fio')
         return this.lname ? `${this.fname} ${this.mname} ${this.lname}` : `${this.mname} ${this.fname}`
     });
 
+modelSchema.virtual('adminLink')
+    .get(function () {
+        return`/admin/person/${this.id}/update`
+    });
+
 modelSchema.virtual('divisions', {
     ref: 'Division',
     label: 'Подразделения',
@@ -67,8 +73,8 @@ modelSchema.virtual('divisions', {
     justOne: false // set true for one-to-one relationship
 });
 
-modelSchema.virtual('meetingsChief', {
-    ref: 'Meeting',
+modelSchema.virtual('councilsChief', {
+    ref: 'Council',
     label: 'Председатель ОУС',
     property: 'name',
     localField: '_id',
@@ -76,8 +82,8 @@ modelSchema.virtual('meetingsChief', {
     justOne: false // set true for one-to-one relationship
 });
 
-modelSchema.virtual('meetings', {
-    ref: 'Meeting',
+modelSchema.virtual('councils', {
+    ref: 'Council',
     label: 'ОУС',
     property: 'name',
     localField: '_id',

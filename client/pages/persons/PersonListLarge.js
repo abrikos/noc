@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "client/pages/persons/person-list-large.sass";
 import MarkDown from "react-markdown";
 import Loader from "client/components/Loader";
+import PersonLarge from "client/pages/persons/PersonLarge";
 
 export default function PersonListLarge(props) {
     const [persons, setPersons] = useState();
@@ -24,18 +25,7 @@ export default function PersonListLarge(props) {
     return <div className="phone-book">
         <h1>{pages[props.type].title}</h1>
         <div className="supervisors-list">
-            {persons.map(p => <div key={p.id} className="supervisor-person">
-                <div className="supervisor-image">
-                    <img src={p.photo} alt={p.fio}/>
-                </div>
-
-                <div className="supervisor-text">
-                    <h4>{p.fio}</h4>
-                    <div className="status">{p.supervisorStatus}</div>
-                    <div className="status">{p.memberStatus}</div>
-                    <MarkDown source={p.description}/>
-                </div>
-            </div>)}
+            {persons.map(p => <PersonLarge key={p.id} person={p} {...props}/>)}
         </div>
     </div>
 }

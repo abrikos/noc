@@ -19,7 +19,7 @@ export default function AdminIndex(props) {
         users: ['Пользователи', <AdminUser  {...props}/>],
         division: ['Подразделения', <AdminModel  {...props}/>],
         person: ['Персоны', <AdminModel  {...props}/>],
-        meeting: ['ОУС', <AdminModel  {...props}/>],
+        council: ['ОУС', <AdminModel  {...props}/>],
         edition: ['Издания', <AdminModel  {...props}/>],
         document: ['Документы', <AdminModel  {...props}/>],
 
