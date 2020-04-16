@@ -11,7 +11,7 @@ const modelSchema = new Schema({
         email: {type: String, label:'Эл.почта',  default:''},
         supervisorStatus: {type: String, label:'Статус руководства',  default:''},
         supervisorOrder: {type: Number, label:'Порядок в руководстве'},
-        description: {type: String, label:'Описание',  default:''},
+        description: {type: String, label:'Описание',  default:'', control:'markdown'},
         voice: {type: Number, label:'Голос в ОУС'},
         member: Number,
         memberStatus: {type: String, label:'Звание 2'},
