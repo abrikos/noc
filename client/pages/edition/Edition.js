@@ -7,7 +7,7 @@ export default function Edition(props) {
     const [data, setData] = useState();
 
     useEffect(() => {
-        props.api('/edition/list').then(r=>setData(r.list))
+        props.api('/edition/list',{order:{order:1}}).then(r=>setData(r.list))
     }, []);
 
     if (!data) return <Loader/>;
