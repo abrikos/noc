@@ -1,5 +1,7 @@
 //import moment from "moment";
 
+import transliterate from "transliterate";
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -60,6 +62,11 @@ modelSchema.virtual('fio')
 modelSchema.virtual('adminLink')
     .get(function () {
         return `/admin/person/${this.id}/update`
+    });
+
+modelSchema.virtual('link')
+    .get(function () {
+        return `/person/` + this.id + '/' + transliterate(this.fio).replace(/[^a-zA-Z0-9]/g, '-')
     });
 
 modelSchema.virtual('divisions', {

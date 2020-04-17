@@ -3,11 +3,12 @@ import Phone from "client/components/Phone";
 import Email from "client/components/Email";
 import React from "react";
 import AdminLink from "client/components/AdminLink";
+import {A} from "hookrouter"
 
 export default function (props) {
     const p = props.person;
     return <div className="person-small">
-        <strong>{p.fio}</strong>
+        <strong><A href={p.link}>{p.fio}</A></strong>
         <div className="row">
             <div className="col-4">
                 <img src={p.image ? p.image.path : noPhoto} alt={p.fio} className={p.image ? '' : 'no-photo'}/>

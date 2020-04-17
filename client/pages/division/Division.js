@@ -3,6 +3,8 @@ import MarkDown from "react-markdown";
 import "./division.sass"
 import Loader from "client/components/Loader";
 import AdminLink from "client/components/AdminLink";
+import PersonSmall from "client/pages/persons/PersonSmall";
+import {A} from "hookrouter"
 
 export default function Division(props) {
     const [data, setData] = useState();
@@ -17,7 +19,7 @@ export default function Division(props) {
         <h1 className="text-uppercase">{data.name}</h1>
         <div className="row">
             <div className="col-md-4 division-card">
-                <div className="fio">{data.chief.fio}</div>
+                <div className="fio"><A href={data.chief.link}>{data.chief.fio}</A></div>
                 <div className="status">{data.chief.status}</div>
                 <div className="rank">{data.chief.rank}</div>
 
@@ -35,6 +37,10 @@ export default function Division(props) {
                 <div>
                     <AdminLink model={data} {...props}/>
                     <MarkDown source={data.description}/>
+                    <h3>Все сотрудники</h3>
+                    <div className="d-flex flex-wrap">
+                        {data.persons.map(p=><PersonSmall person={p} key={p.id} {...props}/>)}
+                    </div>
                 </div>
             </div>
         </div>

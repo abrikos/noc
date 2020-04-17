@@ -13,7 +13,7 @@ export default function (props) {
         </div>
 
         <div className="supervisor-text">
-            <h4>{p.fio}</h4>
+            <h4><A href={p.link}>{p.fio}</A></h4>
             <div className="status">{p.supervisorStatus}</div>
             <div className="status">{p.memberStatus}</div>
             <MarkDown source={p.description}/>

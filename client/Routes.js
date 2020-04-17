@@ -32,6 +32,7 @@ import WebResources from "client/pages/web-resources/WebResources";
 import PresidiumCouncil from "client/pages/presidium/PresidiumCouncil";
 import PersonList from "client/pages/persons/PersonList";
 import Election from "client/pages/election/Election";
+import PersonView from "client/pages/persons/PersonView";
 
 export default function Routes(props) {
 
@@ -76,5 +77,6 @@ export default function Routes(props) {
         "/search/:code": (params) => <SearchResult {...params} {...props}/>,
         "/people/:member/:path": (params) => <PersonList {...params} {...props}/>,
         "/election": (params) => <Election {...params} {...props}/>,
+        "/person/:id/:path": (params) => <PersonView {...params} {...props}/>,
     };
 }
