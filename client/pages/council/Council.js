@@ -20,7 +20,7 @@ export default function Council(props) {
 
     function selectDivision(voice) {
         setVoice(voice * 1)
-        setPersons(data.persons.filter(p => voice === -1 || p.voice === voice * 1))
+        setPersons(data.persons.filter(p => voice === -1 || p.voice === voice * 1 || voice * 1 === 0 && p.member === 0))
     }
 
     if (!data) return <div/>;
@@ -31,13 +31,13 @@ export default function Council(props) {
         <div className="d-sm-block d-none">
             <Nav tabs>
                 <NavItem><span className={`nav-link ${voice === -1 ? 'active' : ''}`} onClick={() => selectDivision(-1)}>Все</span></NavItem>
-                {councilVoices.map((d, i) => <NavItem key={i}><span className={`nav-link  ${voice === i ? 'active' : ''}`} onClick={() => selectDivision(i)}>{d}</span></NavItem>)}
+                {councilVoices.map((d, i) => <NavItem key={i}><span className={`nav-link  ${voice === i ? 'active' : ''}`} onClick={() => selectDivision(d.value)}>{d.label}</span></NavItem>)}
             </Nav>
 
         </div>
         <Input type="select" onChange={e => selectDivision(e.target.value)} className="d-sm-none d-block">
             <option value={''}>Все</option>
-            {councilVoices.map((d, i) => <option key={i} value={i}>{d}</option>)}
+            {councilVoices.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
         </Input>
         <div className="d-flex flex-wrap">
             {chief && <PersonSmall status={'Председатель'} person={chief} {...props}/>}
