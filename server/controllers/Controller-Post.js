@@ -42,7 +42,7 @@ module.exports.controller = function (app) {
     app.post('/api/post/create', passportLib.isAdmin, async (req, res) => {
         const user = req.session.userId;
         const header = 'Новость ' + moment().format('YYYY-MM-DD HH:mm');
-        Mongoose.post.create({user, header, type: req.body.type}).then(post => res.send(post))
+        Mongoose.post.create({user, header}).then(post => res.send(post))
     });
 
     app.post('/api/post/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {

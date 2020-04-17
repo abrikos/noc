@@ -12,7 +12,6 @@ const modelSchema = new Schema({
         editable: Boolean,
         published: Boolean,
         isMassMedia: Boolean,
-        type: {type:String, enum:['static','news']},
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],

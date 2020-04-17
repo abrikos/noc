@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
         name: {type: String, required: true, label: 'Название'},
-        path: {type: String, label: 'Путь'},
+        //path: {type: String, label: 'Путь'},
         noMenu: {type: Boolean, label: 'Не показывать в меню'},
         noPhoneBook: {type: Boolean, label: 'Не показывать в тел.книге'},
         chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', property:'fioShort', label:'Руководитель'},

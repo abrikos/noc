@@ -7,8 +7,8 @@ import {navigate} from "hookrouter"
 export default function AdminNews(props) {
 
     function create() {
-        props.api('/post/create', {type: props.type})
-            .then(post => navigate(`/admin/${post.type}/update/${post.id}`))
+        props.api('/post/create')
+            .then(post => navigate(`/admin/news/${post.id}/update`))
     }
 
     return <div className="row">

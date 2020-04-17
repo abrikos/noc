@@ -24,7 +24,8 @@ export default function (props) {
                 setSchema(s);
                 setFilter(s)
                 const f = {limit:10}
-                f.order = s.listOrder;
+                f.order = s.formOptions.listOrder;
+                console.log(f)
                 getList(f);
                 if (props.id) props.api(`/${modelName}/${props.id}/view`).then(setModel)
             })
