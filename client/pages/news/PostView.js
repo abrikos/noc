@@ -45,7 +45,7 @@ export default function PostView(props) {
             <hr/>
 
             <ShareButtons link={apiLink}/>
-            {post.editable && <A href={`/admin/news/update/${post.id}`}>редактировать новость</A>}
+            {post.editable && <A href={post.adminLink}>редактировать новость</A>}
         </div>
     </div>
 }

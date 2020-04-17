@@ -27,7 +27,7 @@ export default function (props) {
 
 
     function pageChange(f) {
-        props.api('/post/list', f).then(setPosts);
+        props.api('/post/list', f).then(res=>setPosts(res.list));
     }
 
     return <div className="post-list">

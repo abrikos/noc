@@ -5,14 +5,14 @@ import {Button, Nav, NavItem} from "reactstrap";
 import {navigate} from "hookrouter"
 
 export default function AdminNews(props) {
-    const [filter, setFilter] = useState({where: {isMassMedia: false}})
-    const [nav, setNav] = useState(0)
-
     const navs = [
         {label:'Новости', filter:{where:{isMassMedia: {$ne:true}}}},
         {label:'Сми о нас', filter:{where:{isMassMedia: true}}},
         {label:'Выборы', filter:{where:{isElection: true}}},
     ]
+    const [filter, setFilter] = useState(navs[0].filter)
+    const [nav, setNav] = useState(0)
+
 
     function changeFilter(i,f) {
         setNav(i)
