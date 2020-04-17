@@ -11,7 +11,7 @@ const modelSchema = new Schema({
         rank: {type: String, label: 'Звание', default: ''},
         phone: {type: String, label: 'Телефон', default: ''},
         email: {type: String, label: 'Эл.почта', default: ''},
-        education: {type: String, label: 'Образование'},
+        education: {type: String, label: 'Образование', control:'markdown'},
         awards: {type: String, label: 'Награды'},
         publications: {type: String, label: 'Публикации', control: 'markdown'},
         interest: {type: String, label: 'Научные интересы', control:'markdown'},
