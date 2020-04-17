@@ -3,7 +3,6 @@ import AdminUser from "client/pages/admin/AdminUser";
 import {A} from "hookrouter"
 import ErrorPage from "client/components/service/ErrorPage";
 import AdminStart from "client/pages/admin/AdminStart";
-import AdminMeeting from "client/pages/admin/AdminMeeting";
 import {Nav, NavItem} from "reactstrap";
 import AdminNews from "client/pages/admin/AdminNews";
 import AdminModel from "client/pages/admin/AdminModel";

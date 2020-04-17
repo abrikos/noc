@@ -18,12 +18,12 @@ const modelSchema = new Schema({
         supervisorStatus: {type: String, label: 'Статус руководства', default: ''},
         supervisorOrder: {type: Number, label: 'Порядок в руководстве'},
         description: {type: String, label: 'Описание', default: '', control: 'markdown'},
-        voice: {type: Number, label: 'Голос в ОУС', select: ["Действительные члены АН РС(Я)", "С правом решающего голоса", "С правом совещательного голоса"]},
-        member: {type: Number, label: 'Членство в АН', select: ["Действительные члены АН РС(Я)", "С правом решающего голоса", "С правом совещательного голоса"]},
+        voice: {type: Number, label: 'Голос в ОУС', select: [{label: "С правом решающего голоса", value: 1}, {label: "С правом совещательного голоса", value: 2}]},
+        member: {type: Number, label: 'Членство в АН', select: [{label: "Действительные члены АН РС(Я)", value: 0}, {label: "Почетные члены АН РС(Я)", value: 1}, {label: "Иностранные члены АН РС(Я)", value: 2}]},
 
         memberStatus: {type: String, label: 'Звание 2'},
         isApparat: {type: Boolean, label: 'В аппарате'},
-        //divisions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Division', property: 'name', label: 'Подразделение'}],
+        division: {type: mongoose.Schema.Types.ObjectId, ref: 'Division', property: 'name', label: 'Подразделение'},
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
 
@@ -60,7 +60,7 @@ modelSchema.virtual('fio')
 
 modelSchema.virtual('adminLink')
     .get(function () {
-        return`/admin/person/${this.id}/update`
+        return `/admin/person/${this.id}/update`
     });
 
 modelSchema.virtual('divisions', {

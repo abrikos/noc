@@ -3,10 +3,11 @@ import React from "react";
 import {A} from "hookrouter";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit} from "@fortawesome/free-solid-svg-icons";
+import AdminLink from "client/components/AdminLink";
 
 export default function (props) {
     const p = props.person;
-    return <div className="supervisor-person">
+    return <div className="person-large">
         <div className="supervisor-image">
             <img src={p.photo} alt={p.fio}/>
         </div>
@@ -16,7 +17,7 @@ export default function (props) {
             <div className="status">{p.supervisorStatus}</div>
             <div className="status">{p.memberStatus}</div>
             <MarkDown source={p.description}/>
-            {props.authenticatedUser.admin && <A href={p.adminLink}><FontAwesomeIcon icon={faEdit}/></A>}
+            <AdminLink model={p} {...props}/>
         </div>
     </div>
 }

@@ -10,7 +10,7 @@ export default function Council(props) {
     const [councilVoices, setCouncilVoices] = useState([]);
 
     useEffect(() => {
-        props.api(`/council/voices`).then(setCouncilVoices)
+        props.api(`/person/voices`).then(setCouncilVoices)
         props.api(`/council/${props.id}/view`)
             .then(d => {
                 setData(d)

@@ -12,8 +12,6 @@ import PhoneBook from "client/pages/phone-book/PhoneBook";
 import Council from "client/pages/council/Council";
 import SiteMap from "client/pages/SiteMap";
 import Apparatus from "client/pages/Apparatus";
-import PersonListLarge from "client/pages/persons/PersonListLarge";
-import PostList from "client/pages/news/PostList";
 import Edition from "client/pages/edition/Edition";
 import About from "client/pages/about/About";
 import Research from "client/pages/home/research/Research";
@@ -32,6 +30,7 @@ import ProjectRecycle from "client/pages/projects/recycle/ProjectRecycle";
 import Documents from "client/pages/documents/Documents";
 import WebResources from "client/pages/web-resources/WebResources";
 import PresidiumCouncil from "client/pages/presidium/PresidiumCouncil";
+import PersonList from "client/pages/persons/PersonList";
 
 export default function Routes(props) {
 
@@ -67,12 +66,13 @@ export default function Routes(props) {
         "/project/sakha-history": () => <SakhaHistory {...props}/>,
         "/project/sakha-history/:tom": (params) => <SakhaHistory {...params} {...props}/>,
         "/apparatus": () => <Apparatus {...props}/>,
-        "/persons/:type": (params) => <PersonListLarge {...params} {...props}/>,
+        //"/persons/:type": (params) => <PersonListLarge {...params} {...props}/>,
         "/site-map": () => <SiteMap {...props}/>,
         "/static/:page": (params) => <Static {...params} {...props}/>,
         "/division/:id/:path": (params) => <Division {...params} {...props}/>,
         "/council/:id/:path": (params) => <Council {...params} {...props}/>,
         "/council-about": (params) => <MeetingAbout {...params} {...props}/>,
         "/search/:code": (params) => <SearchResult {...params} {...props}/>,
+        "/people/:member/:path": (params) => <PersonList {...params} {...props}/>,
     };
 }

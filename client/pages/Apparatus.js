@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
-import PersonListSmall from "client/pages/persons/PersonListSmall";
+import PersonSmall from "client/pages/persons/PersonSmall";
 
 export default function Apparatus(props) {
     const [persons, setPersons] = useState([]);
 
     useEffect(() => {
         props.api('/person/list', {isApparat: true})
-            .then(res=> {
-                const idx = res.list.map(r=>r.fio).indexOf('Семенов Юрий Иванович')
-                const boss = res.list.splice(idx,1);
+            .then(res => {
+                const idx = res.list.map(r => r.fio).indexOf('Семенов Юрий Иванович')
+                const boss = res.list.splice(idx, 1);
                 setPersons(boss.concat(res.list))
             })
     }, [props.page]);
@@ -16,6 +16,8 @@ export default function Apparatus(props) {
 
     return <div className="phone-book">
         <h1>Аппарат АН РС(Я)</h1>
-        <PersonListSmall persons={persons} {...props}/>
+        <div className="d-flex flex-wrap">
+            {persons.map(p => <PersonSmall key={p.id} person={p} {...props}/>)}
+        </div>
     </div>
 }

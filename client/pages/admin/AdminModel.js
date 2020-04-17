@@ -121,6 +121,7 @@ export default function (props) {
                             {schema.formOptions.listFields.map(f => l[f]).join(' - ') || l.id}</A>
                     </td>
                     <td>
+                        {l.persons.length}
                         {l.image && <img src={l.photo} alt={l.id} height={20}/>}
                     </td>
                 </tr>)}

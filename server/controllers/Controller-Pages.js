@@ -9,19 +9,14 @@ module.exports.controller = function (app) {
         map.push({label: 'Главная', path: '/', menu: true});
         map.push({label: 'Новости', path: '/news', menu: true});
         const divisions = await Mongoose.division.find({path: {$ne: null}});
-        map.push({label: 'Структура', items: [{label: 'Руководство', path: '/persons/supervisors'}, {label: 'Аппарат', path: '/apparatus'}].concat(divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: d.link}))), menu: true});
+        map.push({label: 'Структура', items: [{label: 'Руководство', path: '/people/supervisors/all'}, {label: 'Аппарат', path: '/apparatus'}].concat(divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: d.link}))), menu: true});
         const meetings = await Mongoose.council.find();
         map.push({label: 'Ученые советы', items: [{label: 'О советах', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: d.link}))), menu: true});
         map.push({
-            label: 'Члены академии  АН РС(Я)', menu: true, items: [
-                {label: 'Действительные члены', path: '/persons/real-members'},
-                {label: 'Почетные члены', path: '/persons/honor-members'},
-                {label: 'Иностранные члены', path: '/persons/foreign-members'},
-            ]
+            label: 'Члены академии  АН РС(Я)', menu: true, items: Mongoose.person.schema.paths.member.options.select.map(s=>({label:s.label, path:`/people/${s.value}/members`}))
         })
         map.push({
             label: 'Президиум', menu: true, items: [
-                {label: 'Руководство', path: '/persons/supervisors'},
                 {label: 'Состав', path: '/presidium/council'},
                 {label: 'Секретариат', path: '/division/secretariat'},
                 {label: 'Документы', path: '/documents/presidium'},
@@ -58,11 +53,14 @@ module.exports.controller = function (app) {
         res.send(map)
     });
 
-    app.post('/api/council/voices', (req, res) => {
+    app.post('/api/person/voices', (req, res) => {
         const f =[
-            {label:Mongoose.person.schema.paths.member.options.select[0], value:0},
+            Mongoose.person.schema.paths.member.options.select[0],
             ...Mongoose.person.schema.paths.voice.options.select
         ]
         res.send(f)
+    })
+    app.post('/api/person/members', (req, res) => {
+        res.send(Mongoose.person.schema.paths.member.options.select)
     })
 }
