@@ -14,7 +14,7 @@ const modelSchema = new Schema({
         education: {type: String, label: 'Образование'},
         awards: {type: String, label: 'Награды'},
         publications: {type: String, label: 'Публикации', control: 'markdown'},
-        interest: {type: String, label: 'Научные интересы'},
+        interest: {type: String, label: 'Научные интересы', control:'markdown'},
         supervisorStatus: {type: String, label: 'Статус руководства', default: ''},
         supervisorOrder: {type: Number, label: 'Порядок в руководстве'},
         description: {type: String, label: 'Описание', default: '', control: 'markdown'},
