@@ -19,7 +19,7 @@ export default function InputModel(props) {
     useEffect(() => {
         if (!props.field.options.ref) return;
         const filter = {order: {}}
-        filter.order[props.field.options.property] = 1;
+        filter.sort = props.field.options.sort;
         props.api(`/${props.field.options.ref.toLowerCase()}/list`, filter)
             .then(res => setList(res.list))
     }, [])

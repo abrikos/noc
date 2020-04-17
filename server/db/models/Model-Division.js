@@ -13,9 +13,9 @@ const modelSchema = new Schema({
         //path: {type: String, label: 'Путь'},
         noMenu: {type: Boolean, label: 'Не показывать в меню'},
         noPhoneBook: {type: Boolean, label: 'Не показывать в тел.книге'},
-        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', property:'fioShort', label:'Руководитель'},
+        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', property:'fioShort', sort:{fname:1}, label:'Руководитель'},
         description: {type: String, label: 'Описание', control:'markdown'},
-        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label:'Сотрудники', property:'fioShort'}],
+        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label:'Сотрудники', property:'fioShort', sort:{fname:1}}],
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image', label:'Файлы'}],
     },
     {
