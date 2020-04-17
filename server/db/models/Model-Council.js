@@ -18,7 +18,7 @@ const modelSchema = new Schema({
         // see http://stackoverflow.com/q/13133911/488666
         toJSON: {virtuals: true}
     });
-modelSchema.statics.population = [{path: 'persons', populate: 'image'},{path:'chief', populate:'image'}];
+modelSchema.statics.population = [{path: 'persons', populate: 'image', options:{sort:{fname:1}}},{path:'chief', populate:'image'}];
 modelSchema.formOptions = {
     label: 'Ученый совет',
     listOrder: {name: 1},
