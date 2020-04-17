@@ -1,21 +1,39 @@
-import React from "react";
+import React, {useState} from "react";
 import PostList from "client/pages/news/PostList";
 import PostUpdate from "client/pages/news/PostUpdate";
-import {Button} from "reactstrap";
+import {Button, Nav, NavItem} from "reactstrap";
 import {navigate} from "hookrouter"
 
 export default function AdminNews(props) {
+    const [filter, setFilter] = useState({where: {isMassMedia: false}})
+    const [nav, setNav] = useState(0)
+
+    const navs = [
+        {label:'Новости', filter:{where:{isMassMedia: {$ne:true}}}},
+        {label:'Сми о нас', filter:{where:{isMassMedia: true}}},
+        {label:'Выборы', filter:{where:{isElection: true}}},
+    ]
+
+    function changeFilter(i,f) {
+        setNav(i)
+        setFilter(f)
+    }
 
     function create() {
         props.api('/post/create')
             .then(post => navigate(`/admin/news/${post.id}/update`))
     }
 
-    return <div className="row">
+    return <div>
+
+        <Nav tabs>
+            {navs.map((d, i) => <NavItem key={i}><span className={`nav-link  ${nav === i ? 'active' : ''}`} onClick={() => changeFilter(i,d.filter)}>{d.label}</span></NavItem>)}
+        </Nav>
+
         <h1 className="text-danger">Редактирование новостей</h1>
         {!!props.id || <div>
             <Button onClick={create}>Создать новость</Button>
-            <PostList isAdmin={true} {...props}/>
+            <PostList key={JSON.stringify(filter)} isAdmin={true} filter={filter} {...props}/>
         </div>}
 
         <PostUpdate key={props.id} {...props}/>

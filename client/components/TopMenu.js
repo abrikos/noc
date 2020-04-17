@@ -33,7 +33,7 @@ export default function TopMenu(props) {
                                     {item.items.map((itemSub, i) => {
                                         const ps = itemSub.path ? {href: itemSub.path} : itemSub.onClick ? {href: '#', onClick: itemSub.onClick} : null
                                         return <DropdownItem key={i} disabled={!ps}>
-                                            {ps ? <A {...ps}>{itemSub.label}</A> : itemSub.label}
+                                            {ps ? <A {...ps} className={itemSub.className}>{itemSub.label}</A> : itemSub.label}
                                         </DropdownItem>
                                     })}
                                 </DropdownMenu>

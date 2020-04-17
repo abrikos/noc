@@ -41,7 +41,7 @@ export default function Pager(props) {
         setPages(pgs)
     }
 
-
+    if(pages.length<2) return <div></div>;
     return <div className="d-flex justify-content-center">
         <Pagination>
             <PaginationItem>

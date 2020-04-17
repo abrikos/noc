@@ -36,6 +36,7 @@ module.exports.controller = function (app) {
         map.push({label: 'Издания', path: '/edition', menu: true})
         map.push({
             label: 'Информация', items: [
+                {label: 'Выборы', path: '/election', className:'text-danger'},
                 {label: 'Об Академии', path: '/about'},
                 {label: 'Веб-ресурсы академии', path: '/web-resources'},
                 {label: 'Научные учереждения', path: '/science-org'},

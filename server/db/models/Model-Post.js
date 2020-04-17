@@ -11,6 +11,7 @@ const modelSchema = new Schema({
         editable: Boolean,
         published: {type:Boolean, label:'Опубликовано'},
         isMassMedia: {type:Boolean, label:'СМИ о нас'},
+        isElection: {type:Boolean, label:'Выборы'},
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
@@ -39,6 +40,10 @@ modelSchema.virtual('previewPath')
         return image ? image.path : '/noImage.png'
     });
 
+modelSchema.virtual('adminLink')
+    .get(function () {
+        return `/admin/news/${this.id}/update`
+    });
 
 modelSchema.virtual('link')
     .get(function () {

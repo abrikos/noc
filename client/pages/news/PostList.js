@@ -18,15 +18,16 @@ export default function (props) {
         f.skip = 0;
         if (!props.isAdmin) f.where.published = true;
         setFilter(f);
-        props.api('/post/search', f).then(setPosts);
-        props.api('/post/search/count', f).then(count => {
-            setTotalCount(count.count);
+        console.log(JSON.stringify(f))
+        props.api('/post/list', f).then(res=> {
+            setPosts(res.list)
+            setTotalCount(res.count);
         });
-    }, []);
+    }, [props.filter]);
 
 
     function pageChange(f) {
-        props.api('/post/search', f).then(setPosts);
+        props.api('/post/list', f).then(setPosts);
     }
 
     return <div className="post-list">
