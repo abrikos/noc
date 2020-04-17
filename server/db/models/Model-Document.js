@@ -10,6 +10,7 @@ const modelSchema = new Schema({
         link: {type:String, label:'Ссылка', required:true, default:'ссылка'},
         isPresidium: {type:Boolean, label:'Президиум', default:false},
         published: {type:Boolean, label:'Опубликован'},
+        createdAt: {type:Date, label:'Дата создания'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
     },
