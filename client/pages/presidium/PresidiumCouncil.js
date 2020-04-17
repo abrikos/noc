@@ -1,35 +1,21 @@
 import React, {useEffect, useState} from "react";
-import Council from "client/pages/council/Council";
-const text = `1. Филиппов Василий Васильевич, д.т.н., проф. – председатель
-        2. Матвеев Андрей Иннокентьевич, д.т.н., проф. – заместитель председателя
-        3. Шадрина Людмила Панкратьевна , к.ф.-м.н. – секретарь
-        Члены Ученого совета:
-        4. Гоголев Анатолий Игнатьевич, д.и.н., проф.
-        5. Попов Сергей Вячеславович, д.ф.-м.н., проф.
-        6. Самсонова Ирина Валентиновна, д.э.н., проф.
-        7. Протопопов Альберт Васильевич, д.б.н.
-        8. Едисеева Туйара Олеговна, к.э.н.
-        9. Григорьева Анна Анатольевна, д.э.н.
-        10. Семенов Юрий Иванович
-        11. Скрябин Василий Васильевич
-        12. Иванов Василий Николаевич, д.и.н.
-        13. Кривошапкин Вадим Григорьевич, д.м.н., проф.
-        14. Чугунов Афанасий Васильевич, д.в.н., проф.
-        15. Брагина Дария Григорьевна, д.и.н.
-        16. Малышева Матрена Семеновна, к.э.н.
-        17. Плотников Валерий Валерьевич, к.б.н.
-        18. Шипицын Юрий Александрович, к.т.н.`
-export default function (props) {
-    const [model,setModel] = useState()
-    useEffect(()=>{
-        props.api(`/council/list`,{where:{isPresidium:true}})
-            .then(res=>setModel(res.list[0]))
-    },[])
+import PersonSmall from "client/pages/persons/PersonSmall";
 
-    if(!model) return <div></div>
+export default function (props) {
+    const [model, setModel] = useState()
+    useEffect(() => {
+        props.api(`/council/list`, {where: {isPresidium: true}})
+            .then(res => setModel(res.list[0]))
+    }, [])
+
+    if (!model) return <div></div>
     return <div>
         <h1>Состав ученого совета Президиума Академии наук РС(Я)</h1>
-        {text.split('\n').map((t,i)=><p key={i}>{t}</p>)}
-        <Council id={model.id} {...props}/>
+        <div className="d-flex flex-wrap">
+            {model.chief && <PersonSmall status={'Председатель'} person={model.chief} {...props}/>}
+            {model.deputy && <PersonSmall status={'Заместитель'} person={model.deputy} {...props}/>}
+            {model.secretary && <PersonSmall status={'Секретарь'} person={model.secretary} {...props}/>}
+            {model.persons.map(p => <PersonSmall status={p.status} key={p.id} person={p} {...props}/>)}
+        </div>
     </div>
 }
