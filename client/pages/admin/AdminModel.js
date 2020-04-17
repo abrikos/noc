@@ -40,10 +40,10 @@ export default function (props) {
         })
     }
 
-    function create(form) {
-        props.api(`/admin/${modelName}/create`, form)
+    function create() {
+        props.api(`/admin/${modelName}/create`)
             .then(model => {
-                navigate(`/admin/${modelName}/update/${model.id}`)
+                navigate(model.adminLink)
             })
     }
 

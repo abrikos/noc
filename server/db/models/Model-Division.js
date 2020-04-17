@@ -34,6 +34,10 @@ modelSchema.formOptions = {
     hasMany: ['persons']
 }
 
+modelSchema.virtual('adminLink')
+    .get(function () {
+        return `/admin/division/${this.id}/update`
+    });
 
 
 modelSchema.virtual('link')

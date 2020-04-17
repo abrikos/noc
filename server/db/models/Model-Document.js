@@ -8,7 +8,8 @@ const Schema = mongoose.Schema;
 const modelSchema = new Schema({
         header: {type:String, label:'Название', required:true, default:'Новый документ'},
         link: {type:String, label:'Ссылка', required:true, default:'ссылка'},
-        isPresidium: {type:Boolean, label:'Президиум'},
+        isPresidium: {type:Boolean, label:'Президиум', default:false},
+        published: {type:Boolean, label:'Опубликован'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
     },
@@ -38,6 +39,12 @@ modelSchema.virtual('photo')
     .get(function () {
         return this.image ? this.image.path : '/noImage.png'
     });
+
+modelSchema.virtual('adminLink')
+    .get(function () {
+        return `/admin/document/${this.id}/update`
+    });
+
 
 export default mongoose.model("Document", modelSchema)
 
