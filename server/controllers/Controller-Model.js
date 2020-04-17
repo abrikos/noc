@@ -120,6 +120,7 @@ module.exports.controller = function (app) {
                             }
                         }
                     } else {
+                        if(field.type==='ObjectID' && !req.body[f]) continue;
                         r[f] = req.body[f]
                     }
 
