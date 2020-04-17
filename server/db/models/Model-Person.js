@@ -23,7 +23,6 @@ const modelSchema = new Schema({
 
         memberStatus: {type: String, label: 'Звание 2'},
         isApparat: {type: Boolean, label: 'В аппарате'},
-        division: {type: mongoose.Schema.Types.ObjectId, ref: 'Division', property: 'name', label: 'Подразделение'},
         image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
 
