@@ -41,7 +41,7 @@ modelSchema.formOptions = {
     listOrder: {fio: 1},
     listFields: ['fioShort'],
     virtualFields: ['divisions', 'councils', 'councilsChief'],
-    searchFields: ['fname', 'lname', 'mname']
+    searchFields: ['fname']
 }
 modelSchema.virtual('photo')
     .get(function () {

@@ -89,7 +89,7 @@ export default function (props) {
         e.preventDefault()
         const form = props.formToObject(e.target);
         const f = {...filter}
-        f.regexp = schema.formOptions.listFields.map(p=>{
+        f.regexp = schema.formOptions.searchFields.map(p=>{
                     const o = {};
                     o[p] = form.search
                     return o
@@ -129,7 +129,7 @@ export default function (props) {
             </table>
 
             Найдено: {totalCount}
-            {!!totalCount && <Pager count={totalCount} filter={filter} onPageChange={pageChange}/>}
+            {!!totalCount && <Pager key={totalCount} count={totalCount} filter={filter} onPageChange={pageChange}/>}
         </div>}
         {model && <div>
             <Button onClick={()=>navigate(`/admin/${modelName}`)} color="warning">Закрыть</Button>
