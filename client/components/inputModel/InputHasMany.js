@@ -26,6 +26,9 @@ export default function (props) {
             if (o.selected) vals.push(list.find(m => m.id === o.value))
         }
         setSelected(vals)
+        const currValue = [...value];
+        setValue(currValue.concat(vals))
+        toggle()
     }
 
     function remove(id) {
@@ -52,7 +55,7 @@ export default function (props) {
             <DropdownMenu>
 
                 <select size={20} multiple={true} onChange={selectValues} name="hasManyItems">{list.filter(l => !value.map(v => v.id).includes(l.id)).map(l => <option key={l.id} value={l.id}>{l[props.field.options.property]}</option>)}</select>
-                <Button size="sm" onClick={addHasMany}>Добавить</Button>
+                {/*<Button size="sm" onClick={addHasMany}>Добавить</Button>*/}
 
             </DropdownMenu>
         </Dropdown>}
