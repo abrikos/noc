@@ -49,8 +49,8 @@ export default function (props) {
             </span>)}
         </div>
         {!props.field.options.readOnly && <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle caret>
-                Dropdown
+            <DropdownToggle caret size="sm">
+                Выбрать
             </DropdownToggle>
             <DropdownMenu>
 

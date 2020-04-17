@@ -12,7 +12,7 @@ const modelSchema = new Schema({
         phone: {type: String, label: 'Телефон', default: ''},
         email: {type: String, label: 'Эл.почта', default: ''},
         education: {type: String, label: 'Образование', control:'markdown'},
-        awards: {type: String, label: 'Награды'},
+        awards: {type: String, label: 'Награды', control:'markdown'},
         publications: {type: String, label: 'Публикации', control: 'markdown'},
         interest: {type: String, label: 'Научные интересы', control:'markdown'},
         supervisorStatus: {type: String, label: 'Статус руководства', default: ''},
