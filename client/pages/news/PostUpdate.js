@@ -14,7 +14,6 @@ export default function (props) {
     const [isMassMedia, setIsMassMedia] = useState(false);
     const [updated, setUpdated] = useState(false);
     const [errors, setErrors] = useState({});
-    const tokens = props.getCookie(props.cookieName);
 
 
     useEffect(() => {
@@ -22,7 +21,7 @@ export default function (props) {
     }, []);
 
     function loadPost() {
-        props.id && props.api(`/post/${props.id}/view/`, {tokens}).then(p => {
+        props.id && props.api(`/post/${props.id}/view/`).then(p => {
             setIsMassMedia(p.isMassMedia)
             setPost(p);
         });
@@ -36,8 +35,7 @@ export default function (props) {
         setErrors(errs);
         if (Object.keys(errs).length) return;
         //const formData = new FormData(e.target);
-        if (tokens) form.tokens = tokens;
-        props.api(`/post/${post.id}/update`, form)
+        props.api(`/admin/post/${post.id}/update`, form)
             .then(p => {
                 setUpdated(false)
                 //navigate(`/post/${post.id}`)
@@ -50,7 +48,7 @@ export default function (props) {
 
 
     function uploadDone(images) {
-        props.api(`/post/${post.id}/images/add`, {images, tokens}).then(loadPost)
+        props.api(`/post/${post.id}/images/add`, {images}).then(loadPost)
     }
 
     function change() {

@@ -2,7 +2,6 @@ import Mongoose from "server/db/Mongoose";
 
 const fs = require('fs');
 
-Mongoose.person.find({division:'5e80f5ba7549ce5472a10e13'}).then(console.log)
 
 module.exports.controller = function (app) {
 

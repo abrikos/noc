@@ -8,7 +8,7 @@ module.exports.controller = function (app) {
 
     function getSchema(name) {
         const schema = Mongoose[name].schema;
-        return {
+        const ret = {
             formOptions: schema.formOptions,
             fields: Object.keys(schema.paths)
                 .filter(key => schema.paths[key].options.label)
@@ -21,14 +21,17 @@ module.exports.controller = function (app) {
                         options: p.options
                     }
                 })
-                .concat(schema.formOptions.virtualFields ? schema.formOptions.virtualFields.map(f => {
-                    const ret = {
-                        name: f,
-                        type: 'virtual',
-                        options: schema.virtuals[f].options
-                    }
-                    return ret;
-                }) : [])
+
+        }
+        if (schema.formOptions) {
+            ret.fields = ret.fields.concat(schema.formOptions.virtualFields ? schema.formOptions.virtualFields.map(f => {
+                const ret = {
+                    name: f,
+                    type: 'virtual',
+                    options: schema.virtuals[f].options
+                }
+                return ret;
+            }) : [])
                 .concat(schema.formOptions.hasMany ? schema.formOptions.hasMany.map(f => {
                     const ret = {
                         name: f,
@@ -38,6 +41,7 @@ module.exports.controller = function (app) {
                     return ret;
                 }) : [])
         }
+        return ret;
     }
 
     app.post('/api/:model/schema', (req, res) => {
@@ -91,6 +95,7 @@ module.exports.controller = function (app) {
 
 
     app.post('/api/admin/:model/:id/update', passportLib.isAdmin, (req, res) => {
+        console.log(req.body)
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
             .then(async r => {
@@ -110,7 +115,7 @@ module.exports.controller = function (app) {
                         }
                         for (const id of req.body[f]) {
                             const model = await Mongoose[field.options.ref.toLowerCase()].findById(id)
-                            if(!model[fieldToUpdate].includes(req.params.id)) {
+                            if (!model[fieldToUpdate].includes(req.params.id)) {
                                 model[fieldToUpdate].push(req.params.id)
                                 await model.save()
                             }

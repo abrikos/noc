@@ -5,13 +5,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-        header: String,
-        text: String,
-        path: String,
-        url: String,
+        header: {type:String, label:'Заголовок'},
+        text: {type:String, label:'Текст'},
+        url: {type:String, label:'Адрес на сайте СМИ'},
         editable: Boolean,
-        published: Boolean,
-        isMassMedia: Boolean,
+        published: {type:Boolean, label:'Опубликовано'},
+        isMassMedia: {type:Boolean, label:'СМИ о нас'},
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
