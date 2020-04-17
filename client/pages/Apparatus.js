@@ -5,7 +5,7 @@ export default function Apparatus(props) {
     const [persons, setPersons] = useState([]);
 
     useEffect(() => {
-        props.api('/person/list', {isApparat: true})
+        props.api('/person/list', {where:{isApparat: true}, order:{fname:1}})
             .then(res => {
                 const idx = res.list.map(r => r.fio).indexOf('Семенов Юрий Иванович')
                 const boss = res.list.splice(idx, 1);
