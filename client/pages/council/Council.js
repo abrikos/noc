@@ -24,7 +24,7 @@ export default function Council(props) {
     }
 
     if (!data) return <div/>;
-    const chief = persons.find(p => p.id === data.chief.id)
+    const chief = data.chief && persons.find(p => p.id === data.chief.id)
     return <div className="phone-book">
         <h1>{data.name} <AdminLink model={data} {...props}/></h1>
 
@@ -41,7 +41,7 @@ export default function Council(props) {
         </Input>
         <div className="d-flex flex-wrap">
             {chief && <PersonSmall status={'Председатель'} person={chief} {...props}/>}
-            {persons.filter(p => p.id !== data.chief.id).map(p => <PersonSmall status={p.status} key={p.id} person={p} {...props}/>)}
+            {persons.filter(p => p.id !== (chief && chief.id)).map(p => <PersonSmall status={p.status} key={p.id} person={p} {...props}/>)}
         </div>
     </div>
 }
