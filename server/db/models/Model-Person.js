@@ -37,11 +37,11 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-modelSchema.statics.population = ['image', 'divisions', 'councils', 'images', 'councilsChief'];
+modelSchema.statics.population = ['image', 'divisions', 'councils', 'images', 'councilsChief', 'divisionsChief'];
 modelSchema.formOptions = {
     listOrder: {fio: 1},
     listFields: ['fioShort'],
-    virtualFields: ['divisions', 'councils', 'councilsChief'],
+    virtualFields: ['divisions', 'councils', 'councilsChief', 'divisionsChief'],
     searchFields: ['fname']
 }
 modelSchema.virtual('photo')
@@ -76,6 +76,16 @@ modelSchema.virtual('divisions', {
     readOnly: true,
     localField: '_id',
     foreignField: 'persons',
+    justOne: false // set true for one-to-one relationship
+});
+
+modelSchema.virtual('divisionsChief', {
+    ref: 'Division',
+    label: 'Шеф Подразделений',
+    property: 'name',
+    readOnly: true,
+    localField: '_id',
+    foreignField: 'chief',
     justOne: false // set true for one-to-one relationship
 });
 

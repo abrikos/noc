@@ -4,5 +4,5 @@ import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
 export default function (props) {
-    return props.authenticatedUser.admin ? <A href={props.model.adminLink}><FontAwesomeIcon icon={faEdit}/></A> : ''
+    return props.isAdmin || props.authenticatedUser.admin ? <A href={props.model.adminLink}><FontAwesomeIcon icon={faEdit}/></A> : ''
 }

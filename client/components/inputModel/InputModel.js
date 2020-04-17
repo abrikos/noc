@@ -5,6 +5,7 @@ import "./input-model.sass"
 
 import PropTypes from "prop-types";
 import InputHasMany from "client/components/inputModel/InputHasMany";
+import AdminLink from "client/components/AdminLink";
 
 InputModel.propTypes = {
     model: PropTypes.object.isRequired,
@@ -32,6 +33,7 @@ export default function InputModel(props) {
         {props.field.options.select.map((v, i) => <option key={i} value={v.value || i}>{v.label || v}</option>)}
     </Input>
 
+
     if (props.field.type === 'Boolean') input = <input type="checkbox" name={props.field.name} defaultChecked={props.model[props.field.name]} className="m-2"/>
 
     if (props.field.options.control === 'markdown') {
@@ -39,10 +41,13 @@ export default function InputModel(props) {
     }
 
     if (props.field.options.ref && list.length > 0) {
-        input = <Input type="select" name={props.field.name} defaultValue={props.model[props.field.name] && props.model[props.field.name].id}>
+        input = <div><Input type="select" name={props.field.name} defaultValue={props.model[props.field.name] && props.model[props.field.name].id}>
             <option></option>
             {list.map(l => <option key={l.id} value={l.id}>{l[props.field.options.property]}</option>)}
         </Input>
+
+            {props.model[props.field.name] && <AdminLink model={props.model[props.field.name]} isAdmin={true}/>}
+        </div>
     }
     if (['hasMany', 'virtual'].includes(props.field.type)) {
         input = <InputHasMany value={props.model[props.field.name]} list={list} {...props}/>
