@@ -53,7 +53,8 @@ export default function (props) {
 
         const err = {};
         for (const f of schema.fields) {
-            if (f.options.required && !form[f.name]) err[f.name] = f.label + ' обязательно';
+            console.log(f)
+            if (f.options.required && !form[f.name]) err[f.name] = f.options.label + ' обязательно';
         }
         if (Object.keys(err).length) return setErrors(err);
         setErrors({});

@@ -7,9 +7,9 @@ const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
         name: {type: String, required: true, label: 'Название'},
-        address: {type: String, required: true, label: 'Адрес'},
-        phone: {type: String, required: true, label: 'Телефон'},
-        email: {type: String, required: true, label: 'Email'},
+        address: {type: String, label: 'Адрес'},
+        phone: {type: String, label: 'Телефон'},
+        email: {type: String, label: 'Email'},
         //path: {type: String, label: 'Путь'},
         noMenu: {type: Boolean, label: 'Не показывать в меню'},
         noPhoneBook: {type: Boolean, label: 'Не показывать в тел.книге'},

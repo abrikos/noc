@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import MarkDown from "react-markdown";
 import "./division.sass"
 import Loader from "client/components/Loader";
+import AdminLink from "client/components/AdminLink";
 
 export default function Division(props) {
     const [data, setData] = useState();
@@ -32,6 +33,7 @@ export default function Division(props) {
             </div>
             <div className="col-md-8 text">
                 <div>
+                    <AdminLink model={data} {...props}/>
                     <MarkDown source={data.description}/>
                 </div>
             </div>
