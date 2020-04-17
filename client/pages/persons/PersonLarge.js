@@ -16,6 +16,8 @@ export default function (props) {
             <h4><A href={p.link}>{p.fio}</A></h4>
             <div className="status">{p.supervisorStatus}</div>
             <div className="status">{p.memberStatus}</div>
+            <div className="status">{p.rank}</div>
+            <MarkDown source={p.education}/>
             <MarkDown source={p.description}/>
             <AdminLink model={p} {...props}/>
         </div>
