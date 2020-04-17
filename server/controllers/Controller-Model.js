@@ -95,7 +95,6 @@ module.exports.controller = function (app) {
 
 
     app.post('/api/admin/:model/:id/update', passportLib.isAdmin, (req, res) => {
-        console.log(req.body)
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
             .then(async r => {
