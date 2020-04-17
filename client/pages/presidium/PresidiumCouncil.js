@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import Council from "client/pages/council/Council";
 const text = `1. Филиппов Василий Васильевич, д.т.н., проф. – председатель
         2. Матвеев Андрей Иннокентьевич, д.т.н., проф. – заместитель председателя
         3. Шадрина Людмила Панкратьевна , к.ф.-м.н. – секретарь
@@ -19,8 +20,16 @@ const text = `1. Филиппов Василий Васильевич, д.т.н.
         17. Плотников Валерий Валерьевич, к.б.н.
         18. Шипицын Юрий Александрович, к.т.н.`
 export default function (props) {
+    const [model,setModel] = useState()
+    useEffect(()=>{
+        props.api(`/council/list`,{where:{isPresidium:true}})
+            .then(res=>setModel(res.list[0]))
+    },[])
+
+    if(!model) return <div></div>
     return <div>
         <h1>Состав ученого совета Президиума Академии наук РС(Я)</h1>
         {text.split('\n').map((t,i)=><p key={i}>{t}</p>)}
+        <Council id={model.id} {...props}/>
     </div>
 }

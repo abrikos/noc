@@ -11,14 +11,14 @@ module.exports.controller = function (app) {
         map.push({label: 'Новости', path: '/news', menu: true});
         const divisions = await Mongoose.division.find({path: {$ne: null}});
         map.push({label: 'Структура', items: [{label: 'Руководство', path: '/people/supervisors/all'}, {label: 'Аппарат', path: '/apparatus'}].concat(divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: d.link}))), menu: true});
-        const meetings = await Mongoose.council.find();
+        const meetings = await Mongoose.council.find({isJoined:true});
         map.push({label: 'Ученые советы', items: [{label: 'О советах', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: d.link}))), menu: true});
         map.push({
             label: 'Члены академии  АН РС(Я)', menu: true, items: Mongoose.person.schema.paths.member.options.select.map(s=>({label:s.label, path:`/people/${s.value}/members`}))
         })
         map.push({
             label: 'Президиум', menu: true, items: [
-                {label: 'Состав', path: '/presidium/council'},
+                {label: 'Ученый совет Президиума АН РС(Я)', path: '/presidium/council'},
                 {label: 'Секретариат', path: '/division/5e80f5ba7549ce5472a10e13/secretariat'},
                 {label: 'Документы', path: '/documents/presidium'},
             ]

@@ -7,8 +7,12 @@ const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
         name: {type: String, label: 'Название'},
-        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Председатель', property: 'fioShort'},
-        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Персоны', property: 'fioShort'}],
+        isJoined: {type: Boolean, label: 'Объедененный'},
+        isPresidium: {type: Boolean, label: 'УС президиума'},
+        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Председатель', property: 'fioShort', sort:{fname:1}},
+        deputy: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Заместитель', property: 'fioShort', sort:{fname:1}},
+        secretary: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Секретарь', property: 'fioShort', sort:{fname:1}},
+        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Персоны', property: 'fioShort', sort:{fname:1}}],
         description: {type: String, label: 'Описание'},
     },
     {
