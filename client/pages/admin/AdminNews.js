@@ -26,12 +26,13 @@ export default function AdminNews(props) {
 
     return <div>
 
-        <Nav tabs>
-            {navs.map((d, i) => <NavItem key={i}><span className={`nav-link  ${nav === i ? 'active' : ''}`} onClick={() => changeFilter(i,d.filter)}>{d.label}</span></NavItem>)}
-        </Nav>
+
 
         <h1 className="text-danger">Редактирование новостей</h1>
         {!!props.id || <div>
+            <Nav tabs>
+                {navs.map((d, i) => <NavItem key={i}><span className={`nav-link  ${nav === i ? 'active' : ''}`} onClick={() => changeFilter(i,d.filter)}>{d.label}</span></NavItem>)}
+            </Nav>
             <Button onClick={create}>Создать новость</Button>
             <PostList key={JSON.stringify(filter)} isAdmin={true} filter={filter} {...props}/>
         </div>}
