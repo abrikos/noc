@@ -68,15 +68,13 @@ export default function (props) {
                 </tr>}
                 </tbody>
             </table>
-             <Chart
+            <Chart
 
-                    options={op.options}
-                    series={op.series}
-                    colors={['#F44336', '#E91E63', '#9C27B0']}
-                    type="bar"
-                />
-
-
+                options={op.options}
+                series={op.series}
+                colors={['#F44336', '#E91E63', '#9C27B0']}
+                type="bar"
+            />
 
 
             {/*<div>По состоянию на <span>{data.date}</span></div>*/}
@@ -85,8 +83,8 @@ export default function (props) {
     }
 
     if (!props.details && dataSakha) return <div className="covid-short text-center m-3">
-        <strong>Covid-19</strong>. Оперативные данные по Якутии на <span>{dataSakha.date}</span>.
-        Случаев заболевания: <span className="text-success">{dataSakha.new}</span>. {' '}
+        <strong>Covid-19</strong>. Оперативные данные по Якутии на <span>{dataSakha[dataSakha.length - 1].date}</span>.
+        Случаев заболевания: <span className="text-success">{dataSakha[dataSakha.length - 1].new}</span>. {' '}
         <A href="/covid19">Подробнее</A>
     </div>
 
