@@ -14,10 +14,10 @@ export default function (props) {
                 <img src={p.image ? p.image.path : noPhoto} alt={p.fio} className={p.image ? '' : 'no-photo'}/>
             </div>
             <div className="col-8 d-flex flex-column justify-content-center">
-                <div>
-                    {p.divisions[0] && <span className="division">{p.divisions[0].name}</span>}
+                <div className="person-info">
+                    <span className="division">{p.division}</span>
                     <span className="rank">{p.rank}</span>
-                    <i className="status">{p.status}</i>
+                    <i className="status">{props.presidium ? props.status : p.status}</i>
                 </div>
             </div>
         </div>

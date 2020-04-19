@@ -9,10 +9,10 @@ const modelSchema = new Schema({
         name: {type: String, label: 'Название'},
         isJoined: {type: Boolean, label: 'Объедененный'},
         isPresidium: {type: Boolean, label: 'УС президиума'},
-        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Председатель', property: 'fioShort', sort:{fname:1}},
-        deputy: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Заместитель', property: 'fioShort', sort:{fname:1}},
-        secretary: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Секретарь', property: 'fioShort', sort:{fname:1}},
-        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Персоны', property: 'fioShort', sort:{fname:1}}],
+        chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Председатель', property: 'fioShort', sort: {fname: 1}},
+        deputy: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Заместитель', property: 'fioShort', sort: {fname: 1}},
+        secretary: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Секретарь', property: 'fioShort', sort: {fname: 1}},
+        persons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Person', label: 'Персоны', property: 'fioShort', sort: {fname: 1}}],
         description: {type: String, label: 'Описание'},
     },
     {
@@ -22,7 +22,13 @@ const modelSchema = new Schema({
         // see http://stackoverflow.com/q/13133911/488666
         toJSON: {virtuals: true}
     });
-modelSchema.statics.population = [{path: 'persons', populate: ['image','divisions'], options:{sort:{fname:1}}},{path:'chief', populate:['image','divisions']},{path:'deputy', populate:['image','divisions']},{path:'secretary', populate:['image','divisions']}];
+modelSchema.statics.population = [
+    {path: 'persons', populate: ['image', 'divisions', 'councils', 'images', 'councilsChief', 'divisionsChief'], options:{sort:{fname:1}}},
+    {path: 'chief', populate: ['image', 'divisions', 'councils', 'images', 'councilsChief', 'divisionsChief'], options:{sort:{fname:1}}},
+    {path: 'deputy', populate: ['image', 'divisions', 'councils', 'images', 'councilsChief', 'divisionsChief'], options:{sort:{fname:1}}},
+    {path: 'secretary', populate: ['image', 'divisions', 'councils', 'images', 'councilsChief', 'divisionsChief'], options:{sort:{fname:1}}}
+];
+
 modelSchema.formOptions = {
     label: 'Ученый совет',
     listOrder: {name: 1},
@@ -33,7 +39,7 @@ modelSchema.formOptions = {
 
 modelSchema.virtual('adminLink')
     .get(function () {
-        return`/admin/council/${this.id}/update`
+        return `/admin/council/${this.id}/update`
     });
 
 

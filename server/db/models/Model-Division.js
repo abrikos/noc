@@ -27,7 +27,11 @@ const modelSchema = new Schema({
     });
 
 
-modelSchema.statics.population = [{path: 'chief', populate: 'image'},{path: 'persons', populate: ['image','divisions'], options:{sort:{fname:1}}},'images'];
+modelSchema.statics.population = [
+    {path: 'chief', populate: ['image', 'divisions', 'councils', 'images', 'councilsChief', 'divisionsChief'], options:{sort:{fname:1}}},
+    {path: 'persons', populate: ['image', 'divisions', 'councils', 'images', 'councilsChief', 'divisionsChief'], options:{sort:{fname:1}}},
+    'images'
+];
 
 modelSchema.formOptions = {
     label: 'Подразделение',

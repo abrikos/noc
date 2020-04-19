@@ -49,6 +49,14 @@ modelSchema.virtual('photo')
         return this.image ? this.image.path : '/noImage.png'
     });
 
+modelSchema.virtual('division')
+    .get(function () {
+        let divisions = [];
+        if(this.divisionsChief) divisions = divisions.concat(this.divisionsChief)
+        if(this.divisions)  divisions = divisions.concat(this.divisions)
+        return [...new Set(divisions.map(d=>d.name))].join(', ')
+    });
+
 modelSchema.virtual('fioShort')
     .get(function () {
         return this.lname ? `${this.fname} ${this.mname[0]}. ${this.lname[0]}.` : `${this.mname} ${this.fname[0]}.`

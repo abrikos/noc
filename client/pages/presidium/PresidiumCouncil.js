@@ -12,10 +12,10 @@ export default function (props) {
     return <div>
         <h1>Состав ученого совета Президиума Академии наук РС(Я)</h1>
         <div className="d-flex flex-wrap">
-            {model.chief && <PersonSmall status={'Председатель'} person={model.chief} {...props}/>}
-            {model.deputy && <PersonSmall status={'Заместитель'} person={model.deputy} {...props}/>}
-            {model.secretary && <PersonSmall status={'Секретарь'} person={model.secretary} {...props}/>}
-            {model.persons.map(p => <PersonSmall status={p.status} key={p.id} person={p} {...props}/>)}
+            {model.chief && <PersonSmall presidium={true} status={'Председатель'} person={model.chief} {...props}/>}
+            {model.deputy && <PersonSmall presidium={true} status={'Заместитель'} person={model.deputy} {...props}/>}
+            {model.secretary && <PersonSmall presidium={true} status={'Секретарь'} person={model.secretary} {...props}/>}
+            {model.persons.map(p => <PersonSmall presidium={true} key={p.id} person={p} {...props}/>)}
         </div>
     </div>
 }
