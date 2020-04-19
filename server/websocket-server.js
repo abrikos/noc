@@ -16,6 +16,7 @@ const app = express();
 const wss = new WebSocket.Server({clientTracking: true, noServer: true});
 app.locals.wss = wss;
 const bot = require('server/bot');
+const CronJob = require('cron').CronJob;
 
 mailer.extend(app, JSON.parse(process.env.mailer));
 
@@ -37,6 +38,7 @@ app.locals.sendError = (obj) => {
 };
 
 app.locals.bot = bot;
+app.locals.CronJob = CronJob;
 
 app.locals.socketSend = (action,data)=>{
     wss.clients.forEach(function each(client) {

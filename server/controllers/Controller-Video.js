@@ -4,15 +4,9 @@ import axios from "axios";
 const logger = require('logat');
 const passportLib = require('server/lib/passport');
 const fetchVideoInfo = require('youtube-info');
-const CronJob = require('cron').CronJob;
 const youtubeChannelId = 'UC-ACL2rOnpLvtNYw9HZJQKQ';
 const urlPlayLists = `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.YOUTUBE}&channelId=${youtubeChannelId}&part=id`
 const urlVideos = `https://www.googleapis.com/youtube/v3/playlistItems?key=${process.env.YOUTUBE}&order=date&part=snippet&maxResults=20&playlistId=`
-
-const job = new CronJob('0 0 * * * *', async function () {
-    playlistParse()
-}, null, true, 'America/Los_Angeles');
-playlistParse()
 
 function playlistParse(){
     //await Mongoose.Video.deleteMany()
@@ -38,6 +32,9 @@ function playlistParse(){
 
 
 module.exports.controller = function (app) {
+    const job = new app.locals.CronJob('0 0 * * * *', async function () {
+        playlistParse()
+    }, null, true, 'America/Los_Angeles');
 
 
     app.post('/api/admin/video/create', passportLib.isAdmin, (req, res) => {

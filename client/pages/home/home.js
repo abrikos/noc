@@ -8,6 +8,7 @@ import "./home.sass"
 import woman from "./research/woman.jpeg"
 import intell from "./intellectual/home2.jpeg"
 import DateFormat from "client/components/DateFormat";
+import Covid from "client/pages/home/Covid";
 
 export default function Home(props) {
     const [news, setNews] = useState([]);
@@ -36,6 +37,7 @@ export default function Home(props) {
 
     if(!news.length) return <div></div>
     return <div className="home">
+        <div><Covid {...props}/></div>
         <div className="row">
             {newsLast && <div className="col-sm-4">
                 {formatLastNews(0)}

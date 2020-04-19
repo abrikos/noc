@@ -8,6 +8,7 @@ import edition from "server/db/models/Model-Edition";
 import video from "server/db/models/Model-Vieo";
 import document from "server/db/models/Model-Document";
 import council from "server/db/models/Model-Council";
+import covid from "server/db/models/Model-Covid";
 
 const mongoose = require("mongoose");
 mongoose.set('useCreateIndex', true);
@@ -35,7 +36,7 @@ const Mongoose = {
     isValidId: function (id) {
         return mongoose.Types.ObjectId.isValid(id)
     },
-    User, image, post, division, person, meeting, edition, video, document, council
+    User, image, post, division, person, meeting, edition, video, document, council, covid
 
 };
 export default Mongoose;
