@@ -61,7 +61,7 @@ export default function (props) {
     </div>
 
 
-    return <div className="covid-full">
+    if(props.details) return <div className="covid-full">
         <h1>Оперативные данные распостранения короновирусной инфекции COVID-19</h1>
         <div className="row">
             <div className="col-sm-6">
@@ -89,4 +89,6 @@ export default function (props) {
 
         </div>
     </div>
+
+    return <div></div>
 }
