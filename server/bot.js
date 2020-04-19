@@ -9,10 +9,10 @@ const options = {
     polling: true,
 
 };
-let local = false;
+let botEnabled = false;
 if (process.env.PROXY_SOCKS5_HOST && parseInt(process.env.PROXY_SOCKS5_PORT)) {
     const Agent = require('socks5-https-client/lib/Agent');
-    local = true;
+    botEnabled = false;
     options.request = {
         agentClass: Agent,
         agentOptions: {
@@ -26,7 +26,7 @@ if (process.env.PROXY_SOCKS5_HOST && parseInt(process.env.PROXY_SOCKS5_PORT)) {
     }
 }
 
-if (!local) {
+if (botEnabled) {
     const TelegramBot = require('node-telegram-bot-api');
     const bot = new TelegramBot(process.env.BOT_TOKEN, options);
 
