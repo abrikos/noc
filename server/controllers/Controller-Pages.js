@@ -73,7 +73,6 @@ module.exports.controller = function (app) {
         Mongoose.covid.findOne(req.body.where)
             .sort({createdAt: -1})
             .then(data => {
-                console.log(data)
                 res.send(data)
             })
     })
