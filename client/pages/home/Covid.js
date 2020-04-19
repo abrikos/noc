@@ -47,9 +47,8 @@ export default function (props) {
     }
 
     if (!props.details && dataSakha) return <div className="covid-short">
-        Covid-19. Оперативные данные по Якутии.
-        Случаев заболевания: <span className="text-success">{dataSakha.new}</span>.
-        По состоянию на <span>{dataSakha.date}</span>.{' '}
+        <strong>Covid-19</strong>. Оперативные данные по Якутии на <span>{dataSakha.date}</span>.
+        Случаев заболевания: <span className="text-success">{dataSakha.new}</span>. {' '}
         <A href="/covid19">Подробнее</A>
     </div>
 
