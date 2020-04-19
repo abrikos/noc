@@ -22,7 +22,7 @@ const modelSchema = new Schema({
         // see http://stackoverflow.com/q/13133911/488666
         toJSON: {virtuals: true}
     });
-modelSchema.statics.population = [{path: 'persons', populate: 'image', options:{sort:{fname:1}}},{path:'chief', populate:'image'},{path:'deputy', populate:'image'},{path:'secretary', populate:'image'}];
+modelSchema.statics.population = [{path: 'persons', populate: ['image','divisions'], options:{sort:{fname:1}}},{path:'chief', populate:['image','divisions']},{path:'deputy', populate:['image','divisions']},{path:'secretary', populate:['image','divisions']}];
 modelSchema.formOptions = {
     label: 'Ученый совет',
     listOrder: {name: 1},
