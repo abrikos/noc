@@ -20,23 +20,30 @@ export default function (props) {
 
     function dataTable(list) {
         if (!list) return <div></div>;
-        const data = list[list.length-1];
-        const op = {
+        const data = list[list.length - 1];
+        let op = {
             options: {
                 chart: {
                     id: "basic-bar"
                 },
                 xaxis: {
-                    categories: Object.keys(list)
+                    categories: list.map(l => l.date)
                 }
             },
             series: [
                 {
-                    name: "series-1",
-                    data: list.map(l=>l.new)
+                    name: "Новые",
+                    data: list.map(l => l.new)
+                }, {
+                    name: "Выздоровившие",
+                    data: list.map(l => l.recovery)
+                }, {
+                    name: "Умершие",
+                    data: list.map(l => l.death)
                 }
             ]
         };
+
 
         return <div>
             <table className="table table-responsive">
@@ -61,13 +68,15 @@ export default function (props) {
                 </tr>}
                 </tbody>
             </table>
+             <Chart
 
-            <Chart
-                options={op.options}
-                series={op.series}
-                type="bar"
-                width="500"
-            />
+                    options={op.options}
+                    series={op.series}
+                    colors={['#F44336', '#E91E63', '#9C27B0']}
+                    type="bar"
+                />
+
+
 
 
             {/*<div>По состоянию на <span>{data.date}</span></div>*/}
@@ -82,7 +91,7 @@ export default function (props) {
     </div>
 
 
-    if(props.details) return <div className="covid-full">
+    if (props.details) return <div className="covid-full">
         <h1>Оперативные данные распостранения короновирусной инфекции COVID-19</h1>
         <div className="row">
             <div className="col-sm-6">
