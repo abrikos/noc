@@ -21,7 +21,7 @@ const modelSchema = new Schema({
 
 modelSchema.virtual('date')
     .get(function () {
-        return moment(this.createdAt).format('DD-MM-YYYY HH:mm')
+        return moment(this.createdAt).format('DD.MM.YYYY HH:mm')
     });
 
 
