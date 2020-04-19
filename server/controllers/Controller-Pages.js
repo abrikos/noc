@@ -71,7 +71,7 @@ module.exports.controller = function (app) {
 
     app.post('/api/covid', (req, res) => {
         Mongoose.covid.find(req.body.where)
-            .sort({createdAt: -1})
+            .sort({createdAt: 1})
             .then(data => {
                 res.send(data)
             })

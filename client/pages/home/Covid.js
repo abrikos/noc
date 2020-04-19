@@ -20,7 +20,7 @@ export default function (props) {
 
     function dataTable(list) {
         if (!list) return <div></div>;
-        const data = list[0];
+        const data = list[list.length-1];
         return <div>
             <table className="table table-responsive">
                 <tbody>
