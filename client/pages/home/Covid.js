@@ -50,7 +50,8 @@ export default function (props) {
                 <XAxis dataKey="name" />
                 <YAxis />
             </LineChart>
-            <div>По состоянию на <span>{data.date}</span></div>
+            {/*<div>По состоянию на <span>{data.date}</span></div>*/}
+            <hr/>
         </div>
     }
 
