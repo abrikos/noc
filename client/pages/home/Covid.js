@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./covid.sass"
 import {A} from "hookrouter"
-import {LineChart, Line, CartesianGrid, XAxis, YAxis} from 'recharts';
+import Chart from "react-apexcharts";
 
 export default function (props) {
     const [dataSakha, setDataSakha] = useState()
@@ -21,6 +21,23 @@ export default function (props) {
     function dataTable(list) {
         if (!list) return <div></div>;
         const data = list[list.length-1];
+        const op = {
+            options: {
+                chart: {
+                    id: "basic-bar"
+                },
+                xaxis: {
+                    categories: Object.keys(list)
+                }
+            },
+            series: [
+                {
+                    name: "series-1",
+                    data: list.map(l=>l.new)
+                }
+            ]
+        };
+
         return <div>
             <table className="table table-responsive">
                 <tbody>
@@ -44,12 +61,15 @@ export default function (props) {
                 </tr>}
                 </tbody>
             </table>
-            <LineChart width={400} height={400} data={list.map(l=>({name:l.date, value:l.new}))}>
-                <Line type="monotone" dataKey="value" stroke="#8884d8" />
-                <CartesianGrid stroke="#ccc" />
-                <XAxis dataKey="name" />
-                <YAxis />
-            </LineChart>
+
+            <Chart
+                options={op.options}
+                series={op.series}
+                type="bar"
+                width="500"
+            />
+
+
             {/*<div>По состоянию на <span>{data.date}</span></div>*/}
             <hr/>
         </div>
