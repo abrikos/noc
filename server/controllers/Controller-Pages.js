@@ -98,6 +98,7 @@ module.exports.controller = function (app) {
         return ret;
     }
 
+
     function parseDate(date){
         let datestr = date.replace('По состоянию на ', '').replace(',', '');
         const month = [
@@ -135,6 +136,7 @@ module.exports.controller = function (app) {
             new: cells[1].rawText.replace(' ','') * 1,
             recovery: cells[3].rawText.replace(' ','') * 1,
             death: cells[4].rawText.replace(' ','') * 1,
+            tests: cells[0].rawText,
             isRussia:true,
             createdAt
         }

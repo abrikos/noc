@@ -7,7 +7,7 @@ const modelSchema = new Schema({
         new: Number,
         recovery: Number,
         death: Number,
-        tests: Number,
+        tests: String,
         isRussia: Boolean,
     },
     {
