@@ -46,7 +46,7 @@ export default function (props) {
         </div>
     }
 
-    if (!props.details && dataSakha) return <div className="covid-short">
+    if (!props.details && dataSakha) return <div className="covid-short text-center m-3">
         <strong>Covid-19</strong>. Оперативные данные по Якутии на <span>{dataSakha.date}</span>.
         Случаев заболевания: <span className="text-success">{dataSakha.new}</span>. {' '}
         <A href="/covid19">Подробнее</A>
