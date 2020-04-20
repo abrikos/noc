@@ -27,7 +27,7 @@ export default function Layout(props) {
                 {label: 'ADMIN', path: '/admin/news', hidden: !(props.authenticatedUser && props.authenticatedUser.admin)},
                 {label: 'Выход', onClick: props.logOut, hidden: !props.authenticatedUser},
             ], hidden: !props.authenticatedUser},
-        {label: 'Вход', path: '/login', hidden: props.authenticatedUser},
+        //{label: 'Вход', path: '/login', hidden: props.authenticatedUser},
 
     ];
 
