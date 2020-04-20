@@ -33,3 +33,5 @@ pm2 restart all >> $LOG_UPDATE
 
 echo "UPDATE finish" >> $LOG_UPDATE
 date >> $LOG_UPDATE
+
+sh tools/database/restore.sh
