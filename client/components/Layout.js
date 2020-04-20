@@ -23,11 +23,11 @@ export default function Layout(props) {
         //{label: "Структура", items: siteMap.filter(m => m.pages[0] === 'struktura' && m.pages.length>1).map(m => ({label: m.label, path: '/division' + m.path}))},
         //{label: "ОУС", items: siteMap.filter(m => m.pages[0] === 'obedinyonnye-uchyonye-sovety' && m.pages.length>1).map(m => ({label: m.label, path: '/meeting/' + m.pages[1]}))},
 
-        {label: `${(props.authenticatedUser && props.authenticatedUser.name)}`, items:[
+        {label: `${(props.authenticatedUser && props.authenticatedUser.displayName)}`, items:[
                 {label: 'ADMIN', path: '/admin/news', hidden: !(props.authenticatedUser && props.authenticatedUser.admin)},
                 {label: 'Выход', onClick: props.logOut, hidden: !props.authenticatedUser},
             ], hidden: !props.authenticatedUser},
-        //{label: 'Вход', path: '/login', hidden: props.authenticatedUser},
+        {label: 'Вход', path: '/login', hidden: props.authenticatedUser},
 
     ];
 

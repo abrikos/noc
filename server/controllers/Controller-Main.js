@@ -97,6 +97,11 @@ module.exports.controller = function (app) {
         res.redirect(req.session.admin ? '/admin/news' : '/cabinet')
     });
 
+    app.post('/api/login/:strategy', passport.authenticate('custom'), (req, res, next) => {
+        //const redir = req.cookies.returnUrl || req.query.returnUrl || '/admin/news';
+        res.sendStatus(200)
+    });
+
 
     app.get('/api/not-logged', (req, res) => {
         res.cookie('returnUrl', req.headers.referer, {maxAge: 900000, httpOnly: true});

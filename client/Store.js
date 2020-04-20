@@ -42,6 +42,7 @@ export default function App() {
         const user = await API.postData('/user/authenticated');
         if (user.error) return;
         setAuthUser(user);
+        return user;
     }
 
     useEffect(() => {
@@ -77,6 +78,10 @@ export default function App() {
 
             setCookie(name, value, options);
 
+        },
+
+        async login(){
+            return await getUser()
         },
 
         dateAddTime(time) {

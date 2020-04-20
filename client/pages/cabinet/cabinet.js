@@ -20,7 +20,7 @@ export default function Cabinet(props) {
     function userSave(e) {
         e.preventDefault()
         props.api('/cabinet/user/save', props.formToObject(e.target))
-            .then(setUser)
+            .then(props.login())
     }
 
 
@@ -37,7 +37,7 @@ export default function Cabinet(props) {
             </div>*/}
 
             <div className="input-group mb-3">
-                <Input placeholder="Nickname" defaultValue={user.first_name} name="nick"/>
+                <Input placeholder="Nickname" defaultValue={user.name} name="nick"/>
             </div>
             <Button className="input-group-text" id="basic-addon3">{t('Save')}</Button>
         </form>

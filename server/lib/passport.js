@@ -6,6 +6,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const CustomStrategy = require('passport-custom').Strategy;
 const logger = require('logat');
 const crypto = require('crypto');
+const md5 = require('md5');
 
 
 passport.use(new LocalStrategy({passReqToCallback: true},
@@ -32,14 +33,17 @@ passport.use(new LocalStrategy({passReqToCallback: true},
 passport.use('custom', new CustomStrategy(async function (req, done) {
     let user;
     switch (req.params.strategy) {
+        case 'password':
+            user = await password(req);
+            break;
         case 'vk':
-            user = await vk(req, done);
+            user = await vk(req);
             break;
         case 'telegram':
-            user = await telegram(req, done);
+            user = await telegram(req);
             break;
         case 'mailru':
-            user = await mailru(req, done);
+            user = await mailru(req);
             break;
     }
     if (!user.error) {
@@ -67,6 +71,7 @@ async function telegram(req, done) {
             .digest('hex');
         return hmac === hash;
     }
+
     const data = req.query;
     if (checkSignature(data)) {
         return await getUser(data.id, 'telegram', data.first_name, data.photo_url)
@@ -75,7 +80,22 @@ async function telegram(req, done) {
     }
 }
 
-async function vk(req, done) {
+async function password(req) {
+    const {username, password} = req.body;
+    const user = await Mongoose.User.findOne({username});
+    if (!user) {
+        logger.info('Create user', username)
+        return await Mongoose.User.create({username, password: md5(password), externalId: new Date().valueOf()})
+    }
+    if (user.password !== md5(password)) {
+        logger.info('Wrong password', username, password, user.password, md5(password))
+        return {error: 'Wrong password'}
+    }
+    logger.info(user)
+    return user;
+}
+
+async function vk(req) {
     const url = `https://oauth.vk.com/access_token?client_id=${process.env.VK_ID}&client_secret=${process.env.VK_SECRET}&redirect_uri=${process.env.SITE}/api/login/${req.params.strategy}&code=${req.query.code}`;
     const response = await axios(url);
     const data1 = response.data;
@@ -85,7 +105,7 @@ async function vk(req, done) {
     return getUser(data.id, req.params.strategy, data.first_name + ' ' + data.last_name, data.photo_50)
 }
 
-async function mailru(req, done) {
+async function mailru(req) {
     const url = `https://oauth.vk.com/access_token?client_id=${process.env.VK_ID}&client_secret=${process.env.VK_SECRET}&redirect_uri=${process.env.SITE}/api/login/${req.params.strategy}&code=${req.query.code}`;
 }
 
@@ -97,7 +117,6 @@ async function getUser(externalId, strategy, name, photo) {
     }
     return user;
 }
-
 
 
 passport.serializeUser(function (user, done) {

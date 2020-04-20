@@ -6,8 +6,8 @@ const modelSchema = new Schema({
         externalId: {type: Number},
         strategy: String,
         name: {type: String},
-        companyName: {type: String},
         username: String,
+        password: String,
         photo: String,
         admin: {type: Boolean},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}]
@@ -26,6 +26,11 @@ const modelSchema = new Schema({
 modelSchema.virtual('date')
     .get(function () {
         return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss')
+    });
+
+modelSchema.virtual('displayName')
+    .get(function () {
+        return this.name || this.username;
     });
 
 
