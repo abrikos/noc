@@ -1,5 +1,6 @@
 import Mongoose from "server/db/Mongoose";
 async function main(){
+    return
     const upd = await  Mongoose.division.updateMany({},{$set:{persons:[]}});
     console.log(upd)
     const persons = await  Mongoose.person.find().populate('division')
