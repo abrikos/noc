@@ -2,6 +2,7 @@ import Mongoose from "server/db/Mongoose";
 import axios from "axios";
 import moment from "moment";
 import {parse} from "node-html-parser";
+const logger = require("logat")
 
 const fs = require('fs');
 
@@ -69,12 +70,33 @@ module.exports.controller = function (app) {
         res.send(Mongoose.person.schema.paths.member.options.select)
     })
 
+
     app.post('/api/covid', (req, res) => {
-        Mongoose.covid.find(req.body.where)
-            .sort({createdAt: 1})
+        Mongoose.covid
+            //.find({isRussia:false})
+            .aggregate([
+                {$match: req.body.where},
+                {
+                    $group: {
+                        _id: {
+                            new: "$new",
+                            recover: "$recover",
+                            death: "$death",
+                            recovery: "$recovery",
+                            tests: "$death",
+                        },
+                        date: {$max: "$createdAt"}
+                    },
+
+                },
+                {$sort:{date:1}}
+            ])
             .then(data => {
-                res.send(data)
+                const mapped = data.map(d=>({id:d.date,date:moment(d.date).format('DD.MM.YY HH:mm'), ...d._id}));
+                logger.info(mapped)
+                res.send(mapped)
             })
+
     })
 
     //Mongoose.covid.deleteMany().then(console.log)
@@ -91,14 +113,14 @@ module.exports.controller = function (app) {
             recovery: cells[1].rawText * 1,
             death: cells[2].rawText * 1,
             tests: cells[3].rawText * 1,
-            isRussia:false,
+            isRussia: false,
             createdAt: str
         }
         return ret;
     }
 
 
-    function parseDate(date){
+    function parseDate(date) {
         let datestr = date.replace('По состоянию на ', '').replace(',', '');
         const month = [
             'января',
@@ -116,9 +138,9 @@ module.exports.controller = function (app) {
         ];
         const arr = datestr.split(' ')
         const m = month.indexOf(arr[1]) + 1;
-        if(arr[3]) {
+        if (arr[3]) {
             datestr = `${arr[2]}-${m < 10 ? `0${m}` : m}-${arr[0]} ${arr[3]}`
-        }else{
+        } else {
             datestr = `2020-${m < 10 ? `0${m}` : m}-${arr[0]} ${arr[2]}`
         }
         return moment(datestr).format('YYYY-MM-DD HH:mm');
@@ -132,11 +154,11 @@ module.exports.controller = function (app) {
         const createdAt = parseDate(dateContainer.rawText)
         const cells = container.querySelectorAll('.cv-countdown__item-value')
         const ret = {
-            new: cells[1].rawText.replace(' ','') * 1,
-            recovery: cells[3].rawText.replace(' ','') * 1,
-            death: cells[4].rawText.replace(' ','') * 1,
+            new: cells[1].rawText.replace(' ', '') * 1,
+            recovery: cells[3].rawText.replace(' ', '') * 1,
+            death: cells[4].rawText.replace(' ', '') * 1,
             tests: cells[0].rawText,
-            isRussia:true,
+            isRussia: true,
             createdAt
         }
         return ret;
@@ -147,11 +169,11 @@ module.exports.controller = function (app) {
     async function covid() {
         const rus = await covidRussia();
         const sak = await covidSakha();
-        const last1 = await Mongoose.covid.findOne({createdAt: sak.createdAt, isRussia:false});
+        const last1 = await Mongoose.covid.findOne({createdAt: sak.createdAt, isRussia: false});
         if (!last1) {
             Mongoose.covid.create(sak)
         }
-        const last2 = await Mongoose.covid.findOne({createdAt: rus.createdAt, isRussia:true});
+        const last2 = await Mongoose.covid.findOne({createdAt: rus.createdAt, isRussia: true});
         if (!last2) {
             Mongoose.covid.create(rus)
         }
