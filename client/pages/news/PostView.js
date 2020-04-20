@@ -29,10 +29,10 @@ export default function PostView(props) {
     return <div>
         <div className="post-full">
             <h1>{post.header}</h1>
-            <DateFormat date={post.date}/> | {/*<FontAwesomeIcon icon={faEye}/> {post.views}*/}
+            <DateFormat date={post.createdAt}/> {/*<FontAwesomeIcon icon={faEye}/> {post.views}*/}
             <hr/>
             <div className="d-flex justify-content-center">
-                {post.image && <img src={post.image.path} className="m-auto" alt={post.header}/>}
+                <img src={post.previewPath} className="m-auto" alt={post.header}/>
             </div>
 
             <div className="post-text">
