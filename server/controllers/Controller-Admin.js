@@ -13,6 +13,14 @@ module.exports.controller = function (app) {
             .then(r => res.send(r))
     });
 
+    app.post('/api/admin/user/delete', passportLib.isAdmin, (req, res) => {
+        Mongoose.User.findById(req.body.id)
+            .then(u =>{
+                u.delete()
+                res.sendStatus(200)
+            })
+    });
+
     app.post('/api/admin/user/:id/change-admin', passportLib.isAdmin, (req, res) => {
         Mongoose.User.findById(req.params.id)
             .then(user => {
