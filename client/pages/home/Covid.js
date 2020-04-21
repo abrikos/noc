@@ -50,15 +50,15 @@ export default function (props) {
                 <tbody>
                 <tr>
                     <td>Случаев заболевания</td>
-                    <td className="text-danger">{data.new.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+                    <td className="text-danger">{data.new.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "&nbsp")}</td>
                 </tr>
                 <tr>
                     <td>Случаев выздоровления</td>
-                    <td className="text-success">{data.recovery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+                    <td className="text-success">{data.recovery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "&nbsp;")}</td>
                 </tr>
                 <tr>
                     <td>Случаев летального исхода</td>
-                    <td>{data.death.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")}</td>
+                    <td>{data.death.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "&nbsp;")}</td>
                 </tr>
                 {data.tests ? <tr>
                     <td>Проведено тестов</td>
