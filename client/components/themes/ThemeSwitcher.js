@@ -2,8 +2,9 @@ import React from "react";
 import {Button} from "reactstrap";
 
 export default function (props) {
-    return <div>
-        {props.themes.map(t=><Button key={t.name} onClick={()=>props.switchTheme(t.name)}>{t.label}</Button>)}
+    return <div className="text-center">
+        <hr/>
+        Выбирите стиль отображения сайта: {props.themes.map(t=><Button key={t.name} onClick={()=>props.switchTheme(t.name)} size="sm">{t.label}</Button>)}
 
     </div>
 }
