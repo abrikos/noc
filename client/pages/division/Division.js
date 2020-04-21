@@ -39,11 +39,11 @@ export default function Division(props) {
                 <div>
                     <AdminLink model={data} {...props}/>
                     <MarkDown source={data.description}/>
-                    {data.phone || data.email && <div>
-                    <h3>Контакты</h3>
-                    <div><Phone phone={data.phone}/></div>
-                    <div><Email email={data.email}/></div>
-                    <hr/>
+                    {(data.phone || data.email) && <div>
+                        <h3>Контакты</h3>
+                        <div><Phone phone={data.phone}/></div>
+                        <div><Email email={data.email}/></div>
+                        <hr/>
                     </div>}
                     {!!data.persons.length && <div>
                         <h3>Все сотрудники</h3>

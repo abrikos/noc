@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MarkDown from "react-markdown";
 import AdminLink from "client/components/AdminLink";
+import {A} from "hookrouter"
 
 export default function (props) {
     const [model, setModel] = useState();
@@ -19,7 +20,7 @@ export default function (props) {
                 <img src={model.photo} className="img-fluid" alt={model.fio}/>
             </div>
             <div className="col-sm-6">
-                <h4 className="division">{model.divisions.map(d => d.name).join(', ')}</h4>
+                <h4 className="division">{model.divisions.map(d =><div key={d.id}><A href={d.link}>{d.name}</A></div> )}</h4>
                 <div className="rank">{model.rank}</div>
                 <div className="status">{model.status}</div>
 
