@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import TopMenu from "client/components/TopMenu";
-import 'client/style/main.sass';
 import 'client/style/modal.css';
 import {useRoutes} from "hookrouter";
 import routes from "client/Routes";
 //import YandexMetrica from "client/components/YandexMetrica";
 import BottomInfo from "client/pages/home/BottomInfo";
 import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'client/components/themes/bootstrap.css';
+import ThemeMenuVertical from "client/components/themes/vertical-menu/ThemeMenuVertical";
+import ThemeMenuTop from "client/components/themes/top-menu/ThemeMenuTop";
 
-export default function Layout(props) {
+export default function LayoutMenuTop(props) {
     const [siteMap, setSiteMap] = useState([]);
     let {children, alert, ...rest} = props;
 
@@ -33,17 +34,7 @@ export default function Layout(props) {
 
     let routeResult = useRoutes(routes(props));
 
-    return <div className={'main'}>
-        <TopMenu {...rest} items={siteMap.filter(s => s.menu).concat(menuItems)}/>
-        <div className="container content">
-            {props.errorPage || routeResult}
-            <footer>
-                {/*<YandexMetrica/>*/}
-                <BottomInfo/>
-            </footer>
-        </div>
-
-    </div>
+    return <ThemeMenuTop menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>
 
 }
 
