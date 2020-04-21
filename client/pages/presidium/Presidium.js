@@ -6,13 +6,15 @@ export default function Presidium(props) {
     const [model, setModel] = useState()
     const [persons, setPersons] = useState()
     useEffect(() => {
-        console.log(props.type)
+
         switch (props.type) {
             case 'council':
+                setPersons(null)
                 props.api(`/council/list`, {where: {isPresidium: true}})
                     .then(res => setModel(res.list[0]))
                 break;
             default:
+                setModel(null)
                 const types = {
                     'president': {
                         ids: [1, 2
