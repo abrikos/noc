@@ -82,6 +82,6 @@ export default function Routes(props) {
         "/person/:id/:path": (params) => <PersonView {...params} {...props}/>,
         "/person/:status": (params) => <PersonView {...params} {...props}/>,
         "/covid19": (params) => <Covid details={true} {...props}/>,
-        "/test": (params) => <TestPage details={true} {...props}/>,
+        "/test": (params) => <TestPage {...props}/>,
     };
 }

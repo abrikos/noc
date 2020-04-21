@@ -2,12 +2,12 @@ import React from "react";
 import MenuTop from "client/components/themes/top-menu/MenuTop";
 import BottomInfo from "client/pages/home/BottomInfo";
 import "client/components/themes/main.sass"
-import Covid from "client/pages/home/Covid";
+import CovidShort from "client/pages/home/CovidShort";
 
 export default function (props) {
     return <div className={'main'}>
         <MenuTop {...props} items={props.menuItems}/>
-        <div><Covid {...props}/></div>
+        {window.location.pathname!=='/covid19' && <div><CovidShort {...props}/></div>}
         <div className="container">
             {props.errorPage || props.routeResult}
             <footer>

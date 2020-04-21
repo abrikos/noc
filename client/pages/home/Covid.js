@@ -83,6 +83,7 @@ export default function (props) {
     }
 
     if (!props.details && dataSakha) return <div className="covid-short text-center mb-3">
+        {JSON.stringify(props.details)}
         <strong>Covid-19</strong>. Оперативные данные по Якутии на <span>{dataSakha[dataSakha.length - 1].date}</span>.
         Случаев заболевания: <span className="text-danger">{dataSakha[dataSakha.length - 1].new}</span>. {' '}
         <A href="/covid19">Подробнее</A>

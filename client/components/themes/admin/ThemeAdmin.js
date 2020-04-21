@@ -8,7 +8,6 @@ import "client/components/themes/admin/theme-admin.sass"
 export default function (props) {
     return <div className={'main'}>
         <MenuTop {...props} items={props.menuItems}/>
-        <div><Covid {...props}/></div>
         <div className="container-fluid admin-content">
             {props.errorPage || props.routeResult}
             <footer>
