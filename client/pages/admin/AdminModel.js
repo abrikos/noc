@@ -107,7 +107,7 @@ export default function (props) {
     }
 
     if (!schema) return <div></div>;
-    return <div className="row" key={modelName}>
+    return <div key={modelName}>
         {!model && <div>
             <Button onClick={create} color="primary">Добавить {schema.formOptions.label}</Button>
             <form  onSubmit={search}>

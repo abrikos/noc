@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'client/components/themes/bootstrap.css';
 import ThemeMenuVertical from "client/components/themes/vertical-menu/ThemeMenuVertical";
 import ThemeMenuTop from "client/components/themes/top-menu/ThemeMenuTop";
+import ThemeAdmin from "client/components/themes/admin/ThemeAdmin";
 
 export default function LayoutMenuTop(props) {
     const [siteMap, setSiteMap] = useState([]);
@@ -33,7 +34,7 @@ export default function LayoutMenuTop(props) {
     ];
 
     let routeResult = useRoutes(routes(props));
-
+    if(window.location.pathname.match(/^\/admin/)) return <ThemeAdmin menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>
     return <ThemeMenuTop menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>
 
 }

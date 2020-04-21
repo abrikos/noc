@@ -31,7 +31,7 @@ export default function (props) {
     if (!persons) return <Loader/>
     return <div className="phone-book">
         <h1>{pages[props.member].label}</h1>
-        <div className="d-flex flex-wrap">
+        <div className="d-flex flex-wrap justify-content-center">
             {persons.map(p => <PersonLarge key={p.id} person={p} {...props}/>)}
         </div>
     </div>
