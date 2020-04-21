@@ -34,6 +34,7 @@ import PersonList from "client/pages/persons/PersonList";
 import Election from "client/pages/election/Election";
 import PersonView from "client/pages/persons/PersonView";
 import Covid from "client/pages/home/Covid";
+import TestPage from "client/pages/home/TestPage";
 
 export default function Routes(props) {
 
@@ -80,5 +81,6 @@ export default function Routes(props) {
         "/election": (params) => <Election {...params} {...props}/>,
         "/person/:id/:path": (params) => <PersonView {...params} {...props}/>,
         "/covid19": (params) => <Covid details={true} {...props}/>,
+        "/test": (params) => <TestPage details={true} {...props}/>,
     };
 }
