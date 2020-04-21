@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, UncontrolledDropdown,} from "reactstrap";
 import {A, navigate, usePath} from "hookrouter";
-import "client/style/navbar.sass"
+//import "client/style/navbar.sass"
 import logo from "client/images/logo-text.svg"
 import YouTube from "client/images/youtube.svg"
 import Instagram from "client/images/instagram.svg"
 
-export default function TopMenu(props) {
+export default function MenuTop(props) {
     const [menuPulled, pullMenu] = useState(false);
     const currentPath = usePath();
 
@@ -15,10 +15,11 @@ export default function TopMenu(props) {
         return path === currentPath;
     }
 
-    return (
-        <Navbar light expand="md" className="top-menu">
+    return <div>
+
+        <Navbar light expand="xl" className="top-menu">
             <NavbarBrand href='#' onClick={e => navigate('/')} className='mr-auto site-logo'>
-                <img src={logo} alt="logo" className="logo"/>
+                <img src={logo} alt="logo" className="top-logo"/>
             </NavbarBrand>
             <NavbarToggler onClick={e => pullMenu(!menuPulled)} className="dark"/>
             <Collapse isOpen={menuPulled} navbar>
@@ -77,11 +78,10 @@ export default function TopMenu(props) {
                 </Nav>
             </Collapse>
         </Navbar>
-    );
-
+    </div>
 }
 
-TopMenu.propTypes = {
+MenuTop.propTypes = {
     items: PropTypes.array.isRequired,
     title: PropTypes.string
 };
