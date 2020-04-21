@@ -5,10 +5,14 @@ import {navigate} from "hookrouter";
 import cookieParser from 'cookie';
 import {useCookies} from 'react-cookie';
 
+const themes = [
+    {name:'horizontal',label:'Горизонтальная'},
+    {name:'vertical',label:'Вертикальная'},
+]
 
 export default function App() {
+    const [theme, setTheme] = useState(themes[0].name);
     const [cookies, setCookie] = useCookies([]);
-
     const [alert, setAlert] = useState({isOpen: false});
     const [authenticatedUser, setAuthUser] = useState(false);
     const [message, setMessage] = useState({});
@@ -49,6 +53,8 @@ export default function App() {
         //startWebSocket();
         //setInterval(checkWebsocket, 1000);
         getUser();
+        const t = params.getCookie('theme');
+        if(t) setTheme(t)
     }, [])
 
 
@@ -57,6 +63,8 @@ export default function App() {
         message,
         authenticatedUser,
         alert,
+        theme,
+        themes,
         cookieName: 'postsEdited',
         savedData: {},
         ws(data) {
@@ -70,14 +78,17 @@ export default function App() {
             this.savedData[key] = value;
         },
 
+        switchTheme(name) {
+            this.setCookie('theme', name)
+            setTheme(name)
+        },
+
         getCookie(name) {
             return cookies[name]
         },
 
         setCookie(name, value, options) {
-
             setCookie(name, value, options);
-
         },
 
         async login(){

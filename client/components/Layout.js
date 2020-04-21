@@ -7,12 +7,12 @@ import BottomInfo from "client/pages/home/BottomInfo";
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'client/components/themes/bootstrap.css';
 import ThemeMenuVertical from "client/components/themes/vertical-menu/ThemeMenuVertical";
-import ThemeMenuTop from "client/components/themes/top-menu/ThemeMenuTop";
+import ThemeMenuHorizontal from "client/components/themes/top-menu/ThemeMenuHorizontal";
 import ThemeAdmin from "client/components/themes/admin/ThemeAdmin";
+import ThemeSwitcher from "client/components/themes/ThemeSwitcher";
 
 export default function LayoutMenuTop(props) {
     const [siteMap, setSiteMap] = useState([]);
-    let {children, alert, ...rest} = props;
 
     useEffect(() => {
         props.api('/site-map')
@@ -35,8 +35,12 @@ export default function LayoutMenuTop(props) {
 
     let routeResult = useRoutes(routes(props));
     if(window.location.pathname.match(/^\/admin/)) return <ThemeAdmin menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>
-    return <ThemeMenuTop menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>
-
+    return <div>
+        {/*<ThemeMenuHorizontal menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>*/}
+        {props.theme ==='horizontal' && <ThemeMenuHorizontal menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>}
+        {props.theme ==='vertical' && <ThemeMenuVertical menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>}
+        <ThemeSwitcher {...props}/>
+    </div>
 }
 
 

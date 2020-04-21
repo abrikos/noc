@@ -98,7 +98,6 @@ module.exports.controller = function (app) {
             ])
             .then(data => {
                 const mapped = data.map(d=>({id:d.date,date:moment(d.date).format('DD.MM.YY HH:mm'), ...d._id}));
-                logger.info(mapped)
                 res.send(mapped)
             })
 

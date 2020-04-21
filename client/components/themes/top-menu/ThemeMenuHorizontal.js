@@ -4,7 +4,7 @@ import BottomInfo from "client/pages/home/BottomInfo";
 import "client/components/themes/main.sass"
 import CovidShort from "client/pages/home/CovidShort";
 
-export default function (props) {
+export default function ThemeMenuHorizontal(props) {
     return <div className={'main'}>
         <MenuTop {...props} items={props.menuItems}/>
         {window.location.pathname!=='/covid19' && <div><CovidShort {...props}/></div>}

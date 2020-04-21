@@ -40,6 +40,7 @@ export default function Division(props) {
                     {!!data.persons.length && <div>
                         <h3>Все сотрудники</h3>
                         <div className="d-flex flex-wrap">
+                            <PersonSmall person={data.chief} {...props}/>
                             {data.persons.map(p=><PersonSmall person={p} key={p.id} {...props}/>)}
                         </div>
                     </div>}
