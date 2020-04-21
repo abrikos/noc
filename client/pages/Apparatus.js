@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import PersonSmall from "client/pages/persons/PersonSmall";
+import PersonSmall from "client/pages/people/PersonSmall";
 
 export default function Apparatus(props) {
     const [persons, setPersons] = useState([]);

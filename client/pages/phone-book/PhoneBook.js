@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Input} from "reactstrap";
-import PersonSmall from "client/pages/persons/PersonSmall";
+import PersonSmall from "client/pages/people/PersonSmall";
 
 export default function PhoneBook(props) {
     const [data, setData] = useState([]);

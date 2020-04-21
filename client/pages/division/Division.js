@@ -3,7 +3,7 @@ import MarkDown from "react-markdown";
 import "./division.sass"
 import Loader from "client/components/Loader";
 import AdminLink from "client/components/AdminLink";
-import PersonSmall from "client/pages/persons/PersonSmall";
+import PersonSmall from "client/pages/people/PersonSmall";
 import {A} from "hookrouter"
 
 export default function Division(props) {

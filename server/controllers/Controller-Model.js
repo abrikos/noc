@@ -114,13 +114,16 @@ module.exports.controller = function (app) {
                         }
                         for (const id of req.body[f]) {
                             const model = await Mongoose[field.options.ref.toLowerCase()].findById(id)
-                            if (!model[fieldToUpdate].includes(req.params.id)) {
+                            if (model[fieldToUpdate].id) {
+                                model[fieldToUpdate] = req.params.id;
+                                await model.save()
+                            } else if (!model[fieldToUpdate].includes(req.params.id)) {
                                 model[fieldToUpdate].push(req.params.id)
                                 await model.save()
                             }
                         }
                     } else {
-                        if(field.type==='ObjectID' && !req.body[f]) continue;
+                        if (field.type === 'ObjectID' && !req.body[f]) continue;
                         r[f] = req.body[f]
                     }
 

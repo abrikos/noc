@@ -29,10 +29,10 @@ import SakhaHistory from "client/pages/projects/sakha-history/SakhaHistory";
 import ProjectRecycle from "client/pages/projects/recycle/ProjectRecycle";
 import Documents from "client/pages/documents/Documents";
 import WebResources from "client/pages/web-resources/WebResources";
-import PresidiumCouncil from "client/pages/presidium/PresidiumCouncil";
-import PersonList from "client/pages/persons/PersonList";
+import Presidium from "client/pages/presidium/Presidium";
+import PersonList from "client/pages/people/PersonList";
 import Election from "client/pages/election/Election";
-import PersonView from "client/pages/persons/PersonView";
+import PersonView from "client/pages/people/PersonView";
 import Covid from "client/pages/home/Covid";
 import TestPage from "client/pages/home/TestPage";
 
@@ -60,7 +60,7 @@ export default function Routes(props) {
         "/news": () => <NewsPage {...props}/>,
         "/video": () => <VideoList {...props}/>,
         "/edition": () => <Edition {...props}/>,
-        "/presidium/council": () => <PresidiumCouncil {...props}/>,
+        "/presidium/:type": (params) => <Presidium {...params} {...props}/>,
         "/static/:path": (params) => <PostView {...params} {...props}/>,
         "/news/:id": (params) => <PostView {...params} {...props}/>,
         "/news/:id/:path": (params) => <PostView {...params} {...props}/>,
@@ -77,9 +77,10 @@ export default function Routes(props) {
         "/council/:id/:path": (params) => <Council {...params} {...props}/>,
         "/council-about": (params) => <MeetingAbout {...params} {...props}/>,
         "/search/:code": (params) => <SearchResult {...params} {...props}/>,
-        "/people/:member/:path": (params) => <PersonList {...params} {...props}/>,
+        "/people/:member/:id": (params) => <PersonList {...params} {...props}/>,
         "/election": (params) => <Election {...params} {...props}/>,
         "/person/:id/:path": (params) => <PersonView {...params} {...props}/>,
+        "/person/:status": (params) => <PersonView {...params} {...props}/>,
         "/covid19": (params) => <Covid details={true} {...props}/>,
         "/test": (params) => <TestPage details={true} {...props}/>,
     };

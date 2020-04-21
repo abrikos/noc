@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Input, Nav, NavItem} from "reactstrap";
-import PersonSmall from "client/pages/persons/PersonSmall";
+import PersonSmall from "client/pages/people/PersonSmall";
 import AdminLink from "client/components/AdminLink";
 
 export default function Council(props) {
@@ -10,7 +10,7 @@ export default function Council(props) {
     const [councilVoices, setCouncilVoices] = useState([]);
 
     useEffect(() => {
-        props.api(`/person/voices`).then(setCouncilVoices)
+        props.api(`/person/options/list/voices`).then(setCouncilVoices)
         props.api(`/council/${props.id}/view`)
             .then(d => {
                 setData(d)

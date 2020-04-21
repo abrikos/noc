@@ -17,6 +17,7 @@ const modelSchema = new Schema({
         awards: {type: String, label: 'Награды', control:'markdown'},
         publications: {type: String, label: 'Публикации', control: 'markdown'},
         interest: {type: String, label: 'Научные интересы', control:'markdown'},
+        presidiumStatusId: {type: Number, label: 'Статус президиума', select: [{label: "Президент", value: 1}, {label: "и.о. Президента", value: 2}, {label: "Вице-президент", value: 3}, {label: "Главный ученый секретарь", value: 4}, {label: "Советник", value: 5}]},
         supervisorStatus: {type: String, label: 'Статус руководства', default: ''},
         supervisorOrder: {type: Number, label: 'Порядок в руководстве'},
         description: {type: String, label: 'Описание', default: '', control: 'markdown'},
@@ -55,6 +56,13 @@ modelSchema.virtual('division')
         if(this.divisionsChief) divisions = divisions.concat(this.divisionsChief)
         if(this.divisions)  divisions = divisions.concat(this.divisions)
         return [...new Set(divisions.map(d=>d.name))].join(', ')
+    });
+
+
+modelSchema.virtual('presidiumStatus')
+    .get(function () {
+        const option = modelSchema.paths.presidiumStatusId.options.select.find(o=>o.value === this.presidiumStatusId)
+        return option && option.label
     });
 
 modelSchema.virtual('fioShort')

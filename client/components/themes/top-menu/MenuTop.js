@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, UncontrolledDropdown,} from "reactstrap";
 import {A, navigate, usePath} from "hookrouter";
-//import "client/style/navbar.sass"
+import "client/components/themes/top-menu/navbar.sass"
 import logo from "client/images/logo-text.svg"
 import YouTube from "client/images/youtube.svg"
 import Instagram from "client/images/instagram.svg"

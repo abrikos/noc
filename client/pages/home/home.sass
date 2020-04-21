@@ -1,4 +1,4 @@
-@import "client/style/params"
+@import "../../components/themes/params"
 
 .home
   .first-news
@@ -13,7 +13,8 @@
   .post-small
     box-shadow: none
     display: flex
-    width: 427px
+    @media screen and (min-width: $min-width)
+      width: 40%
     height: 100px
     .post-small-text
       display: none
