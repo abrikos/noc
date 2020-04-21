@@ -2,10 +2,13 @@ import React, {useEffect, useState} from "react";
 import "./covid.sass"
 import {A} from "hookrouter"
 import Chart from "react-apexcharts";
+import axios from "axios";
+import MarkDown from "react-markdown";
 
 export default function (props) {
     const [dataSakha, setDataSakha] = useState()
     const [dataRussia, setDataRussia] = useState()
+    const [text, setText] = useState()
 
     useEffect(() => {
         props.api('/covid', {where: {isRussia: false}})
@@ -16,6 +19,8 @@ export default function (props) {
             .then(res => {
                 setDataRussia(res)
             })
+        axios('/covid19.txt')
+            .then(res=>setText(res.data))
     }, [])
 
     function dataTable(list) {
@@ -82,14 +87,6 @@ export default function (props) {
         </div>
     }
 
-    if (!props.details && dataSakha) return <div className="covid-short text-center mb-3">
-        {JSON.stringify(props.details)}
-        <strong>Covid-19</strong>. Оперативные данные по Якутии на <span>{dataSakha[dataSakha.length - 1].date}</span>.
-        Случаев заболевания: <span className="text-danger">{dataSakha[dataSakha.length - 1].new}</span>. {' '}
-        <A href="/covid19">Подробнее</A>
-    </div>
-
-
     if (props.details) return <div className="covid-full">
         <h1>Оперативные данные распостранения короновирусной инфекции COVID-19</h1>
         <div className="row">
@@ -118,11 +115,8 @@ export default function (props) {
 
         </div>
         <div className="alert alert-info my-5">
-        <h3>
-            <a href="https://drive.google.com/open?id=1heqMRUTrrGCiumyhFS2YZkqgkYbqwTip" target="_blank" rel="noopener noreferrer">Предложения ОУСа по медико-биологическим наукам АН РС (Я)
-                по организационным мерам в отношении борьбы с коронавирусной
-                инфекцией SARS-CoV-2 в Республике Саха (Якутия)</a>
-        </h3>
+            <MarkDown source={text}/>
+            <a href="https://drive.google.com/open?id=1heqMRUTrrGCiumyhFS2YZkqgkYbqwTip" target="_blank" rel="noopener noreferrer">Скачать предложение</a>
         </div>
     </div>
 
