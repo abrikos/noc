@@ -7,6 +7,7 @@ import DateFormat from "client/components/DateFormat";
 import "client/pages/news/post-view.sass"
 import {A} from "hookrouter"
 import HtmlView from "client/components/HtmlView";
+import AdminLink from "client/components/AdminLink";
 
 export default function PostView(props) {
     const [post, setPost] = useState({});
@@ -30,6 +31,7 @@ export default function PostView(props) {
         <div className="post-full">
             <h1>{post.header}</h1>
             <DateFormat date={post.createdAt}/> {/*<FontAwesomeIcon icon={faEye}/> {post.views}*/}
+            <AdminLink model={post} isAdmin={post.editable}/>
             <hr/>
             <div className="d-flex justify-content-center">
                 <img src={post.previewPath} className="m-auto" alt={post.header}/>
@@ -45,7 +47,7 @@ export default function PostView(props) {
             <hr/>
 
             <ShareButtons link={apiLink}/>
-            {post.editable && <A href={post.adminLink}>редактировать новость</A>}
+
         </div>
     </div>
 }
