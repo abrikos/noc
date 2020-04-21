@@ -26,11 +26,11 @@ export default function ThemeMenuVertical(props) {
                         <img src={logo} alt="logo" className="top-logo"/>
                     </div>
 
-                    <ul>
+                    <ul className="vertical-menu">
                         {props.menuItems.map((s, i) => <li key={i}>
                             {s.path ? <A href={s.path}>{s.label}</A> : <span className="menu-link" onClick={() => toggle(i)}>{s.label}</span>}
-                            {s.items && i === dropped && <ul>
-                                {s.items.filter(s => s.path).map((s2, i2) => <li key={i2}><A href={s2.path} className={s2.className}>{s2.label}</A></li>)}
+                            {s.items && (s.items.map(ss=>ss.path).includes(window.location.pathname) || i === dropped) && <ul>
+                                {s.items.filter(s => s.path).map((s2, i2) => <li key={i2} className={s2.path === window.location.pathname && 'active'}><A href={s2.path} className={s2.className}>{s2.label}</A></li>)}
                             </ul>}
                         </li>)}
                     </ul>
