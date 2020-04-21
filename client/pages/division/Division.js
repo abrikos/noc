@@ -37,10 +37,13 @@ export default function Division(props) {
                 <div>
                     <AdminLink model={data} {...props}/>
                     <MarkDown source={data.description}/>
-                    <h3>Все сотрудники</h3>
-                    <div className="d-flex flex-wrap">
-                        {data.persons.map(p=><PersonSmall person={p} key={p.id} {...props}/>)}
-                    </div>
+                    {!!data.persons.length && <div>
+                        <h3>Все сотрудники</h3>
+                        <div className="d-flex flex-wrap">
+                            {data.persons.map(p=><PersonSmall person={p} key={p.id} {...props}/>)}
+                        </div>
+                    </div>}
+
                 </div>
             </div>
         </div>
