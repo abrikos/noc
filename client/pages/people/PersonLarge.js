@@ -10,16 +10,18 @@ export default function (props) {
     return <div className="person-large">
         <div className="supervisor-image">
             <img src={p.photo} alt={p.fio}/>
+
         </div>
 
         <div className="supervisor-text">
-            <h4><A href={p.link}>{p.fio}</A></h4>
+            <AdminLink model={p} {...props}/>
+            <A href={p.link}>
+            <h4>{p.fio}</h4>
             <div className="status">{p.presidiumStatus}</div>
             <div className="status">{p.memberStatus}</div>
             <div className="status">{p.rank}</div>
-            <MarkDown source={p.education}/>
-            <MarkDown source={p.description}/>
-            <AdminLink model={p} {...props}/>
+            <MarkDown source={p.awards}/>
+            </A>
         </div>
     </div>
 }
