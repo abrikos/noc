@@ -5,21 +5,21 @@ import Address from "client/components/Address";
 import {A} from "hookrouter"
 
 export default function BottomInfo(props) {
-    return <div className="row" id="bottom-info">
-        <div className="col-md-4">
+    return <div id="bottom-info">
+        <div className="bottom-col">
             <h3>ИНФОРМАЦИЯ</h3>
             <A href="/phone-book">Телефонный справочник</A>
             <A href="/site-map">Карта сайта</A>
             <A href="/partners">Партнёры</A>
         </div>
-        <div className="col-md-4">
+        <div className="bottom-col">
             <h3>ПОЛЕЗНЫЕ ССЫЛКИ</h3>
             <A href="/about">Об Академии</A>
             <A href="/mass-media">СМИ о нас</A>
             <A href="/science-org">Научные учереждения</A>
             <A href="/gov">Правительство Республики Саха (Якутия)</A>
         </div>
-        <div className="col-md-4">
+        <div className="bottom-col">
             <h3>КОНТАКТЫ</h3>
             <Phone phone={'+7(4122)33-57-11'}/>
             <Email email={'secretary@yakutia.science'}/>

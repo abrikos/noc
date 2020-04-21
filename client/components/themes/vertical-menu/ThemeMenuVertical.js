@@ -6,6 +6,9 @@ import {A} from "hookrouter";
 import logo from "client/images/logo-text.svg";
 import ThemeMenuHorizontal from "client/components/themes/top-menu/ThemeMenuHorizontal";
 import CovidShort from "client/pages/home/CovidShort";
+import {Nav, NavItem} from "reactstrap";
+import Instagram from "client/images/instagram.svg";
+import YouTube from "client/images/youtube.svg";
 
 export default function ThemeMenuVertical(props) {
     const [dropped, setDropped] = useState()
@@ -34,16 +37,27 @@ export default function ThemeMenuVertical(props) {
                             </ul>}
                         </li>)}
                     </ul>
+                    <Nav className="right-menu">
+                        <NavItem >
+                            <A href="/search" className={'nav-link'}><span role="img" aria-label="Search">🔍</span></A>
+                        </NavItem>
+                        <NavItem >
+                            <a href="https://www.instagram.com/academy_of_sciences" target="_blank" rel="noopener noreferrer" className={'nav-link svg-circle'}><img src={Instagram} alt="Instagram"/></a>
+                        </NavItem>
+                        <NavItem >
+                            <A href="/video" className={'nav-link svg-circle'}><img src={YouTube} alt="Видео"/></A>
+                        </NavItem>
+                        <NavItem className="d-flex align-items-center">
+                            <span id="google_translate_element"></span>
+                        </NavItem>
+                    </Nav>
+
+                    <BottomInfo/>
                 </div>
                 <div className="col-9">
                     {props.errorPage || props.routeResult}
                 </div>
             </div>
-
-            <footer>
-                {/*<YandexMetrica/>*/}
-                <BottomInfo/>
-            </footer>
         </div>
 
     </div>

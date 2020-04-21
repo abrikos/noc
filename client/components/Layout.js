@@ -27,6 +27,7 @@ export default function LayoutMenuTop(props) {
 
         {label: `${(props.authenticatedUser && props.authenticatedUser.displayName)}`, items:[
                 {label: 'ADMIN', path: '/admin/news', hidden: !(props.authenticatedUser && props.authenticatedUser.admin)},
+                {label: 'Кабинет', path: '/cabinet'},
                 {label: 'Выход', onClick: props.logOut, hidden: !props.authenticatedUser},
             ], hidden: !props.authenticatedUser},
         //{label: 'Вход', path: '/login', hidden: props.authenticatedUser},
