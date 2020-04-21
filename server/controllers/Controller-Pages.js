@@ -88,7 +88,7 @@ module.exports.controller = function (app) {
                             recover: "$recover",
                             death: "$death",
                             recovery: "$recovery",
-                            tests: "$death",
+                            tests: "$tests",
                         },
                         date: {$max: "$createdAt"}
                     },
@@ -123,7 +123,7 @@ module.exports.controller = function (app) {
         }
         return ret;
     }
-
+    covidSakha()
 
     function parseDate(date) {
         let datestr = date.replace('По состоянию на ', '').replace(',', '');
