@@ -49,7 +49,7 @@ export default function (props) {
             <table className="table table-responsive">
                 <tbody>
                 <tr>
-                    <td>Случаев заболевания </td>
+                    <td>Случаев заболевания</td>
                     <td className="text-danger">{data.new.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
                 </tr>
                 <tr>
@@ -117,9 +117,13 @@ export default function (props) {
             </div>
 
         </div>
-        <a href="https://drive.google.com/open?id=1heqMRUTrrGCiumyhFS2YZkqgkYbqwTip" target="_blank"  rel="noopener noreferrer">Предложения ОУСа по медико-биологическим наукам АН РС (Я)
-            по организационным мерам в отношении борьбы с коронавирусной
-            инфекцией SARS-CoV-2 в Республике Саха (Якутия)</a>
+        <div className="alert alert-info my-5">
+        <h3>
+            <a href="https://drive.google.com/open?id=1heqMRUTrrGCiumyhFS2YZkqgkYbqwTip" target="_blank" rel="noopener noreferrer">Предложения ОУСа по медико-биологическим наукам АН РС (Я)
+                по организационным мерам в отношении борьбы с коронавирусной
+                инфекцией SARS-CoV-2 в Республике Саха (Якутия)</a>
+        </h3>
+        </div>
     </div>
 
     return <div></div>
