@@ -2,11 +2,13 @@ import React from "react";
 import MenuTop from "client/components/themes/top-menu/MenuTop";
 import BottomInfo from "client/pages/home/BottomInfo";
 import "client/components/themes/main.sass"
+import Covid from "client/pages/home/Covid";
 
 export default function (props) {
     return <div className={'main'}>
         <MenuTop {...props} items={props.menuItems}/>
         <div className="container content">
+            <div><Covid {...props}/></div>
             {props.errorPage || props.routeResult}
             <footer>
                 {/*<YandexMetrica/>*/}

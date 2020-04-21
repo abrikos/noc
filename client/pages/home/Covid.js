@@ -82,9 +82,9 @@ export default function (props) {
         </div>
     }
 
-    if (!props.details && dataSakha) return <div className="covid-short text-center m-3">
+    if (!props.details && dataSakha) return <div className="covid-short text-center my-3">
         <strong>Covid-19</strong>. Оперативные данные по Якутии на <span>{dataSakha[dataSakha.length - 1].date}</span>.
-        Случаев заболевания: <span className="text-success">{dataSakha[dataSakha.length - 1].new}</span>. {' '}
+        Случаев заболевания: <span className="text-danger">{dataSakha[dataSakha.length - 1].new}</span>. {' '}
         <A href="/covid19">Подробнее</A>
     </div>
 
@@ -116,6 +116,9 @@ export default function (props) {
             </div>
 
         </div>
+        <a href="https://drive.google.com/open?id=1heqMRUTrrGCiumyhFS2YZkqgkYbqwTip" target="_blank"  rel="noopener noreferrer">Предложения ОУСа по медико-биологическим наукам АН РС (Я)
+            по организационным мерам в отношении борьбы с коронавирусной
+            инфекцией SARS-CoV-2 в Республике Саха (Якутия)</a>
     </div>
 
     return <div></div>
