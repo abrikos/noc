@@ -46,6 +46,11 @@ modelSchema.virtual('adminLink')
         return `/admin/division/${this.id}/update`
     });
 
+modelSchema.virtual('personsWithChief')
+    .get(function () {
+        return [this.chief].concat(this.persons);
+    });
+
 
 modelSchema.virtual('link')
     .get(function () {

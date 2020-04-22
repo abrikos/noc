@@ -8,13 +8,13 @@ export default function PhoneBook(props) {
 
     useEffect(() => {
         props.api('/division/list', {where: {noPhoneBook: {$ne: true}}}).then(dt => {
-            setData(dt.list.filter(d => d.persons.filter(p => p.phone || p.email).length));
+            setData(dt.list.filter(d => d.personsWithChief.filter(p => p.phone || p.email).length));
         });
 
     }, [props.page]);
 
     function loadPersons(e) {
-        setPersons(data.find(d => d.id === e.target.value).persons)
+        setPersons(data.find(d => d.id === e.target.value).personsWithChief)
     }
 
 
