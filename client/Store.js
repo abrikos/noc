@@ -6,8 +6,8 @@ import cookieParser from 'cookie';
 import {useCookies} from 'react-cookie';
 
 const themes = [
-    {name:'horizontal',label:'Горизонтальная'},
-    {name:'vertical',label:'Вертикальная'},
+    {name:'horizontal',label:'Горизонтальный'},
+    {name:'vertical',label:'Вертикальный'},
 ]
 
 export default function App() {
