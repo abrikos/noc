@@ -15,7 +15,7 @@ export default function (props) {
     return <div>
         <form className="p-5 m-5" onSubmit={submit}>
             <div className="input-group">
-                <Input name="text" placeholder="Введите строку для поиска" defaultValue="ан"/>
+                <Input name="text" placeholder="Введите строку для поиска"/>
                 <div className="input-group-append">
                     <Button className="input-group-text">🔍</Button>
                 </div>
