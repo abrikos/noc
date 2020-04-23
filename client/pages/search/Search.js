@@ -7,9 +7,9 @@ export default function (props) {
 
     function submit(e) {
         e.preventDefault();
-        const where = props.formToObject(e.target)
-        console.log(where)
-        setFilter({where})
+        const form = props.formToObject(e.target)
+        console.log(form)
+        setFilter({regex:[{text:form.text},{header:form.text}]})
     }
 
     return <div>
@@ -23,6 +23,6 @@ export default function (props) {
 
 
         </form>
-        {filter && <PostList key={filter.where.text} filter={filter} {...props}/>}
+        {filter && <PostList key={JSON.stringify(filter)} filter={filter} {...props}/>}
     </div>
 }

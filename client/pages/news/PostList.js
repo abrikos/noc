@@ -13,6 +13,7 @@ export default function (props) {
 
     useEffect(() => {
         const f = filter ? Object.assign(filter, {}) : {where:{}};
+        if(!f.where) f.where = {};
         f.order = {createdAt: -1};
         f.limit = 12;
         f.skip = 0;
