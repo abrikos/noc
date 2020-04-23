@@ -9,13 +9,13 @@ export default function (props) {
         e.preventDefault();
         const form = props.formToObject(e.target)
         console.log(form)
-        setFilter({regex:[{text:form.text},{header:form.text}]})
+        setFilter({regexp:[{text:form.text},{header:form.text}]})
     }
 
     return <div>
         <form className="p-5 m-5" onSubmit={submit}>
             <div className="input-group">
-                <Input name="text" placeholder="Введите строку для поиска"/>
+                <Input name="text" placeholder="Введите строку для поиска" defaultValue="ан"/>
                 <div className="input-group-append">
                     <Button className="input-group-text">🔍</Button>
                 </div>
