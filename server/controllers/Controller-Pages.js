@@ -64,7 +64,7 @@ module.exports.controller = function (app) {
         res.send(map)
     });
 
-    app.post('/api/person/options/list/voice', (req, res) => {
+    app.post('/api/person/options/list/voices', (req, res) => {
         const f = [
             Mongoose.person.schema.paths.member.options.select[0],
             ...Mongoose.person.schema.paths.voice.options.select
