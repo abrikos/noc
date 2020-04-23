@@ -31,7 +31,7 @@ export default function PostView(props) {
         <div className="post-full">
             <h1>{post.header}</h1>
             <DateFormat date={post.createdAt}/> {/*<FontAwesomeIcon icon={faEye}/> {post.views}*/}
-            <AdminLink model={post} isAdmin={post.editable}/>
+            <AdminLink model={post} isAdmin={post.editable} {...props}/>
             <hr/>
             <div className="d-flex justify-content-center">
                 <img src={post.previewPath} className="m-auto" alt={post.header}/>
