@@ -15,7 +15,7 @@ export default function PhoneBook(props) {
     }, [props.page]);
 
     function loadPersons(e) {
-        setPersons(data.find(d => d.id === e.target.value).personsWithChief)
+        setPersons(data.find(d => d.id === e.target.value).personsWithChief.filter(p => p.phone || p.email))
     }
 
     if(!data) return <Loader/>
