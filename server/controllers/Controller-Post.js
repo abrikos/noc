@@ -1,5 +1,6 @@
 import Mongoose from "server/db/Mongoose";
 import moment from "moment"
+import striptags from "striptags";
 const logger = require('logat');
 const passportLib = require('server/lib/passport');
 //Mongoose.post.findOne({_id:'5e6b377260ee8707805367b6'})    .populate('token')    .then(console.log)
@@ -72,7 +73,7 @@ module.exports.controller = function (app) {
             .populate(Mongoose.post.population)
             .then(post => res.render('post', {
                 header: post.header,
-                text: post.text,
+                text: striptags(post.text),
                 image: req.protocol + '://' + req.get('host') + (post.image ? post.image.path : '/logo.svg'),
                 url: req.protocol + '://' + req.get('host') + '/post/' + post.id
             }))
