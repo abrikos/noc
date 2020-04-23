@@ -25,8 +25,9 @@ rm "package-lock.json"
 npm i
 #NODE_ENV=production npm run update >> "${LOG_UPDATE}"
 npm run build
-rm -fr /var/www/devportal.yakutia.science/web/*
-cp -avr build/*     /var/www/devportal.yakutia.science/web/
+DIR=/var/www/yakutia.science/web/
+rm -fr "${DIR}/*"
+cp -avr build/*     $DIR
 echo "PM2 start" >> $LOG_UPDATE
 date >> $LOG_UPDATE
 pm2 list >> $LOG_UPDATE
