@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Input, Nav, NavItem} from "reactstrap";
 import PersonSmall from "client/pages/people/PersonSmall";
 import AdminLink from "client/components/AdminLink";
+import Loader from "client/components/Loader";
 
 export default function Council(props) {
     const [data, setData] = useState();
@@ -23,7 +24,7 @@ export default function Council(props) {
         setPersons(data.persons.filter(p => voice === -1 || p.voice === voice * 1 || voice * 1 === 0 && p.member === 0))
     }
 
-    if (!data) return <div/>;
+    if (!data) return <Loader/>;
     return <div className="phone-book">
         <h1>{data.name} <AdminLink model={data} {...props}/></h1>
 

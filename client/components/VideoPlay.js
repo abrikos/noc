@@ -7,6 +7,6 @@ VideoPlay.propTypes = {
 
 export default function VideoPlay(props) {
     if(props.video.type==='youtube')
-        return <YouTube videoId={props.video.uid}/>
+        return <YouTube videoId={props.video.uid} opts={{width:'230', height:'230'}}/>
     return <div>Невозможно отобразить видеоплеер</div>
 }

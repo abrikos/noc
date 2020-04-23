@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import MarkDown from "react-markdown";
 import AdminLink from "client/components/AdminLink";
 import {A} from "hookrouter"
+import Loader from "client/components/Loader";
 
 export default function (props) {
     const [model, setModel] = useState();
@@ -12,7 +13,7 @@ export default function (props) {
 
     const fields = {education: 'Образование', awards: 'Награды', interest: 'Научные интересы', description: 'Информация', publications: 'Основные публикации'}
 
-    if (!model) return <div></div>
+    if (!model) return <Loader/>
     return <div className="person-view">
         <h1>{model.fio} <AdminLink model={model} {...props}/></h1>
         <div className="row">

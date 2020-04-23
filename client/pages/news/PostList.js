@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import PostSmall from "client/pages/news/PostSmall";
 import Pager from "client/components/Pager";
+import Loader from "client/components/Loader";
 
 export default function (props) {
     /*this.propTypes = {
         filter: PropTypes.object,
     };*/
 
-    const [posts, setPosts] = useState([]);
-    const [totalCount, setTotalCount] = useState(0);
+    const [posts, setPosts] = useState();
+    const [totalCount, setTotalCount] = useState(-1);
     const [filter, setFilter] = useState(props.filter);
 
     useEffect(() => {
@@ -31,8 +32,9 @@ export default function (props) {
         props.api('/post/list', f).then(res=>setPosts(res.list));
     }
 
+    if(!posts) return <Loader/>
     return <div className="post-list">
-        <div className="m-3">Найдено: {totalCount}</div>
+        {totalCount>=0 && <div className="m-3 text-center">Найдено: {totalCount}</div>}
         <div className="d-flex flex-wrap">
             {posts.map(p => <PostSmall isAdmin={props.isAdmin} key={p.id} post={p}/>)}
         </div>

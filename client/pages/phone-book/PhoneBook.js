@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {Input} from "reactstrap";
 import PersonSmall from "client/pages/people/PersonSmall";
+import Loader from "client/components/Loader";
 
 export default function PhoneBook(props) {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
     const [persons, setPersons] = useState([]);
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export default function PhoneBook(props) {
         setPersons(data.find(d => d.id === e.target.value).personsWithChief)
     }
 
-
+    if(!data) return <Loader/>
     return <div className="phone-book">
         <h1>Телефонный справочник</h1>
 

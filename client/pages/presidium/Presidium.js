@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PersonSmall from "client/pages/people/PersonSmall";
 import PersonLarge from "client/pages/people/PersonLarge";
+import Loader from "client/components/Loader";
 
 export default function Presidium(props) {
     const [model, setModel] = useState()
@@ -31,6 +32,8 @@ export default function Presidium(props) {
     }, [props.type])
 
     const labels = ['', 'Президент АН РС(Я)', 'И.о. Президента АН РС(Я)', 'Вице-президенты АН РС(Я)', 'Главный ученый секретарь АН РС(Я)', 'Советники АН РС(Я)']
+
+    if(!persons && !model) return <Loader/>;
     if (persons) return <div key={props.type}>
         <h1 className="text-center">{labels[persons[0].presidiumStatusId]}</h1>
         <div className="d-flex justify-content-center">
@@ -48,5 +51,5 @@ export default function Presidium(props) {
         </div>
     </div>
 
-    return <div></div>;
+
 }

@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import PersonSmall from "client/pages/people/PersonSmall";
+import Loader from "client/components/Loader";
 
 export default function Apparatus(props) {
-    const [persons, setPersons] = useState([]);
+    const [persons, setPersons] = useState();
 
     useEffect(() => {
         props.api('/person/list', {where:{isApparat: true}, order:{fname:1}})
@@ -13,7 +14,7 @@ export default function Apparatus(props) {
             })
     }, [props.page]);
 
-
+    if(!persons) return <Loader/>
     return <div className="phone-book">
         <h1>Аппарат АН РС(Я)</h1>
         <div className="d-flex flex-wrap">

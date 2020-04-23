@@ -17,7 +17,7 @@ export default function (props) {
     return <div>
         <h1>Документы {props.type === 'presidium' && 'Президиума'}</h1>
         <ul>
-            {list.map(l => <li key={l.id}><a href={l.link} target="_blank" rel="noopener noreferrer">{l.header} - {l.date}</a> <AdminLink model={l} {...props}/> </li>)}
+            {list.map(l => <li key={l.id}>{l.date} <a href={l.link} target="_blank" rel="noopener noreferrer">{l.header}</a> <AdminLink model={l} {...props}/> </li>)}
         </ul>
     </div>
 }
