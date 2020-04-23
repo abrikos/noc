@@ -23,7 +23,7 @@ export default function PostSmall(props) {
             {props.isAdmin || <div>
                 {post.isMassMedia && <a href={link} target="_blank" rel="noopener noreferrer">{striptags(post.text)}</a>}
                 {!post.isMassMedia && <div className="post-small-text">
-                    {post.text && <A href={link}>{striptags(post.text).substr(0, 50)}...</A>}
+                    {post.text && <A href={link}>{striptags(post.text)}</A>}
                 </div>}
             </div>}
         </div>

@@ -1,4 +1,8 @@
+@import "client/components/themes/params"
 .theme-horizontal
-  #bottom-info
-    display: flex
-    justify-content: space-between
+  @media screen and (min-width: $min-width)
+    #bottom-info
+      display: flex
+      justify-content: space-between
+      div
+        text-align: left
