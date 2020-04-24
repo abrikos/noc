@@ -113,8 +113,6 @@ module.exports.controller = function (app) {
 
     })
 
-    //Mongoose.covid.deleteMany().then(console.log)
-
     async function covidSakha() {
         const res = await axios('https://stopcovid19.sakha.gov.ru/')
         const html = parse(res.data);
