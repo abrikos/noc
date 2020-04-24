@@ -97,8 +97,6 @@ module.exports.controller = function (app) {
             ])
     }
 
-    covidMongo({isRussia:false})
-        .then(console.log)
 
     app.get('/api/git/push', (req, res) => {
         console.log('GET', req.body, req.query)
@@ -133,8 +131,10 @@ module.exports.controller = function (app) {
             isRussia: false,
             createdAt: str
         }
+
         return ret;
     }
+
 
     function parseDate(date) {
         let datestr = date.replace('По состоянию на ', '').replace(',', '');
@@ -178,8 +178,6 @@ module.exports.controller = function (app) {
             createdAt
         }
         return ret;
-
-
     }
 
     async function covid() {
