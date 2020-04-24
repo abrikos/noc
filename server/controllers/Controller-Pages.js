@@ -117,6 +117,7 @@ module.exports.controller = function (app) {
             })
     })
 
+
     async function covidSakha() {
         const res = await axios('https://stopcovid19.sakha.gov.ru/')
         const html = parse(res.data);
