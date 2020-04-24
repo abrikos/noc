@@ -115,7 +115,6 @@ module.exports.controller = function (app) {
             .then(data => {
                 res.send(data)
             })
-
     })
 
     async function covidSakha() {
