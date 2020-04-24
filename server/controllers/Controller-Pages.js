@@ -100,6 +100,11 @@ module.exports.controller = function (app) {
     covidMongo({isRussia:false})
         .then(console.log)
 
+    app.post('/api/git/push', (req, res) => {
+        console.log(req.body)
+        res.sendStatus(200)
+    })
+
     app.post('/api/covid', (req, res) => {
         covidMongo(req.body.where)
             .then(data => {
