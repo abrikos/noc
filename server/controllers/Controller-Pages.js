@@ -76,7 +76,6 @@ module.exports.controller = function (app) {
     })
 
     async function covidMongo(where){
-        console.log(where)
         return await Mongoose.covid
             //.find({isRussia:false})
             .aggregate([
