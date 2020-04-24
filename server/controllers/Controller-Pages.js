@@ -135,6 +135,7 @@ module.exports.controller = function (app) {
         return ret;
     }
 
+
     function parseDate(date) {
         let datestr = date.replace('По состоянию на ', '').replace(',', '');
         const month = [
