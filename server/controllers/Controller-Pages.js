@@ -101,7 +101,12 @@ module.exports.controller = function (app) {
         .then(console.log)
 
     app.get('/api/git/push', (req, res) => {
-        console.log(req.body, req.query)
+        console.log('GET', req.body, req.query)
+        res.sendStatus(200)
+    })
+
+    app.post('/api/git/push', (req, res) => {
+        console.log('POST', req.body, req.query)
         res.sendStatus(200)
     })
 
