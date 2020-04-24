@@ -4,6 +4,7 @@ import {A} from "hookrouter"
 import Chart from "react-apexcharts";
 import axios from "axios";
 import MarkDown from "react-markdown";
+import moment from "moment"
 
 export default function (props) {
     const [dataSakha, setDataSakha] = useState()
@@ -25,28 +26,71 @@ export default function (props) {
 
     function dataTable(list) {
         if (!list) return <div></div>;
-        const data = list[list.length - 1];
+        const avg = [];
+        let tempo = 0;
+        for(let i = 0; i< list.length;i++){
+            if(i>0 && i<list.length-1){
+                tempo += list[i].new - list[i-1].new;
+            }
+            const a = ((list[i-1] ? list[i-1].new : list[i].new)+ list[i].new + (list[i+1] ? list[i+1].new : list[i].new))/3
+            avg.push(a)
+        }
+
+        //Средний темп прироста
+        tempo = (tempo / (list.length - 2)).toFixed(2)
+
+        const lastData = list[list.length - 1];
         let op = {
             options: {
                 chart: {
                     id: "basic-bar"
                 },
                 xaxis: {
-                    categories: list.map(l => l.date)
-                }
+                    categories: list.map(l => l.id),
+                    labels: {
+                        formatter: v=>moment(v).format('DD.MM.YY')
+                    }
+                },
+                yaxis:{
+                    decimalsInFloat: 0,
+                    logarithmic: false,
+                    labels: {
+                        //formatter: v=>v.toFixed(0)
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    position:"bottom",
+                    formatter: function(val) {
+                        return val.toFixed(0);
+                    },
+                    style: {
+                        fontSize: "9px",
+                        colors: ["#304758"]
+                    }
+                },
             },
+
             series: [
                 {
                     name: "Новые",
-                    data: list.map(l => l.new)
+                    data: list.map(l => l.new),
+                    type: "column"
                 }, {
                     name: "Выздоровившие",
-                    data: list.map(l => l.recovery)
+                    data: list.map(l => l.recovery),
+                    type: "column"
                 }, {
                     name: "Умершие",
-                    data: list.map(l => l.death)
+                    data: list.map(l => l.death),
+                    type: "column"
+                }, {
+                    name: "Скользящая средняя (3 дня)",
+                    data: avg,
+                    type: "line"
                 }
             ]
+
         };
 
 
@@ -55,19 +99,23 @@ export default function (props) {
                 <tbody>
                 <tr>
                     <td>Случаев заболевания</td>
-                    <td className="text-danger">{data.new.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
+                    <td className="text-danger">{lastData.new.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
+                </tr>
+                <tr>
+                    <td>Средний темп прироста в день</td>
+                    <td>{tempo}</td>
                 </tr>
                 <tr>
                     <td>Случаев выздоровления</td>
-                    <td className="text-success">{data.recovery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
+                    <td className="text-success">{lastData.recovery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
                 </tr>
                 <tr>
                     <td>Случаев летального исхода</td>
-                    <td>{data.death.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
+                    <td>{lastData.death.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
                 </tr>
-                {data.tests ? <tr>
+                {lastData.tests ? <tr>
                     <td>Проведено тестов</td>
-                    <td>{data.tests}</td>
+                    <td>{lastData.tests}</td>
                 </tr> : <tr>
                     <td>&nbsp;</td>
                 </tr>}
@@ -78,7 +126,7 @@ export default function (props) {
                 options={op.options}
                 series={op.series}
                 colors={['#F44336', '#E91E63', '#9C27B0']}
-                type="bar"
+                //type="bar"
             />
 
 

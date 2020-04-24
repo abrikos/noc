@@ -75,30 +75,36 @@ module.exports.controller = function (app) {
         res.send(Mongoose.person.schema.paths.member.options.select)
     })
 
-
-    app.post('/api/covid', (req, res) => {
-        Mongoose.covid
+    async function covidMongo(where){
+        console.log(where)
+        return await Mongoose.covid
             //.find({isRussia:false})
             .aggregate([
-                {$match: req.body.where},
+                {$match: where},
+                //{$addFields:{createdAt:{$dateFromParts:{year:{$year:"$createdAt"}, month:{$month:"$createdAt"}, day:{$dayOfMonth : "$createdAt" }}}}},
+
                 {
                     $group: {
-                        _id: {
-                            new: "$new",
-                            recover: "$recover",
-                            death: "$death",
-                            recovery: "$recovery",
-                            tests: "$tests",
-                        },
-                        date: {$max: "$createdAt"}
+                        _id: {$dateFromParts:{year:{$year:"$createdAt"}, month:{$month:"$createdAt"}, day:{$dayOfMonth : "$createdAt" }}},
+                        newG:{$max:"$new"},
+                        recoveryG:{$max:"$recovery"},
+                        deathG:{$max:"$death"},
+                        testsG:{$max:"$tests"},
                     },
 
                 },
-                {$sort:{date:1}}
+                {$project:{_id:0, id:"$_id", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG"}},
+                {$sort:{id:1}}
             ])
+    }
+
+    covidMongo({isRussia:false})
+        .then(console.log)
+
+    app.post('/api/covid', (req, res) => {
+        covidMongo(req.body.where)
             .then(data => {
-                const mapped = data.map(d=>({id:d.date,date:moment(d.date).format('DD.MM.YY HH:mm'), ...d._id}));
-                res.send(mapped)
+                res.send(data)
             })
 
     })
@@ -183,7 +189,6 @@ module.exports.controller = function (app) {
         }
     }
 
-    covid();
     const job = new app.locals.CronJob('0 0 * * * *', async function () {
         covid()
     }, null, true, 'America/Los_Angeles');

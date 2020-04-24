@@ -35,6 +35,7 @@ import Election from "client/pages/election/Election";
 import PersonView from "client/pages/people/PersonView";
 import Covid from "client/pages/home/Covid";
 import TestPage from "client/pages/home/TestPage";
+import Graph from "client/pages/modeling/Graph";
 
 export default function Routes(props) {
 
@@ -83,5 +84,6 @@ export default function Routes(props) {
         "/person/:status": (params) => <PersonView {...params} {...props}/>,
         "/covid19": (params) => <Covid details={true} {...props}/>,
         "/test": (params) => <TestPage {...props}/>,
+        "/graph": (params) => <Graph {...props}/>,
     };
 }
