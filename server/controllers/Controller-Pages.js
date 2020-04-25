@@ -3,13 +3,12 @@ import axios from "axios";
 import moment from "moment";
 import {parse} from "node-html-parser";
 const logger = require("logat")
-
 const fs = require('fs');
 
 
 module.exports.controller = function (app) {
 
-    app.post('/api/site-map', async (req, res) => {
+    async function siteMap(){
         const map = [];
         map.push({label: 'Главная', path: '/', menu: true});
         map.push({label: 'Новости', path: '/news', menu: true});
@@ -59,9 +58,15 @@ module.exports.controller = function (app) {
                 {label: 'Телефонный справочник', path: '/phone-book'}
             ], menu: true
         });
+        return map;
+    }
+    siteMap()
+        .then(map=>fs.writeFileSync('client/components/site-map.json', JSON.stringify(map)))
 
 
-        res.send(map)
+    app.post('/api/site-map', (req, res) => {
+        siteMap()
+            .then(map=>res.send(map))
     });
 
     app.post('/api/person/options/list/voices', (req, res) => {

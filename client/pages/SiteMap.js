@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {A} from "hookrouter"
+import siteMap from "client/components/site-map.json"
 
 export default function SiteMap(props) {
-    const [siteMap, setMap] = useState([])
-    useEffect(() => {
-        props.api('/site-map').then(setMap)
-    }, [])
+
     return <div>
         <ul>
             {siteMap.map((s, i) => <li key={i}>

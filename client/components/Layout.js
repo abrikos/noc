@@ -10,14 +10,9 @@ import ThemeMenuVertical from "client/components/themes/vertical-menu/ThemeMenuV
 import ThemeMenuHorizontal from "client/components/themes/top-menu/ThemeMenuHorizontal";
 import ThemeAdmin from "client/components/themes/admin/ThemeAdmin";
 import ThemeSwitcher from "client/components/themes/ThemeSwitcher";
+import siteMap from "client/components/site-map.json"
 
 export default function LayoutMenuTop(props) {
-    const [siteMap, setSiteMap] = useState([]);
-
-    useEffect(() => {
-        props.api('/site-map')
-            .then(setSiteMap)
-    }, [])
 
     const menuItems = [
         //{label: "Начало", path: "/"},
