@@ -15,7 +15,7 @@ export default function (props) {
             </div>
             <div className="col-8 d-flex flex-column justify-content-center">
                 <div className="person-info">
-                    <span className="division">{p.division}</span>
+                    <span className="division">{p.divisionName}</span>
                     <span className="rank">{p.rank}</span>
                     <i className="status">{props.presidium ? props.status : p.status}</i>
                 </div>

@@ -50,7 +50,7 @@ modelSchema.virtual('photo')
         return this.image ? this.image.path : '/noImage.png'
     });
 
-modelSchema.virtual('division')
+modelSchema.virtual('divisionName')
     .get(function () {
         let divisions = [];
         if(this.divisionsChief) divisions = divisions.concat(this.divisionsChief)

@@ -133,7 +133,9 @@ export default function (props) {
             {!!totalCount && <Pager key={totalCount} count={totalCount} filter={filter} onPageChange={pageChange}/>}
         </div>}
         {model && <div>
+
             <Button onClick={()=>navigate(`/admin/${modelName}`)} color="warning">Закрыть</Button>
+            <A href={model.link}>Смотреть</A>
             <div className="row">
                 <div className="col-10">
                     <form onSubmit={submit} key={model.id} onChange={() => setEdited(true)} className="form-model">
