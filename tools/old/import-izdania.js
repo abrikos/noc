@@ -1,4 +1,4 @@
-import funcs from "./import-func"
+import funcs from "tools/old/import-func"
 import Mongoose from "server/db/Mongoose";
 import transliterate from 'transliterate';
 import {func} from "prop-types";

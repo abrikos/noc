@@ -1,7 +1,7 @@
 import * as axios from "axios";
 import {parse} from "node-html-parser";
-import siteMap from "client/site-map";
-import phoneBook from "client/phone-book";
+import siteMap from "client/site-map.json";
+import phoneBook from "client/phone-book.json";
 import md5 from "md5";
 import Mongoose from "server/db/Mongoose";
 

@@ -11,6 +11,7 @@ import council from "server/db/models/Model-Council";
 import covid from "server/db/models/Model-Covid";
 
 const mongoose = require("mongoose");
+require('dotenv').config();
 mongoose.set('useCreateIndex', true);
 // подключение
 console.log('Mongoose connect...');

@@ -16,7 +16,7 @@ const walkSync = function(dir, filelist) {
 
 const langFile = 'public/locales/ru.json';
 const langJson = require('../'+langFile);
-const translatedJson = require('../tools/translated.json');
+const translatedJson = require('tools/old/translated.json');
 
 
 for(let i =0; i < Object.keys(translatedJson).length; i++){
