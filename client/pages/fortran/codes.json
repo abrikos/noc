@@ -1,0 +1,15 @@
+{
+  "hello": {
+    "label": "Hello World",
+    "code":"program hello\nprint *, \"Hello World!\"\nend program hello"
+  },
+  "userinput": {
+    "label": "Ожидание ввода",
+    "code":"      program som\n      implicit none\n      integer n, i, sum\n      double precision r\n      sum = 0\n      write (*,*) 'Please input a number?'\n      read *, n\n      do i = 1, n\n        sum = sum + i\n        r = sum / n\n        write (*,*) 'Sum = ', sum, ' and the average = ', r\n      enddo\n   \n      end"
+  },
+  "loop": {"label":"Бесконечный цикл","code": "program som\nimplicit none\ninteger  i\nwrite (*,*) 'Infinite loop'\ndo\n\ni = i + 1\n\nend do   \nend"},
+  "omp": {
+    "label": "OMP",
+    "code":"    program SomethingElse\n    use omp_lib         ! required module for interfaces to OpenMP library routines\n    implicit none\n\n    ! Variables\n    integer, parameter :: N=50000\n    real, allocatable :: X(:,:)\n    real :: SumOfSquares\n    real(8) :: T\n    integer :: I, J\n    ! Body of SomethingElse\n    \n    T = omp_get_wtime()\n    allocate(X(N,N))\n    print *, \"Time to allocate:\", omp_get_wtime() - T\n    \n    \n    T = omp_get_wtime()\n    X = 1.001   ! Whatever your data is...\n    print *, \"Time to initialize:\", omp_get_wtime() - T\n    \n    ! Serial version of code\n    T = omp_get_wtime()\n    SumOfSquares = 0.0\n    DO J=1,N\n        DO I=1,N\n            SumOfSquares = SumOfSquares + X(I,J)**2\n        END DO\n    END DO\n    print *,\"Time to compute serially:\", omp_get_wtime() - T, SumOfSquares\n    \n    T = omp_get_wtime()\n    !$OMP PARALLEL\n    I = 0 ! do approximately no work\n    !$OMP END PARALLEL\n    print *,\"Time to initialize thread team:\", omp_get_wtime() - T\n    \n    ! parallel version\n    T = omp_get_wtime()\n    SumOfSquares = 0.0\n    !$OMP PARALLEL DO REDUCTION(+:SumOfSquares)\n    DO J=1,N\n        DO I=1,N\n            SumOfSquares = SumOfSquares + X(I,J)**2\n        END DO\n    END DO\n    !$OMP END PARALLEL DO\n    print *,\"Time to compute in parallel:\", omp_get_wtime() - T, SumOfSquares\n    end program SomethingElse"
+  }
+}
