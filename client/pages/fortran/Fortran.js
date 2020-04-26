@@ -1,5 +1,8 @@
 import React, {useState} from "react";
 import Loader from "client/components/Loader";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import MarkDown from "react-markdown";
 
 export default function (props) {
     const [data, setData] = useState()
@@ -27,7 +30,7 @@ export default function (props) {
         '      integer n, i, sum\n' +
         '      double precision r\n' +
         '      sum = 0\n' +
-        '      write (*,*) \'How many terms ?\'\n' +
+        '      write (*,*) \'Please input a number?\'\n' +
         '      read *, n\n' +
         '      do i = 1, n\n' +
         '        sum = sum + i\n' +
@@ -39,21 +42,34 @@ export default function (props) {
     const infinite ='program som\n' +
         'implicit none\n' +
         'integer  i\n' +
+        'write (*,*) \'Infinite loop\'\n' +
         'do\n' +
         '\n' +
         'i = i + 1\n' +
         '\n' +
         'end do   \n' +
-        'end'
+        'end';
+
+    function CodeBook({args}) {
+        console.log('zzzzzzz', args)
+        return <SyntaxHighlighter language="fortran" style={docco}>{text}</SyntaxHighlighter>
+    }
+
     return <div>
         <h1>Компилятор FORTRAN</h1>
         <div className="row">
             <form onSubmit={compile} className="col-sm-6">
-                <textarea name="code" cols={50} rows={10} defaultValue={text} placeholder="Введите код FORTRAN"/>
+                <textarea name="code" cols={50} rows={10}  onChange={e=>setText(e.target.value)} defaultValue={text} placeholder="Введите код FORTRAN"/>
                 <div>Примеры:
-                    <button onClick={() => setText(hello)} type="reset">Hello World</button>
-                    <button onClick={() => setText(terms)} type="reset">Ожидание ввода</button>
-                    <button onClick={() => setText(infinite)} type="reset">Бесконечный цикл</button>
+                    <button onClick={() => {
+                        setText(hello);setData(null)
+                    }} type="reset">Hello World</button>
+                    <button onClick={() => {
+                        setText(terms);setData(null)
+                    }} type="reset">Ожидание ввода</button>
+                    <button onClick={() => {
+                        setText(infinite);setData(null)
+                    }} type="reset">Бесконечный цикл</button>
                 </div>
                 <hr/>
                 <button>Compile</button>
@@ -62,12 +78,14 @@ export default function (props) {
 
             <div className="col-sm-6">
                 {loading && <Loader/>}
-                {data && <div>
+                {!loading && data && <div>
                     {data.data && <code>{data.data}</code>}
                     {data.err && <div className="alert alert-danger">
                         <pre>{data.err}</pre>
                     </div>}
                 </div>}
+                {text && <SyntaxHighlighter language="fortran" style={docco}>{text}</SyntaxHighlighter>}
+
             </div>
 
         </div>
