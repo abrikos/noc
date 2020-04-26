@@ -24,14 +24,11 @@ export default function (props) {
     const hello = 'program hello\nprint *, "Hello World!"\nend program hello'
     const terms = '      program som\n' +
         '      implicit none\n' +
-        '\n' +
         '      integer n, i, sum\n' +
         '      double precision r\n' +
-        '\n' +
         '      sum = 0\n' +
         '      write (*,*) \'How many terms ?\'\n' +
         '      read *, n\n' +
-        ' \n' +
         '      do i = 1, n\n' +
         '        sum = sum + i\n' +
         '        r = sum / n\n' +
@@ -39,27 +36,40 @@ export default function (props) {
         '      enddo\n' +
         '   \n' +
         '      end'
-    return <div className="row">
-        <form onSubmit={compile} className="col-sm-6">
-            <textarea name="code" cols={50} rows={10} defaultValue={text}/>
-            <div>Примеры:
-                <button onClick={() => setText(hello)} type="reset">Hello World</button>
-                <button onClick={() => setText(terms)} type="reset">Ожидание ввода</button>
-            </div>
-            <hr/>
-            <button>Compile</button>
+    const infinite ='program som\n' +
+        'implicit none\n' +
+        'integer  i\n' +
+        'do\n' +
+        '\n' +
+        'i = i + 1\n' +
+        '\n' +
+        'end do   \n' +
+        'end'
+    return <div>
+        <h1>Компилятор FORTRAN</h1>
+        <div className="row">
+            <form onSubmit={compile} className="col-sm-6">
+                <textarea name="code" cols={50} rows={10} defaultValue={text} placeholder="Введите код FORTRAN"/>
+                <div>Примеры:
+                    <button onClick={() => setText(hello)} type="reset">Hello World</button>
+                    <button onClick={() => setText(terms)} type="reset">Ожидание ввода</button>
+                    <button onClick={() => setText(infinite)} type="reset">Бесконечный цикл</button>
+                </div>
+                <hr/>
+                <button>Compile</button>
 
-        </form>
+            </form>
 
-        <div className="col-sm-6">
-            {loading && <Loader/>}
-            {data && <div>
-                {data.data && <code>{data.data}</code>}
-                {data.err && <div className="alert alert-danger">
-                    <pre>{data.err}</pre>
+            <div className="col-sm-6">
+                {loading && <Loader/>}
+                {data && <div>
+                    {data.data && <code>{data.data}</code>}
+                    {data.err && <div className="alert alert-danger">
+                        <pre>{data.err}</pre>
+                    </div>}
                 </div>}
-            </div>}
-        </div>
+            </div>
 
+        </div>
     </div>
 }
