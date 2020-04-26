@@ -36,6 +36,7 @@ import PersonView from "client/pages/people/PersonView";
 import Covid from "client/pages/home/Covid";
 import TestPage from "client/pages/home/TestPage";
 import Graph from "client/pages/modeling/Graph";
+import Fortran from "client/pages/fortran/Fortran";
 
 export default function Routes(props) {
 
@@ -85,5 +86,6 @@ export default function Routes(props) {
         "/covid19": (params) => <Covid details={true} {...props}/>,
         "/test": (params) => <TestPage {...props}/>,
         "/graph": (params) => <Graph {...props}/>,
+        "/fortran": (params) => <Fortran {...props}/>,
     };
 }
