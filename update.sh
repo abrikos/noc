@@ -20,7 +20,7 @@ fi
 echo "START UPDATE 2" > $LOG_UPDATE
 rm "package-lock.json"
 
-/usr/local/bin/pm2 restart all >> $LOG_UPDATE
+/usr/bin/pm2 restart all >> $LOG_UPDATE
 
 npm i
 #NODE_ENV=production npm run update >> "${LOG_UPDATE}"
