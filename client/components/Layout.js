@@ -11,6 +11,7 @@ import ThemeMenuHorizontal from "client/components/themes/top-menu/ThemeMenuHori
 import ThemeAdmin from "client/components/themes/admin/ThemeAdmin";
 import ThemeSwitcher from "client/components/themes/ThemeSwitcher";
 import siteMap from "client/components/site-map.json"
+import {navigate} from "hookrouter";
 
 export default function LayoutMenuTop(props) {
 
@@ -26,6 +27,7 @@ export default function LayoutMenuTop(props) {
                 {label: 'Выход', onClick: props.logOut, hidden: !props.authenticatedUser},
             ], hidden: !props.authenticatedUser},
         //{label: 'Вход', path: '/login', hidden: props.authenticatedUser},
+        {label: 'Вход', onClick:()=>{props.updateReturnUrl(window.location.pathname); navigate('/login')}, pathX: '/login?xx', hidden: props.authenticatedUser},
 
     ];
 

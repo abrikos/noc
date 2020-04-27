@@ -16,6 +16,7 @@ export default function App() {
     const [alert, setAlert] = useState({isOpen: false});
     const [authenticatedUser, setAuthUser] = useState(false);
     const [message, setMessage] = useState({});
+    const [returnUrl, setReturnUrl] = useState();
 
     let websocket;
 
@@ -67,6 +68,7 @@ export default function App() {
         themes,
         cookieName: 'postsEdited',
         savedData: {},
+        returnUrl,
         ws(data) {
             if (websocket.readyState !== 1) {
                 websocket = new WebSocket(`wss://${window.location.hostname}/ws`);
@@ -76,6 +78,10 @@ export default function App() {
 
         saveData(key, value) {
             this.savedData[key] = value;
+        },
+
+        updateReturnUrl(url){
+            setReturnUrl(url)
         },
 
         switchTheme(name) {
@@ -157,7 +163,7 @@ export default function App() {
             API.postData('/logout')
                 .then(res => {
                     if (res.ok) setAuthUser(false);
-                    navigate('/');
+                    navigate(returnUrl || '/login');
                 })
         },
 

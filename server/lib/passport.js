@@ -31,21 +31,8 @@ passport.use(new LocalStrategy({passReqToCallback: true},
 ));
 
 passport.use('custom', new CustomStrategy(async function (req, done) {
-    let user;
-    switch (req.params.strategy) {
-        case 'password':
-            user = await password(req);
-            break;
-        case 'vk':
-            user = await vk(req);
-            break;
-        case 'telegram':
-            user = await telegram(req);
-            break;
-        case 'mailru':
-            user = await mailru(req);
-            break;
-    }
+    if(!strategyFunctions[req.params.strategy]) return done(null,null, {error:'Wrong strategy: ' + req.params.strategy})
+    const user = await strategyFunctions[req.params.strategy](req);
     if (!user.error) {
         req.session.userId = user.id;
         req.session.admin = user.admin;
@@ -55,59 +42,65 @@ passport.use('custom', new CustomStrategy(async function (req, done) {
     }
 }));
 
-async function telegram(req, done) {
-    function checkSignature({hash, ...data}) {
-        const TOKEN = process.env.BOT_TOKEN;
-        const secret = crypto.createHash('sha256')
-            .update(TOKEN)
-            .digest();
-        const {returnUrl, ...rest} = data;
-        const checkString = Object.keys(rest)
-            .sort()
-            .map(k => (`${k}=${data[k]}`))
-            .join('\n');
-        const hmac = crypto.createHmac('sha256', secret)
-            .update(checkString)
-            .digest('hex');
-        return hmac === hash;
-    }
+const strategyFunctions = {
+    telegram: async (req, done)=> {
+        function checkSignature({hash, ...data}) {
+            const TOKEN = process.env.BOT_TOKEN;
+            const secret = crypto.createHash('sha256')
+                .update(TOKEN)
+                .digest();
+            const {returnUrl, ...rest} = data;
+            const checkString = Object.keys(rest)
+                .sort()
+                .map(k => (`${k}=${data[k]}`))
+                .join('\n');
+            const hmac = crypto.createHmac('sha256', secret)
+                .update(checkString)
+                .digest('hex');
+            return hmac === hash;
+        }
 
-    const data = req.query;
-    if (checkSignature(data)) {
-        return await getUser(data.id, 'telegram', data.first_name, data.photo_url)
-    } else {
-        return {error: 'wrong-data', message: 'Wrong POST data.'};
+        const data = req.query;
+        if (checkSignature(data)) {
+            return await getUser(data.id, 'telegram', data.first_name, data.photo_url)
+        } else {
+            return {error: 'wrong-data', message: 'Wrong POST data.'};
+        }
+    },
+
+    password:async(req)=> {
+        const {username, password} = req.body;
+        const user = await Mongoose.User.findOne({username});
+        if (!user) {
+            logger.info('Create user', username)
+            return await Mongoose.User.create({username, password: md5(password), externalId: new Date().valueOf()})
+        }
+        if (user.password !== md5(password)) {
+            logger.info('Wrong password', username, password, user.password, md5(password))
+            return {error: 'Wrong password'}
+        }
+        logger.info(user)
+        return user;
+    },
+
+    google:async (req)=> {
+        const url = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${req.body.accessToken}`;
+        const response = await axios(url);
+        const data = response.data;
+        return getUser(data.user_id, req.params.strategy, req.body.Pt.Ad, req.body.profileObj.imageUrl)
+    },
+
+    vk:async (req)=> {
+        const url = `https://oauth.vk.com/access_token?client_id=${process.env.VK_ID}&client_secret=${process.env.VK_SECRET}&redirect_uri=${process.env.SITE}/api/login/${req.params.strategy}&code=${req.query.code}`;
+        const response = await axios(url);
+        const data1 = response.data;
+        const urlInfo = `https://api.vk.com/method/users.get?user_ids=${data1.user_id}&fields=photo_50,sex&access_token=${data1.access_token}&v=5.103`;
+        const result = await axios(urlInfo);
+        const data = result.data.response[0];
+        return getUser(data.id, req.params.strategy, data.first_name + ' ' + data.last_name, data.photo_50)
     }
 }
 
-async function password(req) {
-    const {username, password} = req.body;
-    const user = await Mongoose.User.findOne({username});
-    if (!user) {
-        logger.info('Create user', username)
-        return await Mongoose.User.create({username, password: md5(password), externalId: new Date().valueOf()})
-    }
-    if (user.password !== md5(password)) {
-        logger.info('Wrong password', username, password, user.password, md5(password))
-        return {error: 'Wrong password'}
-    }
-    logger.info(user)
-    return user;
-}
-
-async function vk(req) {
-    const url = `https://oauth.vk.com/access_token?client_id=${process.env.VK_ID}&client_secret=${process.env.VK_SECRET}&redirect_uri=${process.env.SITE}/api/login/${req.params.strategy}&code=${req.query.code}`;
-    const response = await axios(url);
-    const data1 = response.data;
-    const urlInfo = `https://api.vk.com/method/users.get?user_ids=${data1.user_id}&fields=photo_50,sex&access_token=${data1.access_token}&v=5.103`;
-    const result = await axios(urlInfo);
-    const data = result.data.response[0];
-    return getUser(data.id, req.params.strategy, data.first_name + ' ' + data.last_name, data.photo_50)
-}
-
-async function mailru(req) {
-    const url = `https://oauth.vk.com/access_token?client_id=${process.env.VK_ID}&client_secret=${process.env.VK_SECRET}&redirect_uri=${process.env.SITE}/api/login/${req.params.strategy}&code=${req.query.code}`;
-}
 
 async function getUser(externalId, strategy, name, photo) {
     let user = await Mongoose.User.findOne({externalId, strategy})

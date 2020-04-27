@@ -1,5 +1,5 @@
 import Mongoose from "server/db/Mongoose";
-
+import axios from "axios"
 const nodemailer = require('nodemailer');
 const mailer = JSON.parse(process.env.mailer);
 const transport = nodemailer.createTransport(mailer)
@@ -94,7 +94,7 @@ module.exports.controller = function (app) {
 
     app.get('/api/login/:strategy', passport.authenticate('custom'), (req, res, next) => {
         //const redir = req.cookies.returnUrl || req.query.returnUrl || '/admin/news';
-        res.redirect(req.session.admin ? '/admin/news' : '/cabinet')
+        res.redirect(req.session.admin ? '/admin/news' : (req.query.returnUrl || '/cabinet'))
     });
 
     app.post('/api/login/:strategy', passport.authenticate('custom'), (req, res, next) => {

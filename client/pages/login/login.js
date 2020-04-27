@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {t} from "client/components/Translator";
 import {navigate} from "hookrouter";
 import {Button, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import vk from "client/images/vkcom.svg"
+import TelegramLogin from "client/pages/login/TelegramLogin";
+import GoogleLogin from 'react-google-login';
 
 export default function Login(props) {
     const [errors, setErrors] = useState({})
+    const [user, setUser] = useState()
 
     function submit(e) {
         e.preventDefault();
@@ -18,11 +21,7 @@ export default function Login(props) {
 
         props.api('/login/password', form)
             .then(res => {
-                props.login()
-                    .then(user => {
-                        navigate(user.admin ? '/admin/news' : '/cabinet')
-                    })
-
+                props.login().then(setUser)
             })
             .catch(error => {
                 console.error(error)
@@ -30,19 +29,30 @@ export default function Login(props) {
             })
     }
 
-    if (props.authenticatedUser) navigate('/cabinet');
 
     const responseVk = (strategy) => {
-        props.api('/redirect/' + strategy).then(res => {
+        props.api('/redirect/' + strategy, {returnUrl: props.returnUrl}).then(res => {
             //window.open(res.url);
             document.location.href = res.url;
         })
     }
 
+    const responseGoogle = (response) => {
+        props.api(`/login/google?returnUrl=`, response)
+            .then(res => {
+                props.login().then(setUser)
+            })
+
+    }
+
+    useEffect(()=>{
+        if(user) navigate(user.admin ? '/admin/news' : (props.returnUrl || '/cabinet'))
+    },[user])
+
     return <div>
+        <h3 className="text-center">Вход с локальными учетными данными</h3>
         <div className={'d-flex justify-content-center'}>
             <div className={'card'}>
-                <div className={'card-header'}>{t('Log in')}</div>
                 <div className={'card-body'}>
                     <form onSubmit={submit}>
                         <FormGroup>
@@ -61,24 +71,29 @@ export default function Login(props) {
                         <span className="text-danger">{errors.login}</span>
                     </form>
 
-                    {/*<Button onClick={() => props.logIn('test')}>Test</Button>*/}
-
-                    {/*<TelegramLogin {...props}/>*/}
-                    <Button onClick={() => responseVk('vk')} color="light"><img src={vk} alt="В контакте" style={{width: 50}}/> </Button>
-                    {/*<Button onClick={()=>responseVk('mailru')}>Mailru</Button>*/}
-
-                    {/*<GoogleLogin
-                        clientId="986859169011-5ia10srbpfgt71ig1sh33aiv3l961un3.apps.googleusercontent.com"
-                        buttonText="Login"
-                        onSuccess={responseGoogle}
-                        onFailure={responseGoogle}
-                        cookiePolicy={'single_host_origin'}
-                    />*/}
                 </div>
 
             </div>
         </div>
-
+        <hr/>
+        <h3 className="text-center">Вход через внешние сервисы</h3>
+        <div className="d-flex justify-content-center align-items-center">
+            <div className="m-2">
+                <GoogleLogin
+                    clientId="837280129910-io4tdr2citvq6b39t2gfb8pl9e52faq3.apps.googleusercontent.com"
+                    buttonText="Вход"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    scope="https://www.googleapis.com/auth/analytics"
+                />
+            </div>
+            <div className="m-2">
+                <TelegramLogin {...props}/>
+            </div>
+            <div className="m-2">
+                <Button onClick={() => responseVk('vk')} color="light"><img src={vk} alt="В контакте" style={{width: 50}}/> </Button>
+            </div>
+        </div>
 
     </div>
 
