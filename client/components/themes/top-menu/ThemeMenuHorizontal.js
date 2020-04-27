@@ -8,7 +8,9 @@ import CovidShort from "client/pages/home/CovidShort";
 export default function ThemeMenuHorizontal(props) {
     return <div className="theme-horizontal">
         <MenuTop {...props} items={props.menuItems}/>
+        {window.location.pathname}!=={'/covid19'}
         {window.location.pathname!=='/covid19' && <div><CovidShort {...props}/></div>}
+        zzz
         <div className="container">
             {props.errorPage || props.routeResult}
             <footer>
