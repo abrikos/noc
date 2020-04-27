@@ -74,7 +74,8 @@ module.exports.controller = function (app) {
         res.send({
             site: process.env.SITE,
             botName: process.env.BOT_NAME,
-            vkId: process.env.VK_ID
+            vkId: process.env.VK_ID,
+            googleId:process.env.GOOGLE_ID,
         })
     });
 

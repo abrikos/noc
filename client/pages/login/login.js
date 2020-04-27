@@ -79,13 +79,13 @@ export default function Login(props) {
         <h3 className="text-center">Вход через внешние сервисы</h3>
         <div className="d-flex justify-content-center align-items-center">
             <div className="m-2">
-                <GoogleLogin
-                    clientId="837280129910-io4tdr2citvq6b39t2gfb8pl9e52faq3.apps.googleusercontent.com"
+                {props.siteInfo.googleId && <GoogleLogin
+                    clientId={props.siteInfo.googleId}
                     buttonText="Вход"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     scope="https://www.googleapis.com/auth/analytics"
-                />
+                />}
             </div>
             <div className="m-2">
                 <TelegramLogin {...props}/>

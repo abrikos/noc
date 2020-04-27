@@ -17,6 +17,7 @@ export default function App() {
     const [authenticatedUser, setAuthUser] = useState(false);
     const [message, setMessage] = useState({});
     const [returnUrl, setReturnUrl] = useState();
+    const [siteInfo, setSiteInfo] = useState({});
 
     let websocket;
 
@@ -54,6 +55,8 @@ export default function App() {
         //startWebSocket();
         //setInterval(checkWebsocket, 1000);
         getUser();
+        API.postData('/site-info')
+            .then(setSiteInfo)
         const t = params.getCookie('theme');
         if(t) setTheme(t)
     }, [])
@@ -69,6 +72,7 @@ export default function App() {
         cookieName: 'postsEdited',
         savedData: {},
         returnUrl,
+        siteInfo,
         ws(data) {
             if (websocket.readyState !== 1) {
                 websocket = new WebSocket(`wss://${window.location.hostname}/ws`);
