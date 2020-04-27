@@ -56,6 +56,7 @@ module.exports.controller = function (app) {
     })
 
     app.post('/api/covid', (req, res) => {
+        console.log(req.body.where)
         covidMongo(req.body.where)
             .then(data => {
                 res.send(data)
