@@ -16,7 +16,7 @@ import security from "./security.svg"
 export default function Intellectual(props) {
 
 
-    return <div className="static-page">
+    return <div className="intellectual">
         <h1 className="mb-5">ЦЕНТР ИНТЕЛЛЕКТУАЛЬНОЙ СОБСТВЕННОСТИ РС(Я)</h1>
         <div className="row">
             <div className="col-md-6">
