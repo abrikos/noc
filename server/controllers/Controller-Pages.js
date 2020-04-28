@@ -45,13 +45,14 @@ module.exports.controller = function (app) {
                     },
 
                 },
-                {$project:{_id:0, id:"$dateG", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG"}},
+                {$project:{_id:0, id:"$dateG", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG", type:"week", doy:{$dayOfYear:"$dateG"}}},
                 {$sort:{id:1}}
             ])
+        console.log({createdAt: {$nin:dataWeeks.map(d=>d.doy)}, ...where})
         const dataDays = await Mongoose.covid
             //.find({isRussia:false})
             .aggregate([
-                {$match: {createdAt: {$gt:from_date.add(23,'hours')._d}, ...where}},
+                {$match: {createdAt: {$gt:from_date._d}, ...where}},
                 //{$addFields:{createdAt:{$dateFromParts:{year:{$year:"$createdAt"}, month:{$month:"$createdAt"}, day:{$dayOfMonth : "$createdAt" }}}}},
 
                 {
@@ -61,14 +62,13 @@ module.exports.controller = function (app) {
                         recoveryG:{$max:"$recovery"},
                         deathG:{$max:"$death"},
                         testsG:{$max:"$tests"},
+                        dateG:{$max:"$createdAt"},
                     },
-
                 },
-                {$project:{_id:0, id:"$_id", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG"}},
+                {$project:{_id:0, id:"$_id", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG", type:"day", doy:{$dayOfYear:"$dateG"}}},
                 {$sort:{id:1}}
             ])
-        const data = dataWeeks.concat(dataDays);
-        console.log(data)
+        const data = dataWeeks.concat(dataDays.filter(d=>!dataWeeks.map(x=>x.doy).includes(d.doy)));
         return data;
     }
 

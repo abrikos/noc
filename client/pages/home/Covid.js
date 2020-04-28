@@ -14,11 +14,11 @@ export default function (props) {
     useEffect(() => {
         props.api('/covid', {where: {isRussia: false}})
             .then(res => {
-                setDataSakha(res)
+                setDataSakha(dataTable(res))
             })
         props.api('/covid', {where: {isRussia: true}})
             .then(res => {
-                setDataRussia(res)
+                setDataRussia(dataTable(res))
             })
         axios('/covid19.txt')
             .then(res=>setText(res.data))
@@ -28,16 +28,21 @@ export default function (props) {
         if (!list) return <div></div>;
         const avg = [];
         let tempo = 0;
-        for(let i = 0; i< list.length;i++){
-            if(i>0 && i<list.length-1){
-                tempo += list[i].new - list[i-1].new;
+        const list2 = list.filter(l=>l.type==='day')
+
+        for(let i = 0; i< list2.length;i++){
+            if(list2[i+1]){
+                tempo += (list2[i+1].new - list2[i].new)
             }
+        }
+        console.log('zzzzzzzz')
+        for(let i = 0; i< list.length;i++){
             const a = ((list[i-1] ? list[i-1].new : list[i].new)+ list[i].new + (list[i+1] ? list[i+1].new : list[i].new))/3
             avg.push(a)
         }
 
         //Средний темп прироста
-        tempo = (tempo / (list.length - 2)).toFixed(2)
+        tempo = (tempo/ (list2.length - 1)).toFixed(2)
 
         const lastData = list[list.length - 1];
         let op = {
@@ -141,7 +146,7 @@ export default function (props) {
             <div className="col-sm-6">
                 <div className="covid-block">
                     <h3>по Якутии</h3>
-                    {dataTable(dataSakha)}
+                    {dataSakha}
                     <small>
                         <a title="#CтопКоронавирусЯкутия" href="https://stopcovid19.sakha.gov.ru"><span style={{color: '#ff2775'}}>#Стоп</span>Коронавирус<span style={{color: "#ff2775"}}>Якутия</span></a>
                         <br/>
@@ -152,7 +157,7 @@ export default function (props) {
             <div className="col-sm-6">
                 <div className="covid-block">
                     <h3>по России</h3>
-                    {dataTable(dataRussia)}
+                    {dataRussia}
                     <small>
                         <img itemProp="logo" src="https://dalee.cdnvideo.ru/stopcoronavirus.rf/img/logo.svg" alt="COVID-19 info" className="cv-header__logo-img" width={200}/>
                         <br/>
