@@ -22,10 +22,36 @@ module.exports.controller = function (app) {
     })
 
     async function covidMongo(where){
-        const data = await Mongoose.covid
+        const today = moment();
+        const from_date = today.startOf('week');
+
+
+
+        const dataWeeks = await Mongoose.covid
             //.find({isRussia:false})
             .aggregate([
-                {$match: where},
+                {$match: {createdAt: {$lt:from_date._d}, ...where}},
+                //{$addFields:{createdAt:{$dateFromParts:{year:{$year:"$createdAt"}, month:{$month:"$createdAt"}, day:{$dayOfMonth : "$createdAt" }}}}},
+
+                {
+                    $group: {
+                        //_id: {$dateFromParts:{year:{$year:"$createdAt"}, month:{$month:"$createdAt"}, day:{$dayOfMonth : "$createdAt" }}},
+                        _id: {$week:"$createdAt"},
+                        newG:{$max:"$new"},
+                        recoveryG:{$max:"$recovery"},
+                        deathG:{$max:"$death"},
+                        testsG:{$max:"$tests"},
+                        dateG:{$max:"$createdAt"},
+                    },
+
+                },
+                {$project:{_id:0, id:"$dateG", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG"}},
+                {$sort:{id:1}}
+            ])
+        const dataDays = await Mongoose.covid
+            //.find({isRussia:false})
+            .aggregate([
+                {$match: {createdAt: {$gt:from_date.add(23,'hours')._d}, ...where}},
                 //{$addFields:{createdAt:{$dateFromParts:{year:{$year:"$createdAt"}, month:{$month:"$createdAt"}, day:{$dayOfMonth : "$createdAt" }}}}},
 
                 {
@@ -41,10 +67,12 @@ module.exports.controller = function (app) {
                 {$project:{_id:0, id:"$_id", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG"}},
                 {$sort:{id:1}}
             ])
+        const data = dataWeeks.concat(dataDays);
         console.log(data)
         return data;
     }
 
+    covidMongo({isRussia:false})
 
     app.get('/api/git/push', (req, res) => {
         console.log('GET', req.body, req.query)
