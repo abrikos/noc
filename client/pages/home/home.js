@@ -28,7 +28,7 @@ export default function Home(props) {
     function formatLastNews(i) {
         return <div className="first-news">
             <div className="first-news-img">
-                <A href={newsLast[i].link}><img src={newsLast[i].previewPath} className="img-fluid"/></A>
+                <A href={newsLast[i].link}><img src={newsLast[i].previewPath} className="img-preview"/></A>
             </div>
             <div><DateFormat date={newsLast[i].date}/></div>
             <A href={newsLast[i].link}>{newsLast[i].header}</A>
