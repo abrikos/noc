@@ -48,7 +48,7 @@ module.exports.controller = function (app) {
                 {$project:{_id:0, id:"$dateG", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG", type:"week", doy:{$dayOfYear:"$dateG"}}},
                 {$sort:{id:1}}
             ])
-        console.log({createdAt: {$nin:dataWeeks.map(d=>d.doy)}, ...where})
+
         const dataDays = await Mongoose.covid
             //.find({isRussia:false})
             .aggregate([

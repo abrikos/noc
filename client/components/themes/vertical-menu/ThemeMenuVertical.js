@@ -21,6 +21,7 @@ export default function ThemeMenuVertical(props) {
         return s.items.map(ss=>ss.path).includes(window.location.pathname) || i === dropped
     }
 
+
     return <div>
         <div className="d-sm-none">
             <ThemeMenuHorizontal {...props}/>
@@ -35,7 +36,7 @@ export default function ThemeMenuVertical(props) {
 
                     <ul className="vertical-menu">
                         {props.menuItems.filter(i=>!i.hidden).map((s, i) => <li key={i}>
-                            {s.path ? <A href={s.path}>{s.label}</A> : <span className={!s.items.map(ss=>ss.path).includes(window.location.pathname) && "menu-link"} onClick={() => toggle(i)}>{s.label}</span>}
+                            {s.path ? <A href={s.path}>{s.label}</A> : <span className={s.items && !s.items.map(ss=>ss.path).includes(window.location.pathname) && "menu-link"} onClick={() => toggle(i)}>{s.label}</span>}
                             {s.items && isDropped(s,i) && <ul>
                                 {s.items.filter(s => s.path).map((s2, i2) => <li key={i2} className={s2.path === window.location.pathname && 'active'}><A href={s2.path} className={s2.className}>{s2.label}</A></li>)}
                             </ul>}

@@ -8,7 +8,6 @@ export default function (props) {
     useEffect(() => {
         props.api('/covid', {where: {isRussia: false}})
             .then(res => {
-                console.log(res)
                 setDataSakha(res)
             })
     }, [])

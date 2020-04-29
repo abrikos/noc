@@ -38,7 +38,6 @@ export default function Pager(props) {
         for (let i = from; i < to; i++) {
             pgs.push(i)
         }
-        console.log(totalPages)
         setPages(pgs)
     }
 
