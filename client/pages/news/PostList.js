@@ -38,7 +38,6 @@ export default function (props) {
         <div className="d-flex flex-wrap">
             {posts.map(p => <PostSmall isAdmin={props.isAdmin} key={p.id} post={p}/>)}
         </div>
-        pager
         {filter && !!totalCount && <Pager count={totalCount} filter={filter} onPageChange={pageChange}/>}
     </div>
 }
