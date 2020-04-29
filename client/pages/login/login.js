@@ -32,7 +32,7 @@ export default function Login(props) {
 
     const responseVk = (strategy) => {
         props.api('/redirect/' + strategy, {returnUrl: props.returnUrl}).then(res => {
-            //window.open(res.url);
+            console.log(res.url)
             document.location.href = res.url;
         })
     }
