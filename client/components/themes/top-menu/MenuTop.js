@@ -6,6 +6,8 @@ import "client/components/themes/top-menu/navbar.sass"
 import logo from "client/images/logo-text.svg"
 import YouTube from "client/images/youtube.svg"
 import Instagram from "client/images/instagram.svg"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 export default function MenuTop(props) {
     const [menuPulled, pullMenu] = useState(false);
@@ -64,7 +66,7 @@ export default function MenuTop(props) {
                 </Nav>
                 <Nav className="right-menu">
                     <NavItem >
-                        <A href="/search" className={'nav-link'}><span role="img" aria-label="Search">🔍</span></A>
+                        <A href="/search" className={'nav-link'}><span role="img" aria-label="Search"><FontAwesomeIcon icon={faSearch}/></span></A>
                     </NavItem>
                     <NavItem >
                         <a href="https://www.instagram.com/academy_of_sciences" target="_blank" rel="noopener noreferrer" className={'nav-link svg-circle'}><img src={Instagram} alt="Instagram"/></a>
