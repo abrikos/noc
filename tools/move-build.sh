@@ -1,5 +1,5 @@
 #!/bin/bash
 
-DIR=/var/www/yakutia.science/web/
+DIR=build_production
 rm -fr "${DIR}/*"
 cp -avr build/*     $DIR
