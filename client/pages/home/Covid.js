@@ -35,14 +35,14 @@ export default function (props) {
                 tempo += (list2[i+1].new - list2[i].new)
             }
         }
-        console.log('zzzzzzzz')
+
         for(let i = 0; i< list.length;i++){
             const a = ((list[i-1] ? list[i-1].new : list[i].new)+ list[i].new + (list[i+1] ? list[i+1].new : list[i].new))/3
             avg.push(a)
         }
 
         //Средний темп прироста
-        tempo = (tempo/ (list2.length - 1)).toFixed(2)
+        tempo = list2.length > 1 ? (tempo/ (list2.length - 1)).toFixed(2) : 0
 
         const lastData = list[list.length - 1];
         let op = {
@@ -106,10 +106,10 @@ export default function (props) {
                     <td>Случаев заболевания</td>
                     <td className="text-danger">{lastData.new.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
                 </tr>
-                <tr>
+                {!!tempo && <tr>
                     <td>Средний темп прироста в день</td>
                     <td>{tempo}</td>
-                </tr>
+                </tr>}
                 <tr>
                     <td>Случаев выздоровления</td>
                     <td className="text-success">{lastData.recovery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}</td>
