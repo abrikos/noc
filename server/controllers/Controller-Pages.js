@@ -23,7 +23,7 @@ module.exports.controller = function (app) {
 
     async function covidMongo(where){
         const today = moment();
-        const from_date = today.startOf('week');
+        const from_date = today.add(-7,'day').startOf('week');
 
 
 
