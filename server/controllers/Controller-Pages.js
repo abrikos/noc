@@ -131,12 +131,18 @@ module.exports.controller = function (app) {
         const arr = datestr.split(' ')
         const m = month.indexOf(arr[1]) + 1;
         if (arr[3]) {
-            datestr = `${arr[2]}-${m < 10 ? `0${m}` : m}-${arr[0]} ${arr[3]}`
+            datestr = `${arr[2]}-${m < 10 ? `0${m}` : m}-${arr[0].length===1?'0'+arr[0]:arr[0]} ${arr[3]}`
         } else {
-            datestr = `2020-${m < 10 ? `0${m}` : m}-${arr[0]} ${arr[2]}`
+            datestr = `2020-${m < 10 ? `0${m}` : m}-${arr[0].length===1?'0'+arr[0]:arr[0]} ${arr[2]}`
         }
-        return moment(datestr).format('YYYY-MM-DD HH:mm');
+        try {
+            return moment(datestr).format('YYYY-MM-DD HH:mm');
+        }catch (e) {
+            console.log('zzzzzzzzzzzzz', datestr, e.message)
+        }
     }
+
+    covidSakha()
 
     async function covidRussia() {
         const res = await axios('https://xn--80aesfpebagmfblc0a.xn--p1ai/')
