@@ -1,8 +1,6 @@
 import MarkDown from "react-markdown";
 import React from "react";
 import {A} from "hookrouter";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import AdminLink from "client/components/AdminLink";
 
 export default function (props) {
@@ -16,12 +14,15 @@ export default function (props) {
         <div className="supervisor-text">
             <AdminLink model={p} {...props}/>
             <A href={p.link}>
-            <h4>{p.fio}</h4>
-            <div className="status">{p.presidiumStatus}</div>
-            <div className="status">{p.memberStatus}</div>
-            <div className="status">{p.rank}</div>
-            <MarkDown source={p.awards}/>
+                <strong>{p.fio}</strong>
+                <div className="alert alert-dark">
+                    <div className="statusX"><strong>{p.presidiumStatus}</strong></div>
+                    <div className="statusX">{p.memberStatus}</div>
+                    <div className="statusX">{p.rank}</div>
+                </div>
+                <MarkDown source={p.awards}/>
             </A>
+
         </div>
     </div>
 }
