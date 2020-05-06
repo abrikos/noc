@@ -6,12 +6,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
-        name: {type: String, required: true, label: 'Название'},
+        name: {type: String, required: true, label: 'Название', default:'Новое подразделение'},
         address: {type: String, label: 'Адрес'},
         phone: {type: String, label: 'Телефон'},
         email: {type: String, label: 'Email'},
         //path: {type: String, label: 'Путь'},
-        noMenu: {type: Boolean, label: 'Не показывать в меню'},
+        inMenu: {type: Boolean, label: 'Показывать в меню'},
         noPhoneBook: {type: Boolean, label: 'Не показывать в тел.книге'},
         chief: {type: mongoose.Schema.Types.ObjectId, ref: 'Person', property:'fioShort', sort:{fname:1}, label:'Руководитель'},
         description: {type: String, label: 'Описание', control:'markdown'},

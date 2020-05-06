@@ -83,7 +83,7 @@ export default function Login(props) {
                     clientId={props.siteInfo.googleId}
                     buttonText="Вход"
                     onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
+                    onFailure={console.error}
                     scope="https://www.googleapis.com/auth/analytics"
                 />}
             </div>

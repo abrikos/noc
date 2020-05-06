@@ -10,7 +10,7 @@ import ThemeMenuVertical from "client/components/themes/vertical-menu/ThemeMenuV
 import ThemeMenuHorizontal from "client/components/themes/top-menu/ThemeMenuHorizontal";
 import ThemeAdmin from "client/components/themes/admin/ThemeAdmin";
 import ThemeSwitcher from "client/components/themes/ThemeSwitcher";
-import siteMap from "client/components/site-map.json"
+import siteMap from "client/components/site-map-compiled.json"
 import {navigate} from "hookrouter";
 
 export default function LayoutMenuTop(props) {

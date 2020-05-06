@@ -1,24 +1,25 @@
 import Mongoose from "server/db/Mongoose";
+
 const fs = require('fs');
 
 
-async function siteMap(){
+async function siteMap() {
     const map = [];
     map.push({label: 'Главная', path: '/', menu: true});
     map.push({label: 'Новости', path: '/news', menu: true});
-    const divisions = await Mongoose.division.find({path: {$ne: null}});
-    map.push({label: 'Структура', items: [{label: 'Аппарат', path: '/apparatus'}].concat(divisions.filter(d => !d.noMenu).map(d => ({label: d.name, path: d.link}))), menu: true});
+    const divisions = await Mongoose.division.find({inMenu: true});
+    map.push({label: 'Структура', items: [{label: 'Аппарат', path: '/apparatus'}].concat(divisions.map(d => ({label: d.name, path: d.link}))), menu: true});
     const meetings = await Mongoose.council.find({isJoined: true});
-    map.push({label: 'Ученые советы', items: [{label: 'Ученый совет Президиума АН РС(Я)', path: '/presidium/council'},{label: '------'},{label: 'Объединенные ученые советы', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: d.link}))), menu: true});
+    map.push({label: 'Ученые советы', items: [{label: 'Ученый совет Президиума АН РС(Я)', path: '/presidium/council'}, {label: '------'}, {label: 'Объединенные ученые советы', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: d.link}))), menu: true});
     map.push({
         label: 'Члены академии  АН РС(Я)', menu: true, items: Mongoose.person.schema.paths.member.options.select.map(s => ({label: s.label, path: `/people/${s.value}/members`}))
     })
     map.push({
         label: 'Президиум', menu: true, items: [
             {label: 'Руководство', path: '/people/supervisors/all'},
-            {label: 'И.о. Президента', path: '/presidium/president', className:'level2'},
-            {label: 'Вице-президенты', path: '/presidium/vice', className:'level2'},
-            {label: 'Главный ученый секретарь', path: '/presidium/scsecretary', className:'level2'},
+            {label: 'И.о. Президента', path: '/presidium/president', className: 'level2'},
+            {label: 'Вице-президенты', path: '/presidium/vice', className: 'level2'},
+            {label: 'Главный ученый секретарь', path: '/presidium/scsecretary', className: 'level2'},
             {label: 'Секретариат', path: '/division/5e80f5ba7549ce5472a10e13/secretariat'},
             {label: 'Документы', path: '/documents/presidium'},
         ]
@@ -57,5 +58,7 @@ async function siteMap(){
     Mongoose.close()
     return map;
 }
-siteMap().then(map=>fs.writeFileSync('client/components/site-map.json', JSON.stringify(map)))
+
+
+siteMap().then(map => fs.writeFileSync('client/components/site-map-compiled.json', JSON.stringify(map)))
 

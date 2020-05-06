@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {A} from "hookrouter"
-import siteMap from "client/components/site-map.json"
+import siteMap from "client/components/site-map-compiled.json"
 
 export default function SiteMap(props) {
 
