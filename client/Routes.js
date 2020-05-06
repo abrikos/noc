@@ -37,6 +37,7 @@ import Covid from "client/pages/home/Covid";
 import TestPage from "client/pages/home/TestPage";
 import Graph from "client/pages/modeling/Graph";
 import Fortran from "client/pages/fortran/Fortran";
+import JournalGroup from "client/pages/JournalGroup";
 
 export default function Routes(props) {
 
@@ -72,6 +73,7 @@ export default function Routes(props) {
         "/project/sakha-history": () => <SakhaHistory {...props}/>,
         "/project/sakha-history/:tom": (params) => <SakhaHistory {...params} {...props}/>,
         "/apparatus": () => <Apparatus {...props}/>,
+        "/journal": () => <JournalGroup {...props}/>,
         //"/persons/:type": (params) => <PersonListLarge {...params} {...props}/>,
         "/site-map": () => <SiteMap {...props}/>,
         "/static/:page": (params) => <Static {...params} {...props}/>,
