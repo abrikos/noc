@@ -71,8 +71,8 @@ export default function (props) {
 
         <div className="col-10">
             <A href="/admin/news" className="btn btn-warning" title="Закрыть"><FontAwesomeIcon icon={faTimes}/> Закрыть</A>
-
             <form onSubmit={_handleSubmit} encType="multipart/form-data" onChange={change}>
+                {updated && <Button>Сохранить</Button>}
                 <FormGroup>
                     <Label>Заголовок</Label>
                     <Input name="header" defaultValue={post.header} invalid={!!errors.header}/>
@@ -91,6 +91,11 @@ export default function (props) {
                     <Label>Ссылка</Label>
                     <Input name="url" defaultValue={post.url}/>
                 </FormGroup>}
+
+                <FormGroup>
+                    <Label>Дата</Label>
+                    <Input name="date" defaultValue={post.date}/>
+                </FormGroup>
 
                 <FormGroup>
                     <Label>Текст</Label>

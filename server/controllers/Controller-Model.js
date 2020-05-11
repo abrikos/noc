@@ -101,7 +101,10 @@ module.exports.controller = function (app) {
                 const schema = getSchema(req.params.model);
                 for (const f of Object.keys(req.body)) {
                     const field = schema.fields.find(fld => fld.name === f);
-                    if (!field) continue;
+                    if (!field) {
+                        r[f] = req.body[f]
+                        continue;
+                    }
                     if (field.type === 'virtual') {
                         const schemaRel = getSchema(field.options.ref.toLowerCase());
                         const fieldRel = schemaRel.fields.find(fld => fld.name === field.options.foreignField);
