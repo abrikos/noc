@@ -7,11 +7,13 @@ import ImageList from "client/components/image-list/ImageList";
 import HtmlEditor from "client/components/html-editor/HtmlEditor";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes, faTrash} from "@fortawesome/free-solid-svg-icons";
+import MarkdownEditor from "client/components/markdown-editor/MarkdownEditor";
 
 
 export default function (props) {
     const [post, setPost] = useState({});
     const [isMassMedia, setIsMassMedia] = useState(false);
+    const [isMarkdown, setIsMarkdown] = useState(false);
     const [updated, setUpdated] = useState(false);
     const [errors, setErrors] = useState({});
 
@@ -23,6 +25,7 @@ export default function (props) {
     function loadPost() {
         props.id && props.api(`/post/${props.id}/view/`).then(p => {
             setIsMassMedia(p.isMassMedia)
+            setIsMarkdown(p.isMarkdown)
             setPost(p);
         });
     }
@@ -97,13 +100,16 @@ export default function (props) {
                     <Input name="date" defaultValue={post.date}/>
                 </FormGroup>
 
+                <FormGroup check>
+                    <Label check>
+                        <Input type="checkbox" name="isMarkdown" defaultChecked={post.isMarkdown} onChange={e=>setIsMarkdown(e.target.checked)}/>
+                        MarkDown
+                    </Label>
+                </FormGroup>
                 <FormGroup>
                     <Label>Текст</Label>
-                    <HtmlEditor name={"text"} value={post.text} onChange={() => setUpdated(true)} options={{height: 600}}/>
-                    {/*<MarkdownEditor
-                    name="text"
-                    value={post.text}
-                />*/}
+                    {isMarkdown ? <MarkdownEditor                    name="text"                    value={post.text}                /> : <HtmlEditor name={"text"} value={post.text} onChange={() => setUpdated(true)} options={{height: 600}}/>}
+
                 </FormGroup>
 
                 <FormGroup check>

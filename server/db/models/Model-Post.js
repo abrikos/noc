@@ -6,8 +6,9 @@ const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
         header: {type: String, label: 'Заголовок'},
-        text: {type: String, label: 'Текст'},
+        text: {type: String, label: 'Текст', control:'markdown'},
         url: {type: String, label: 'Адрес на сайте СМИ'},
+        isMarkdown: {type: Boolean, label: 'Markdown'},
         editable: Boolean,
         published: {type: Boolean, label: 'Опубликовано'},
         isMassMedia: {type: Boolean, label: 'СМИ о нас'},
@@ -28,6 +29,14 @@ const modelSchema = new Schema({
     });
 
 modelSchema.statics.population = ['image', 'images', 'preview'];
+
+modelSchema.formOptions = {
+    label: 'Новости',
+    listOrder: {createdAt: -1},
+    listFields: ['header', 'date'],
+    searchFields: ['header'],
+}
+
 
 modelSchema.virtual('date')
     .get(function () {

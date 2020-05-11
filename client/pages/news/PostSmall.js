@@ -4,6 +4,7 @@ import {A} from "hookrouter";
 import DateFormat from "client/components/DateFormat";
 import PropTypes from "prop-types";
 import striptags from "striptags"
+import MarkDown from "react-markdown";
 
 export default function PostSmall(props) {
     PostSmall.propTypes = {
@@ -23,7 +24,7 @@ export default function PostSmall(props) {
             {props.isAdmin || <div>
                 {post.isMassMedia && <a href={link} target="_blank" rel="noopener noreferrer">{striptags(post.text)}</a>}
                 {!post.isMassMedia && <div className="post-small-text">
-                    {post.text && <A href={link}>{striptags(post.text)}</A>}
+                    {post.text && <A href={link}><MarkDown source={striptags(post.text)}/></A>}
                 </div>}
             </div>}
         </div>
