@@ -53,10 +53,11 @@ module.exports.controller = function (app) {
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
             .then(item => {
+                if(!item) return res.sendStatus(404)//.send({message:'Wrong ID ' + req.params.id})
                 item.editable = req.session.admin;
                 res.send(item)
             })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
     function bodyToWhere(body) {
@@ -90,7 +91,7 @@ module.exports.controller = function (app) {
                         res.send({count, list})
                     })
             })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
 
@@ -149,7 +150,7 @@ module.exports.controller = function (app) {
             })
     });
     app.post('/api/admin/:model/:id/images/add', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
         Mongoose[req.params.model].findById(req.params.id)
 
             .then(model => {
@@ -162,10 +163,10 @@ module.exports.controller = function (app) {
 
 
             })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
     app.post('/api/admin/:model/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
         Mongoose[req.params.model].findById(req.params.id)
             .then(model => {
                 model.image = req.params.image;
@@ -174,7 +175,7 @@ module.exports.controller = function (app) {
                     res.send(m)
                 })
             })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
 

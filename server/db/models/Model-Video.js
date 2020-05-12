@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
 const modelSchema = new Schema({
         uid: String,
         type: String,
-        name: String,
-        text: String,
+        name: {type:String, label:"Название"},
+        text: {type:String, label:"Описание"},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     },
     {
@@ -17,6 +17,14 @@ const modelSchema = new Schema({
         // see http://stackoverflow.com/q/13133911/488666
         toJSON: {virtuals: true}
     });
+
+modelSchema.formOptions = {
+    label: 'Видео',
+    listOrder: {createdAt: -1},
+    listFields: ['name', 'date'],
+    searchFields: ['name'],
+}
+
 
 modelSchema.virtual('date')
     .get(function () {
@@ -28,6 +36,11 @@ modelSchema.virtual('link')
         let link;
         if(this.type==='youtube') link = `https://www.youtube.com/watch?v=${this.uid}`
         return link;
+    });
+
+modelSchema.virtual('adminLink')
+    .get(function () {
+        return `/admin/video/${this.id}/update`
     });
 
 

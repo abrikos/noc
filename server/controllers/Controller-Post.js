@@ -30,14 +30,14 @@ module.exports.controller = function (app) {
             .skip(parseInt(req.body.skip))
             .populate(Mongoose.post.population)
             .then(items => res.send(items))
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
     app.post('/api/post/search/count', (req, res) => {
         const filter = bodyToWhere(req.body);
         Mongoose.post.countDocuments(filter)
             .then(count => res.send({count}))
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
     app.post('/api/post/create', passportLib.isAdmin, async (req, res) => {
@@ -47,17 +47,17 @@ module.exports.controller = function (app) {
     });
 
     app.post('/api/post/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
         Mongoose.post.findById(req.params.id)
             .then(post => {
                 post.preview = req.params.image;
                 post.save().then(p=>res.send(p));
             })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
     app.post('/api/post/:id/images/add', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
         Mongoose.post.findById(req.params.id)
             .then(post => {
                 post.images = post.images.concat(req.body.images);
@@ -65,7 +65,7 @@ module.exports.controller = function (app) {
                 post.editable = true;
                 res.send(post)
             })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
     app.get('/api/post/share/:id', (req, res) => {
@@ -77,11 +77,11 @@ module.exports.controller = function (app) {
                 image: req.protocol + '://' + req.get('host') + (post.image ? post.image.path : '/logo.svg'),
                 url: req.protocol + '://' + req.get('host') + '/post/' + post.id
             }))
-            .catch(e => res.send(app.locals.sendError({error: 404, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
     app.post('/api/post/:id/delete', passportLib.isAdmin, async (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
         Mongoose.post.findById(req.params.id)
             .populate('token')
             .then(post => {

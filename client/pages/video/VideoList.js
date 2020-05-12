@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Pager from "client/components/Pager";
 import VideoPlay from "client/components/VideoPlay";
 import Loader from "client/components/Loader";
+import AdminLink from "client/components/AdminLink";
 
 export default function VideoList(props) {
     const [models, setModels] = useState();
@@ -24,7 +25,7 @@ export default function VideoList(props) {
     return <div className="post-list">
         <h1>Видео</h1>
         <div className="d-sm-flex d-none flex-wrap justify-content-center">
-            {models.map(m => <div className="m-2"><VideoPlay key={m.id} video={m}/></div>)}
+            {models.map(m => <div className="m-2"><AdminLink model={m} {...props}/><VideoPlay key={m.id} video={m}/></div>)}
         </div>
 
 

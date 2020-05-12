@@ -34,13 +34,13 @@ app.locals.sendError = (obj) => {
     if (process.env.NODE_ENV === 'production') {
         obj.message = 'Server error'
     }
-    return obj;
+    return {error: 500, message: obj.message};
 };
 
 app.locals.bot = bot;
 app.locals.CronJob = CronJob;
 
-app.locals.socketSend = (action,data)=>{
+app.locals.socketSend = (action, data) => {
     wss.clients.forEach(function each(client) {
         client.send(JSON.stringify({action, data}));
     });
@@ -84,7 +84,6 @@ server.on('upgrade', function (request, socket, head) {
         });
     });
 });
-
 
 
 //

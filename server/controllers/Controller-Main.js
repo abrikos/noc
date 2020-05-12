@@ -36,8 +36,8 @@ module.exports.controller = function (app) {
             text: req.body.name + ':\n\n' + options[req.body.option] +'\n\n' +  req.body.text,
             attachments: [{path: `./${file}`}]
         };
-        transport.sendMail(message, (err) => {
-            if (err) return res.send(app.locals.sendError({error: 500, message: err}));
+        transport.sendMail(message, (error) => {
+            if (error) return res.send(app.locals.sendError(error));
             fs.unlinkSync(`./${file}`);
             res.send({ok: 200});
 

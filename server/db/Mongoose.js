@@ -5,7 +5,7 @@ import division from "server/db/models/Model-Division";
 import person from "server/db/models/Model-Person";
 import meeting from "server/db/models/Model-Meeting";
 import edition from "server/db/models/Model-Edition";
-import video from "server/db/models/Model-Vieo";
+import video from "server/db/models/Model-Video";
 import document from "server/db/models/Model-Document";
 import council from "server/db/models/Model-Council";
 import covid from "server/db/models/Model-Covid";

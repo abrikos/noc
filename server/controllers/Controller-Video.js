@@ -4,36 +4,37 @@ import axios from "axios";
 const logger = require('logat');
 const passportLib = require('server/lib/passport');
 const fetchVideoInfo = require('youtube-info');
-const youtubeChannelId = 'UC-ACL2rOnpLvtNYw9HZJQKQ';
-const urlPlayLists = `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.YOUTUBE}&channelId=${youtubeChannelId}&part=id`
+const youtubeChannes = ['UC-ACL2rOnpLvtNYw9HZJQKQ', 'UCmavIHBeAVh6lbVWkMljf3Q'];
 const urlVideos = `https://www.googleapis.com/youtube/v3/playlistItems?key=${process.env.YOUTUBE}&order=date&part=snippet&maxResults=20&playlistId=`
 
-function playlistParse(){
+async function playlistParse(id) {
     //await Mongoose.Video.deleteMany()
-    axios(urlPlayLists)
-        .then(res=>{
-            for(const pl of res.data.items){
-                axios(urlVideos+pl.id)
-                    .then(res2=>{
-                        for(const u of res2.data.items.reverse()){
-                            const video = u.snippet
-                            const uid = video.resourceId.videoId;
-                            Mongoose.video.findOne({uid})
-                                .then(found=>{
-                                    if(found) return;
-                                    Mongoose.video.create({uid, type:'youtube',name:video.title, description:video.description})
-                                })
-                        }
-                    })
+    const url = `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.YOUTUBE}&channelId=${id}&part=id`
 
-            }
-        })
+    const res = await axios(url)
+    for (const pl of res.data.items) {
+        const res2 = await axios(urlVideos + pl.id)
+        for (const u of res2.data.items.reverse()) {
+            const video = u.snippet
+            const uid = video.resourceId.videoId;
+            const found = await Mongoose.video.findOne({uid})
+            if (found) continue;
+            await Mongoose.video.create({uid, type: 'youtube', name: video.title + ' ' + video.description})
+        }
+    }
 }
 
+async function loop() {
+    for (const id of youtubeChannes) {
+        await playlistParse(id)
+    }
+
+}
+loop()
 
 module.exports.controller = function (app) {
     const job = new app.locals.CronJob('0 0 * * * *', async function () {
-        playlistParse()
+        loop()
     }, null, true, 'America/Los_Angeles');
 
 
@@ -52,7 +53,7 @@ module.exports.controller = function (app) {
                 await r.save()
                 res.send(r);
             })
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+            .catch(e => res.send(app.locals.sendError(e)))
     });
 
     app.post('/api/admin/video/:id/delete', passportLib.isAdmin, (req, res) => {
