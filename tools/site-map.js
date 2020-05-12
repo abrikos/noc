@@ -12,7 +12,7 @@ async function siteMap() {
     const meetings = await Mongoose.council.find({isJoined: true});
     map.push({label: 'Ученые советы', items: [{label: 'Ученый совет Президиума АН РС(Я)', path: '/presidium/council'}, {label: '------'}, {label: 'Объединенные ученые советы', path: '/council-about'}].concat(meetings.map(d => ({label: d.name, path: d.link}))), menu: true});
     map.push({
-        label: 'Члены академии  АН РС(Я)', menu: true, items: Mongoose.person.schema.paths.member.options.select.map(s => ({label: s.label, path: `/people/${s.value}/members`}))
+        label: 'Члены АН РС(Я)', menu: true, items: Mongoose.person.schema.paths.member.options.select.map(s => ({label: s.label, path: `/people/${s.value}/members`}))
     })
     map.push({
         label: 'Президиум', menu: true, items: [
@@ -28,10 +28,10 @@ async function siteMap() {
         label: 'Проекты', items: [
             {label: 'Издания', path: '/edition', menu: true},
             {label: '------'},
-            {label: 'История якутии', path: '/project/sakha-history'},
-            {label: 'История якутии. Том 1', path: '/project/sakha-history/1'},
-            {label: 'История якутии. Том 2', path: '/project/sakha-history/2'},
-            {label: 'История якутии. Том 3', path: '/project/sakha-history/3'},
+            {label: 'История Якутии', path: '/project/sakha-history'},
+            {label: 'История Якутии. Том 1', path: '/project/sakha-history/1'},
+            {label: 'История Якутии. Том 2', path: '/project/sakha-history/2'},
+            {label: 'История Якутии. Том 3', path: '/project/sakha-history/3'},
             {label: '------'},
             {label: 'Переработка мусора', path: '/project/recycle'},
             {label: '------'},
