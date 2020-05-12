@@ -19,6 +19,7 @@ async function playlistParse(id) {
             const uid = video.resourceId.videoId;
             const found = await Mongoose.video.findOne({uid})
             if (found) continue;
+            console.log(uid)
             await Mongoose.video.create({uid, type: 'youtube', name: video.title + ' ' + video.description})
         }
     }
