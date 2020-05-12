@@ -10,11 +10,11 @@ const urlVideos = `https://www.googleapis.com/youtube/v3/playlistItems?key=${pro
 async function playlistParse(id) {
     //await Mongoose.Video.deleteMany()
     const url = `https://www.googleapis.com/youtube/v3/playlists?key=${process.env.YOUTUBE}&channelId=${id}&part=id`
-
     const res = await axios(url)
     for (const pl of res.data.items) {
         const res2 = await axios(urlVideos + pl.id)
         for (const u of res2.data.items.reverse()) {
+
             const video = u.snippet
             const uid = video.resourceId.videoId;
             const found = await Mongoose.video.findOne({uid})
