@@ -26,6 +26,7 @@ export default function (props) {
     if(!(schema) ) return <div></div>;
     return <div>
         <ConferenceMenu/>
+        <div className="alert alert-info">Для участия в конференции пожалуйста заполните эту форму!</div>
         <form onSubmit={submit}>
         <table className="table">
             <tbody>
