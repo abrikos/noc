@@ -22,6 +22,7 @@ export default function AdminIndex(props) {
         council: ['ОУС', <AdminModel  {...props}/>],
         edition: ['Издания', <AdminModel  {...props}/>],
         document: ['Документы', <AdminModel  {...props}/>],
+        conference: ['Конференция', <AdminModel  {...props}/>],
 
     };
 

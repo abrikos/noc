@@ -38,6 +38,9 @@ import TestPage from "client/pages/home/TestPage";
 import Graph from "client/pages/modeling/Graph";
 import Fortran from "client/pages/fortran/Fortran";
 import JournalGroup from "client/pages/JournalGroup";
+import Conference from "client/pages/conference/Conference";
+import ConferencePerson from "client/pages/conference/ConferencePerson";
+import ConferenceForm from "client/pages/conference/ConferenceForm";
 
 export default function Routes(props) {
 
@@ -89,5 +92,8 @@ export default function Routes(props) {
         "/test": (params) => <TestPage {...props}/>,
         "/graph": (params) => <Graph {...props}/>,
         "/fortran": (params) => <Fortran {...props}/>,
+        "/conference": (params) => <Conference {...props}/>,
+        "/conference/registration": (params) => <ConferenceForm {...props}/>,
+        "/conference/:id/:name": (params) => <ConferencePerson {...params} {...props}/>,
     };
 }

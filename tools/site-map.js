@@ -55,6 +55,12 @@ async function siteMap() {
             {label: 'Телефонный справочник', path: '/phone-book'}
         ], menu: true
     });
+    map.push({
+        label: 'IX Международная конференция по математическому моделированию', items: [
+            {label: 'Регистраци', path: '/conference/registration'},
+            {label: 'Список участников', path: '/conference'},
+        ], menu: false
+    });
     Mongoose.close()
     return map;
 }

@@ -1,5 +1,9 @@
 import Mongoose from "server/db/Mongoose";
 
+const nodemailer = require('nodemailer');
+const mailer = JSON.parse(process.env.mailer);
+const transport = nodemailer.createTransport(mailer)
+
 const passportLib = require('server/lib/passport');
 //const passport = require('passport');
 
@@ -49,11 +53,43 @@ module.exports.controller = function (app) {
 
     });
 
+    app.post('/api/conference/create', (req, res) => {
+        Mongoose.conference.create(req.body)
+            .then(person => {
+                    const schema = getSchema('conference');
+                    let text = '';
+                    for (const f of schema.fields) {
+                        if(!person[f.name]) continue;
+                        text += f.options.label + ': '
+                            + (f.options.select ?
+                                f.options.select[person[f.name] - 1] && f.options.select[person[f.name] - 1].label
+                                : person[f.name]) + '\n'
+                    }
+                text += `Посмотреть на сайте: https://yakutia.science${person.link}`
+
+                    const message = {
+                        from: mailer.auth.user,
+                        cc: "me@abrikos.pro",
+                        to:"abrikoz@gmail.com",
+                        //to:"guspopov@mail.ru",
+                        subject: `${person.fioShort} Регистрация. IX Международная конференция по математическому моделированию`,
+                        text,
+                    };
+                    transport.sendMail(message, (error) => {
+                        if (error) return res.send(app.locals.sendError(error));
+                        res.send({ok: 200});
+                    });
+                }
+            )
+
+    })
+
+
     app.post('/api/:model/:id/view', (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
             .then(item => {
-                if(!item) return res.sendStatus(404)//.send({message:'Wrong ID ' + req.params.id})
+                if (!item) return res.sendStatus(404)//.send({message:'Wrong ID ' + req.params.id})
                 item.editable = req.session.admin;
                 res.send(item)
             })
@@ -150,7 +186,7 @@ module.exports.controller = function (app) {
             })
     });
     app.post('/api/admin/:model/:id/images/add', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message: 'Wrong id'}))
         Mongoose[req.params.model].findById(req.params.id)
 
             .then(model => {
@@ -166,7 +202,7 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError(e)))
     });
     app.post('/api/admin/:model/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message: 'Wrong id'}))
         Mongoose[req.params.model].findById(req.params.id)
             .then(model => {
                 model.image = req.params.image;
