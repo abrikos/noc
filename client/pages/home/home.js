@@ -8,7 +8,6 @@ import "./home.sass"
 import woman from "./research/woman.jpeg"
 import intell from "./intellectual/home2.jpeg"
 import DateFormat from "client/components/DateFormat";
-import axios from "axios";
 
 export default function Home(props) {
     const [news, setNews] = useState([]);
@@ -24,8 +23,8 @@ export default function Home(props) {
                 setNewsLast(last)
                 setNews(res)
             })
-        axios.get('/skaha-stat.json')
-            .then(res => setSakhaStat(res.data))
+        props.api('/sakha-stat')
+            .then(setSakhaStat)
     }, []);
 
     function formatLastNews(i) {

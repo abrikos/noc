@@ -3,8 +3,14 @@ import axios from "axios";
 import moment from "moment";
 import {parse} from "node-html-parser";
 const fs = require('fs')
+const file = 'client/sakha-stat.json';
+
 
 module.exports.controller = function (app) {
+
+    app.post('/api/sakha-stat',  (req, res) => {
+        res.send(JSON.parse(fs.readFileSync(file,'utf8')));
+    });
 
     async function getData() {
         const res = await axios('https://sakha.gks.ru/')
@@ -21,9 +27,9 @@ module.exports.controller = function (app) {
             }
             ret.push(r)
         }
-        console.log(ret)
-        fs.writeFileSync('build/skaha-stat.json', JSON.stringify(ret),'utf8')
+        fs.writeFileSync(file, JSON.stringify(ret),'utf8')
     }
+
 
     getData()
 
