@@ -7,7 +7,7 @@ const passportLib = require('server/lib/passport');
 
 module.exports.controller = function (app) {
 
-    /*function bodyToWhere(body) {
+    function bodyToWhere(body) {
         if (!body.where) body.where = {};
         body.where.published = true;
         for(const f in body.where){
@@ -68,18 +68,6 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError(e)))
     });
 
-    app.get('/api/post/share/:id', (req, res) => {
-        Mongoose.post.findById(req.params.id)
-            .populate(Mongoose.post.population)
-            .then(post => res.render('post', {
-                header: post.header,
-                text: striptags(post.text),
-                image: req.protocol + '://' + req.get('host') + (post.image ? post.image.path : '/logo.svg'),
-                url: req.protocol + '://' + req.get('host') + '/post/' + post.id
-            }))
-            .catch(e => res.send(app.locals.sendError(e)))
-    });
-
     app.post('/api/post/:id/delete', passportLib.isAdmin, async (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
         Mongoose.post.findById(req.params.id)
@@ -88,7 +76,7 @@ module.exports.controller = function (app) {
                 post.delete();
                 res.sendStatus(200);
             })
-    });*/
+    });
 
 }
 ;
