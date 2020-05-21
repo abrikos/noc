@@ -22,7 +22,7 @@ module.exports.controller = function (app) {
             ret.push(r)
         }
         console.log(ret)
-        fs.writeFileSync('public/skaha-stat.json', JSON.stringify(ret),'utf8')
+        fs.writeFileSync('build/skaha-stat.json', JSON.stringify(ret),'utf8')
     }
 
     getData()
