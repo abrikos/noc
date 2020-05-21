@@ -1,4 +1,5 @@
 import Mongoose from "server/db/Mongoose";
+import striptags from "striptags";
 
 const nodemailer = require('nodemailer');
 const mailer = JSON.parse(process.env.mailer);
@@ -6,6 +7,7 @@ const transport = nodemailer.createTransport(mailer)
 
 const passportLib = require('server/lib/passport');
 //const passport = require('passport');
+const removeMd = require('remove-markdown');
 
 module.exports.controller = function (app) {
 
@@ -211,6 +213,18 @@ module.exports.controller = function (app) {
                     res.send(m)
                 })
             })
+            .catch(e => res.send(app.locals.sendError(e)))
+    });
+
+    app.get('/api/post/share/:id', (req, res) => {
+        Mongoose.post.findById(req.params.id)
+            .populate(Mongoose.post.population)
+            .then(post => res.render('post', {
+                header: `${process.env.SITE_NAME} - ${removeMd(post.header)}`,
+                text: striptags(post.text),
+                image: req.protocol + '://' + req.get('host') + (post.image ? post.image.path : '/logo.svg'),
+                url: req.protocol + '://' + req.get('host') + '/post/' + post.id
+            }))
             .catch(e => res.send(app.locals.sendError(e)))
     });
 
