@@ -8,11 +8,12 @@ import "./home.sass"
 import woman from "./research/woman.jpeg"
 import intell from "./intellectual/home2.jpeg"
 import DateFormat from "client/components/DateFormat";
-import Covid from "client/pages/home/Covid";
+import axios from "axios";
 
 export default function Home(props) {
     const [news, setNews] = useState([]);
     const [newsLast, setNewsLast] = useState();
+    const [sakhaStat, setSakhaStat] = useState([]);
     useEffect(() => {
         props.api('/post/search', {where: {published: true, isMassMedia: {$ne: true}}, limit: 15})
             .then(res => {
@@ -23,6 +24,8 @@ export default function Home(props) {
                 setNewsLast(last)
                 setNews(res)
             })
+        axios.get('/skaha-stat.json')
+            .then(res => setSakhaStat(res.data))
     }, []);
 
     function formatLastNews(i) {
@@ -52,8 +55,17 @@ export default function Home(props) {
             </div>
 
         </div>
-
-
+        <div className="alert alert-info">
+            <h2>Оперативные показатели</h2>
+            <table className="table">
+                <tbody>
+                {sakhaStat.map((r, i) => <tr key={i}>
+                    {r.map((c, j) => <td key={j}>{c}</td>)}
+                </tr>)}
+                </tbody>
+            </table>
+            <small>Информация с сайта <a href="https://sakha.gks.ru/" target="_blank">sakha.gks.ru</a> </small>
+        </div>
         <hr/>
 
         <div className=" my-5">
