@@ -41,6 +41,7 @@ import JournalGroup from "client/pages/JournalGroup";
 import Conference from "client/pages/conference/Conference";
 import ConferencePerson from "client/pages/conference/ConferencePerson";
 import ConferenceForm from "client/pages/conference/ConferenceForm";
+import Power8 from "client/pages/power8/Power8";
 
 export default function Routes(props) {
 
@@ -93,6 +94,7 @@ export default function Routes(props) {
         "/graph": (params) => <Graph {...props}/>,
         "/fortran": (params) => <Fortran {...props}/>,
         "/conference": (params) => <Conference {...props}/>,
+        "/power8": (params) => <Power8 {...props}/>,
         "/conference/registration": (params) => <ConferenceForm {...props}/>,
         "/conference/:id/:name": (params) => <ConferencePerson {...params} {...props}/>,
     };

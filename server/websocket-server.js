@@ -17,7 +17,8 @@ const wss = new WebSocket.Server({clientTracking: true, noServer: true});
 app.locals.wss = wss;
 const bot = require('server/bot');
 const CronJob = require('cron').CronJob;
-
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 mailer.extend(app, JSON.parse(process.env.mailer));
 
 const sessionParser = session({
