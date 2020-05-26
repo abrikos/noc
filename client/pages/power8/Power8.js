@@ -106,7 +106,7 @@ return <div className="power8">
         </ul>
 
     </div>
-
+    <a href="https://drive.google.com/open?id=1ahezkv7zc1_zFSo8uYviwguo1u6HcK7X">Подробный отчет о тестировании системы</a>
 
 </div>
 }
