@@ -49,25 +49,63 @@ return <div className="power8">
     <h2>Архитектурно вычислительная система</h2>
     <img src={arch} className="img-fluid m-auto d-block"/>
 
-    <h2>Характеристики производительности СХД</h2>
+    <h2>Результаты тестов</h2>
     <table className="table table-info">
         <tbody>
         <tr>
-            <td>Копирование</td>
+            <td>Скорость системы хранения данных</td>
             <td>1.7 GB/s</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <td>Пропускная способность между глобальной памятью и
+                памятью GPU</td>
+            <td>535.7 GB/s</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
+            <td>Пропускная способность NVLink</td>
+            <td>33.1 GB/s</td>
+        </tr>
+        <tr>
+            <td colSpan={2} className="text-center">Средняя производительность</td>
+        </tr>
+        <tr>
+            <td>SGEMM</td>
+            <td>9397.4 GFlops</td>
+        </tr>
+        <tr>
+            <td>DGEMM</td>
+            <td>4819.2 GFlops</td>
+        </tr>
+        <tr>
+            <td>XL IBM</td>
+            <td>29.1 GFlops</td>
+        </tr>
+        <tr>
+            <td>SMP64</td>
+            <td>232.1 GFlops</td>
+        </tr>
+        <tr>
+            <td>SMP CUDA</td>
+            <td>6971.3 GFlops</td>
+        </tr>
+        <tr>
+            <td>HPL</td>
+            <td>189000 Gflops</td>
         </tr>
         </tbody>
     </table>
 
+    <div>
+        Серия тестов для получения максимальной производительности в реальных
+        ненагруженных условиях, показывает следующие результаты:
+        <ul>
+            <li>Операции с плавающей точкой одинарной точности составляет 88.65 % от
+                заявленных производителем</li>
+            <li>Операция двойной точности – 90.92 % от пиковой производительности GPU</li>
+            <li>Использование ESSL 64 bit – 34 % от пиковой</li>
+        </ul>
 
+    </div>
 
 
 </div>
