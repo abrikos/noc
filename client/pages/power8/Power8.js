@@ -90,7 +90,7 @@ return <div className="power8">
         </tr>
         <tr>
             <td>HPL</td>
-            <td>189000 Gflops</td>
+            <td>189 Gflops</td>
         </tr>
         </tbody>
     </table>
