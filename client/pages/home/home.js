@@ -14,7 +14,7 @@ export default function Home(props) {
     const [newsLast, setNewsLast] = useState();
     const [sakhaStat, setSakhaStat] = useState([]);
     useEffect(() => {
-        props.api('/post/search', {where: {published: true, isMassMedia: {$ne: true}}, limit: 15})
+        props.api('/post/search', {where: {published: true}, limit: 15})
             .then(res => {
                 const last = [];
                 last.push(res.shift());

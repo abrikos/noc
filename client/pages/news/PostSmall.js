@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import striptags from "striptags"
 import MarkDown from "react-markdown";
 
+const removeMd = require('remove-markdown');
+
 export default function PostSmall(props) {
     PostSmall.propTypes = {
         post: PropTypes.object.isRequired,
@@ -24,7 +26,7 @@ export default function PostSmall(props) {
             {props.isAdmin || <div>
                 {post.isMassMedia && <a href={link} target="_blank" rel="noopener noreferrer">{striptags(post.text)}</a>}
                 {!post.isMassMedia && <div className="post-small-text">
-                    {post.text && <A href={link}><MarkDown source={striptags(post.text)}/></A>}
+                    {post.text && <A href={link}><MarkDown source={striptags(removeMd(post.text))}/></A>}
                 </div>}
             </div>}
         </div>
