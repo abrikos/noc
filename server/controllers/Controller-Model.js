@@ -7,7 +7,7 @@ const transport = nodemailer.createTransport(mailer)
 
 const passportLib = require('server/lib/passport');
 //const passport = require('passport');
-const removeMd = require('remove-markdown');
+
 
 module.exports.controller = function (app) {
 
@@ -216,15 +216,10 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError(e)))
     });
 
-    app.get('/api/post/share/:id', (req, res) => {
-        Mongoose.post.findById(req.params.id)
-            .populate(Mongoose.post.population)
-            .then(post => res.render('post', {
-                header: `${process.env.SITE_NAME} - ${removeMd(post.header)}`,
-                text: striptags(post.text),
-                image: req.protocol + '://' + req.get('host') + (post.image ? post.image.path : '/logo.svg'),
-                url: req.protocol + '://' + req.get('host') + '/post/' + post.id
-            }))
+    app.get('/api/:model/share/:id', (req, res) => {
+        Mongoose[req.params.model].findById(req.params.id)
+            .populate(Mongoose[req.params.model].population)
+            .then(post => res.render('post', post.shareData))
             .catch(e => res.send(app.locals.sendError(e)))
     });
 

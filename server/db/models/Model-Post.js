@@ -1,5 +1,7 @@
 import moment from "moment";
 import transliterate from "transliterate"
+import striptags from "striptags";
+const removeMd = require('remove-markdown');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -56,6 +58,16 @@ modelSchema.virtual('previewPath')
 modelSchema.virtual('adminLink')
     .get(function () {
         return `/admin/news/${this.id}/update`
+    });
+
+modelSchema.virtual('shareData')
+    .get(function () {
+        return {
+            header: `${process.env.SITE_NAME} - ${removeMd(this.header)}`,
+            text: striptags(removeMd(this.text)),
+            image:  `${process.env.SITE}${this.image ? this.image.path : '/logo.svg'}`,
+            url: `${process.env.SITE}${this.link}`
+        }
     });
 
 modelSchema.virtual('link')

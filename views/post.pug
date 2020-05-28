@@ -5,12 +5,11 @@ html
 		meta( data-n-head="true" data-hid="og-description" name="og:description" content=text)
 		meta( data-n-head="true" data-hid="og-image" name="og:image" content=image)
 
-	title=types
+	title=header
 	body
-		div=types
 		div=text
 		img(src=image)
-		div=url
-		div=image
+		div='URL: ' + url
+		div='IMAGE: ' + image
 		script.
 			document.location.href = '#{url}'
