@@ -83,7 +83,7 @@
     "moment": "^2.23.0",
     "mongoose": "^5.9.5",
     "node-html-parser": "^1.2.13",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "node-telegram-bot-api": "^0.40.0",
     "node-url-shortener": "^1.0.1",
     "nodemailer": "latest",

@@ -30,10 +30,12 @@ export default function Home(props) {
     function formatLastNews(i) {
         return <div className="first-news">
             <div className="first-news-img">
-                <A href={newsLast[i].link}><img src={newsLast[i].previewPath} className="img-preview"/></A>
+                {newsLast[i].isMassMedia && <a href={newsLast[i].link} target="_blank" rel="noopener noreferrer"><img src={newsLast[i].previewPath} alt={newsLast[i].header} className="img-preview"/></a>}
+                {!newsLast[i].isMassMedia && <A href={newsLast[i].link}><img src={newsLast[i].previewPath} className="img-preview"/></A>}
             </div>
             <div><DateFormat date={newsLast[i].date}/></div>
-            <A href={newsLast[i].link}>{newsLast[i].header}</A>
+            {newsLast[i].isMassMedia && <a href={newsLast[i].link} target="_blank" rel="noopener noreferrer">{newsLast[i].header}</a>}
+            {!newsLast[i].isMassMedia && <A href={newsLast[i].link}>{newsLast[i].header}</A>}
         </div>
     }
 
