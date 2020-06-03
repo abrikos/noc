@@ -27,7 +27,7 @@ export default function PostSmall(props) {
                 <div><a href={link} target="_blank" rel="noopener noreferrer"><DateFormat date={post.date}/></a></div>
                 <a href={link}><h5 target="_blank" rel="noopener noreferrer">{post.header}</h5></a>
                 {props.isAdmin || <div>
-                    <a href={link} target="_blank" rel="noopener noreferrer">{striptags(post.text)}</a>
+                    <a href={link} target="_blank" rel="noopener noreferrer">{striptags(removeMd(post.text))}</a>
                 </div>}
             </div>
         </div>;
