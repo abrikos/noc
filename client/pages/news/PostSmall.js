@@ -38,7 +38,7 @@ export default function PostSmall(props) {
             </div>
             <div className="post-small-content">
                 <div><A href={link}><DateFormat date={post.date}/></A></div>
-                <A href={link}><h5>{post.header} {link}</h5></A>
+                <A href={link}><h5>{post.header}</h5></A>
                 {props.isAdmin || <div>
                     <div className="post-small-text">
                         {post.text && <A href={link}>{striptags(removeMd(post.text))}</A>}
