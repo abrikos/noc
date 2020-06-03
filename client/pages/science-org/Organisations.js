@@ -19,7 +19,7 @@ import noImage from "client/images/noImage.png"
 import "./organisations.sass"
 
 export default function (props) {
-    return <div><h1>Научные учереждения РС(Я)</h1>
+    return <div><h1>Научные учреждения РС(Я)</h1>
         <div className="science-org">
 
             <div className="uk-grid-margin"><a className="el-item uk-card uk-card-hover uk-card-small uk-card-body uk-margin-remove-first-child uk-display-block uk-link-toggle uk-scrollspy-inview uk-animation-slide-top-medium" href="http://prez.ysn.ru" target="_blank" rel="noopener noreferrer" uk-scrollspy-class="uk-animation-slide-top-medium">
