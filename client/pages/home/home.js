@@ -52,11 +52,11 @@ export default function Home(props) {
                     <div className="col-sm-6">{formatLastNews(newsLast[1])}</div>
                     <div className="col-sm-6">{formatLastNews(newsLast[2])}</div>
                 </div>
-            </div>}
-            <div className="col-sm-8">
                 <div className="d-flex flex-wrap">
                     {fixed.map(n => <div key={n.id}>{formatLastNews(n)}</div>)}
                 </div>
+            </div>}
+            <div className="col-sm-8">
                 <div className="text-center">Все новости</div>
                 <div className="d-flex flex-wrap">
                     {news.map(n => <PostSmall key={n.id} post={n}/>)}
