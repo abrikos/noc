@@ -20,7 +20,6 @@ module.exports.controller = function (app) {
         } else {
             delete body.where.text;
         }
-        console.log(body)
         return body.where;
     }
 
