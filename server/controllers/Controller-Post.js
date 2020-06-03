@@ -9,9 +9,10 @@ module.exports.controller = function (app) {
 
     function bodyToWhere(body) {
         if (!body.where) body.where = {};
+
         body.where.published = true;
         for(const f in body.where){
-            if(!body.where[f]) delete body.where[f];
+            if(body.where[f]===null) delete body.where[f];
         }
         if (body.where.text) {
             body.where.$or =[{text:new RegExp(body.where.text, 'i')},{header:new RegExp(body.where.text, 'i')},]
@@ -19,11 +20,13 @@ module.exports.controller = function (app) {
         } else {
             delete body.where.text;
         }
+        console.log(body)
         return body.where;
     }
 
     app.post('/api/post/search', (req, res) => {
         const filter = bodyToWhere(req.body);
+
         Mongoose.post.find(filter)
             .sort({createdAt: -1})
             .limit(parseInt(req.body.limit) || 10)

@@ -15,6 +15,7 @@ const modelSchema = new Schema({
         published: {type: Boolean, label: 'Опубликовано'},
         isMassMedia: {type: Boolean, label: 'СМИ о нас'},
         isElection: {type: Boolean, label: 'Выборы'},
+        isFixed: {type: Boolean, label: 'Фиксированная'},
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],

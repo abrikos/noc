@@ -11,10 +11,13 @@ import DateFormat from "client/components/DateFormat";
 
 export default function Home(props) {
     const [news, setNews] = useState([]);
+    const [fixed, setFixed] = useState([]);
     const [newsLast, setNewsLast] = useState();
     const [sakhaStat, setSakhaStat] = useState([]);
     useEffect(() => {
-        props.api('/post/search', {where: {published: true}, limit: 15})
+        props.api('/post/search', {where: {published: true, isFixed:true}, limit: 15})
+            .then(setFixed)
+        props.api('/post/search', {where: {published: true, isFixed:{$ne:true}}, limit: 15})
             .then(res => {
                 const last = [];
                 last.push(res.shift());
@@ -27,28 +30,33 @@ export default function Home(props) {
             .then(setSakhaStat)
     }, []);
 
-    function formatLastNews(i) {
+    function formatLastNews(post) {
         return <div className="first-news">
             <div className="first-news-img">
-                {newsLast[i].isMassMedia && <a href={newsLast[i].link} target="_blank" rel="noopener noreferrer"><img src={newsLast[i].previewPath} alt={newsLast[i].header} className="img-preview"/></a>}
-                {!newsLast[i].isMassMedia && <A href={newsLast[i].link}><img src={newsLast[i].previewPath} className="img-preview"/></A>}
+                {post.isMassMedia && <a href={post.link} target="_blank" rel="noopener noreferrer"><img src={post.previewPath} alt={post.header} className="img-preview"/></a>}
+                {!post.isMassMedia && <A href={post.link}><img src={post.previewPath} className="img-preview"/></A>}
             </div>
-            <div><DateFormat date={newsLast[i].date}/></div>
-            {newsLast[i].isMassMedia && <a href={newsLast[i].link} target="_blank" rel="noopener noreferrer">{newsLast[i].header}</a>}
-            {!newsLast[i].isMassMedia && <A href={newsLast[i].link}>{newsLast[i].header}</A>}
+            <div><DateFormat date={post.date}/></div>
+            {post.isMassMedia && <a href={post.link} target="_blank" rel="noopener noreferrer">{post.header}</a>}
+            {!post.isMassMedia && <A href={post.link}>{post.header}</A>}
         </div>
     }
+
+
 
     return <div className="home">
         <div className="row">
             {newsLast && <div className="col-sm-4">
-                {formatLastNews(0)}
+                {formatLastNews(newsLast[0])}
                 <div className="row rest-news">
-                    <div className="col-sm-6">{formatLastNews(1)}</div>
-                    <div className="col-sm-6">{formatLastNews(2)}</div>
+                    <div className="col-sm-6">{formatLastNews(newsLast[1])}</div>
+                    <div className="col-sm-6">{formatLastNews(newsLast[2])}</div>
                 </div>
             </div>}
             <div className="col-sm-8">
+                <div className="d-flex flex-wrap">
+                    {fixed.map(n => <div key={n.id}>{formatLastNews(n)}</div>)}
+                </div>
                 <div className="text-center">Все новости</div>
                 <div className="d-flex flex-wrap">
                     {news.map(n => <PostSmall key={n.id} post={n}/>)}

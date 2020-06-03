@@ -23,12 +23,12 @@ export default function PostSmall(props) {
             {!post.isMassMedia && <A href={link}><img src={post.previewPath} alt={post.header} className="img-preview"/></A>}
         </div>
         <div className="post-small-content">
-            {!post.isMassMedia && <div><A href={link}><DateFormat date={post.date}/></A></div>}
+            <div><A href={link}><DateFormat date={post.date}/></A></div>
             <A href={link}><h5>{post.header}</h5></A>
             {props.isAdmin || <div>
                 {post.isMassMedia && <a href={link} target="_blank" rel="noopener noreferrer">{striptags(post.text)}</a>}
                 {!post.isMassMedia && <div className="post-small-text">
-                    {post.text && <A href={link}><MarkDown source={striptags(removeMd(post.text))}/></A>}
+                    {post.text && <A href={link}>{striptags(removeMd(post.text))}</A>}
                 </div>}
             </div>}
         </div>

@@ -90,6 +90,13 @@ export default function (props) {
                     </Label>
                 </FormGroup>
 
+                <FormGroup check>
+                    <Label check>
+                        <Input type="checkbox" name="isFixed" defaultChecked={post.isFixed}/>
+                        Фиксированная
+                    </Label>
+                </FormGroup>
+
                 {isMassMedia && <FormGroup>
                     <Label>Ссылка</Label>
                     <Input name="url" defaultValue={post.url}/>
