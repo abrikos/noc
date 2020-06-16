@@ -13,7 +13,8 @@ module.exports.controller = function (app) {
         const dataWeeks = await Mongoose.covid
             //.find({isRussia:false})
             .aggregate([
-                {$match: {createdAt: {$lt:from_date._d}, ...where}},
+                //{$match: {createdAt: {$lt:from_date._d}, ...where}},
+                {$match: {...where}},
                 //{$addFields:{createdAt:{$dateFromParts:{year:{$year:"$createdAt"}, month:{$month:"$createdAt"}, day:{$dayOfMonth : "$createdAt" }}}}},
 
                 {
@@ -51,8 +52,8 @@ module.exports.controller = function (app) {
                 {$project:{_id:0, id:"$_id", new:"$newG", recovery:"$recoveryG", death:"$deathG", tests:"$testsG", type:"day", doy:{$dayOfYear:"$dateG"}}},
                 {$sort:{id:1}}
             ])
-        const data = dataWeeks.concat(dataDays.filter(d=>!dataWeeks.map(x=>x.doy).includes(d.doy)));
-        return data;
+        //const data = dataWeeks.concat(dataDays.filter(d=>!dataWeeks.map(x=>x.doy).includes(d.doy)));
+        return dataWeeks;
     }
 
     app.post('/api/covid', (req, res) => {
