@@ -73,11 +73,10 @@ module.exports.controller = function (app) {
             new: cells[0].rawText * 1,
             recovery: cells[1].rawText * 1,
             death: cells[2].rawText * 1,
-            tests: cells[3].rawText * 1,
+            tests: cells[3].rawText,
             isRussia: false,
             createdAt: str
         }
-
         return ret;
     }
 
@@ -130,6 +129,8 @@ module.exports.controller = function (app) {
         }
         return ret;
     }
+
+    covidSakha()
 
     async function covid() {
         const rus = await covidRussia();

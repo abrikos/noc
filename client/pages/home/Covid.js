@@ -63,7 +63,7 @@ export default function (props) {
                         //formatter: v=>v.toFixed(0)
                     }
                 },
-                dataLabels: {
+                /*dataLabels: {
                     enabled: true,
                     position:"bottom",
                     formatter: function(val) {
@@ -73,7 +73,7 @@ export default function (props) {
                         fontSize: "9px",
                         colors: ["#304758"]
                     }
-                },
+                },*/
             },
 
             series: [
