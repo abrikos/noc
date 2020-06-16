@@ -10,7 +10,7 @@ const modelSchema = new Schema({
         header: {type: String, label: 'Заголовок'},
         text: {type: String, label: 'Текст', control:'markdown'},
         url: {type: String, label: 'Адрес на сайте СМИ'},
-        isMarkdown: {type: Boolean, label: 'Markdown'},
+        isMarkdown: {type: Boolean, label: 'Markdown', default: true},
         editable: Boolean,
         published: {type: Boolean, label: 'Опубликовано'},
         isMassMedia: {type: Boolean, label: 'СМИ о нас'},
