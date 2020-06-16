@@ -52,9 +52,6 @@ export default function Home(props) {
                     <div className="col-sm-6">{formatLastNews(newsLast[1])}</div>
                     <div className="col-sm-6">{formatLastNews(newsLast[2])}</div>
                 </div>
-                <div className="d-flex flex-wrap">
-                    {fixed.map(n => <div key={n.id}>{formatLastNews(n)}</div>)}
-                </div>
             </div>}
             <div className="col-sm-8">
                 <div className="text-center">Все новости</div>
@@ -64,6 +61,11 @@ export default function Home(props) {
             </div>
 
         </div>
+
+        <div className="d-flex flex-wrap justify-content-center">
+            {fixed.map(n => <div key={n.id} className="w-25 m-3">{formatLastNews(n)}</div>)}
+        </div>
+
         <div className="alert alert-info">
             <h2>Оперативные показатели</h2>
             <table className="table">
