@@ -1,5 +1,5 @@
 import React from "react";
-import Icons from "client/files/social.jpg";
+import Icons from "client/images/social.jpg";
 import "./share-button.sass"
 import CopyButton from "client/components/copy-button/CopyButton";
 
