@@ -10,7 +10,7 @@ export default function ThemeNoc(props) {
     return <div className="theme-noc container">
         <div className=" header">
             <div className="row">
-                <div className="col-2 text-center"><img src={logo} alt="НОЦ лого" className="img-fluid"/></div>
+                <div className="col-2 text-center"><img src={logo} alt="НОЦ лого" className="img-fluid m-2"/></div>
                 <div className="col-10 d-flex align-items-center"><h1>Научно-образовательный центр «Север: территория устойчивого развития»</h1></div>
             </div>
         </div>
