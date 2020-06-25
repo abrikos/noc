@@ -19,7 +19,7 @@ export default function ThemeNoc(props) {
 
                 <img src={logo} alt="НОЦ лого" className="img-fluid"/>
 
-                <A href={'/'}><img src={logoAcademy} alt="АН РС(Я) лого" className="img-fluid"/></A>
+                <a href={window.location.origin}><img src={logoAcademy} alt="АН РС(Я) лого" className="img-fluid"/></a>
 
         </footer>
     </div>
