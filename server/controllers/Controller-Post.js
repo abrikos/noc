@@ -51,7 +51,6 @@ module.exports.controller = function (app) {
 
     function getMeta(url, cb) {
         ogs({url}, (e, r, re) => {
-            console.log(e, r)
             cb(r)
         })
     }
