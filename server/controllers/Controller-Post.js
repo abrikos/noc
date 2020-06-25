@@ -1,8 +1,9 @@
 import Mongoose from "server/db/Mongoose";
 import moment from "moment"
-import striptags from "striptags";
+
 const logger = require('logat');
 const passportLib = require('server/lib/passport');
+const ogs = require('open-graph-scraper');
 //Mongoose.post.findOne({_id:'5e6b377260ee8707805367b6'})    .populate('token')    .then(console.log)
 
 module.exports.controller = function (app) {
@@ -11,11 +12,11 @@ module.exports.controller = function (app) {
         if (!body.where) body.where = {};
 
         body.where.published = true;
-        for(const f in body.where){
-            if(body.where[f]===null) delete body.where[f];
+        for (const f in body.where) {
+            if (body.where[f] === null) delete body.where[f];
         }
         if (body.where.text) {
-            body.where.$or =[{text:new RegExp(body.where.text, 'i')},{header:new RegExp(body.where.text, 'i')},]
+            body.where.$or = [{text: new RegExp(body.where.text, 'i')}, {header: new RegExp(body.where.text, 'i')},]
             delete body.where.text;
         } else {
             delete body.where.text;
@@ -48,18 +49,36 @@ module.exports.controller = function (app) {
         Mongoose.post.create({user, header}).then(post => res.send(post))
     });
 
+    function getMeta(url, cb) {
+        ogs({url}, (e, r, re) => {
+            console.log(e, r)
+            cb(r)
+        })
+    }
+
+    //getMeta('http://192.168.2.1/admin/index.html#/home', r=>{    })
+
+    app.post('/api/post/create-from-link', passportLib.isAdmin, async (req, res) => {
+        const user = req.session.userId;
+        getMeta(req.body.smiLink, r => {
+            if (!r.ogTitle) return res.sendStatus(404);
+            Mongoose.post.create({user, imgUrl: r.ogImage.url, header: r.ogTitle, text: r.ogDescription, published: true, isMassMedia: true, url: req.body.smiLink})
+                .then(post => res.send(post))
+        })
+    });
+
     app.post('/api/post/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message: 'Wrong id'}))
         Mongoose.post.findById(req.params.id)
             .then(post => {
                 post.preview = req.params.image;
-                post.save().then(p=>res.send(p));
+                post.save().then(p => res.send(p));
             })
             .catch(e => res.send(app.locals.sendError(e)))
     });
 
     app.post('/api/post/:id/images/add', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message: 'Wrong id'}))
         Mongoose.post.findById(req.params.id)
             .then(post => {
                 post.images = post.images.concat(req.body.images);
@@ -71,7 +90,7 @@ module.exports.controller = function (app) {
     });
 
     app.post('/api/post/:id/delete', passportLib.isAdmin, async (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message:'Wrong id'}))
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message: 'Wrong id'}))
         Mongoose.post.findById(req.params.id)
             .populate('token')
             .then(post => {

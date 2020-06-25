@@ -98,8 +98,10 @@ export default function (props) {
                 </FormGroup>
 
                 {isMassMedia && <FormGroup>
-                    <Label>Ссылка</Label>
+                    <Label>Ссылка СМИ</Label>
                     <Input name="url" defaultValue={post.url}/>
+                    <Label>Картинка СМИ</Label>
+                    <Input name="imgUrl" defaultValue={post.imgUrl}/>
                 </FormGroup>}
 
                 <FormGroup>

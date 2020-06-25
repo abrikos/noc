@@ -9,6 +9,7 @@ const Schema = mongoose.Schema;
 const modelSchema = new Schema({
         header: {type: String, label: 'Заголовок'},
         text: {type: String, label: 'Текст', control:'markdown'},
+        imgUrl: {type: String},
         url: {type: String, label: 'Адрес на сайте СМИ'},
         isMarkdown: {type: Boolean, label: 'Markdown', default: true},
         editable: Boolean,
@@ -54,7 +55,7 @@ modelSchema.virtual('date')
 modelSchema.virtual('previewPath')
     .get(function () {
         const image = this.image || this.preview;
-        return image ? image.path : '/noImage.png'
+        return image ? image.path : this.imgUrl || '/noImage.png'
     });
 
 modelSchema.virtual('adminLink')
