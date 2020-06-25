@@ -8,6 +8,8 @@ import {useCookies} from 'react-cookie';
 const themes = [
     {name:'horizontal',label:'Горизонтальный'},
     {name:'vertical',label:'Вертикальный'},
+    {name:'admin',label:'Пустой'},
+    {name:'noc',label:'НОЦ'},
 ]
 
 export default function App() {
@@ -90,6 +92,10 @@ export default function App() {
 
         switchTheme(name) {
             this.setCookie('theme', name)
+            setTheme(name)
+        },
+
+        useTheme(name) {
             setTheme(name)
         },
 

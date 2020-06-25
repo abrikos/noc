@@ -12,6 +12,7 @@ import ThemeAdmin from "client/components/themes/admin/ThemeAdmin";
 import ThemeSwitcher from "client/components/themes/ThemeSwitcher";
 import siteMap from "client/components/site-map-compiled.json"
 import {navigate} from "hookrouter";
+import ThemeNoc from "client/pages/projects/noc/ThemeNoc";
 
 export default function LayoutMenuTop(props) {
 
@@ -31,13 +32,17 @@ export default function LayoutMenuTop(props) {
 
     ];
 
+    console.log(props.theme)
+
     let routeResult = useRoutes(routes(props));
-    if(window.location.pathname.match(/^\/admin/)) return <ThemeAdmin menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>
+    //if(window.location.pathname.match(/^\/admin/)) return <ThemeAdmin menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>
     return <div>
         {/*<ThemeMenuHorizontal menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>*/}
         {props.theme ==='horizontal' && <ThemeMenuHorizontal menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>}
         {props.theme ==='vertical' && <ThemeMenuVertical menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>}
-        <ThemeSwitcher {...props}/>
+        {props.theme ==='admin' && <ThemeAdmin menuItems={siteMap.filter(s => s.menu).concat(menuItems)} routeResult={routeResult} {...props}/>}
+        {props.theme ==='noc' && <ThemeNoc  routeResult={routeResult} {...props}/>}
+        {/*<ThemeSwitcher {...props}/>*/}
     </div>
 }
 

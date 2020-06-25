@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import AdminUser from "client/pages/admin/AdminUser";
 import {A} from "hookrouter"
 import ErrorPage from "client/components/service/ErrorPage";
@@ -25,6 +25,10 @@ export default function AdminIndex(props) {
         conference: ['Конференция', <AdminModel  {...props}/>],
 
     };
+
+    useEffect(()=>{
+        props.useTheme('admin')
+    },[])
 
     if (!props.authenticatedUser.admin) return <ErrorPage error={403}/>;
 
