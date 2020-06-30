@@ -43,6 +43,7 @@ import ConferencePerson from "client/pages/conference/ConferencePerson";
 import ConferenceForm from "client/pages/conference/ConferenceForm";
 import Power8 from "client/pages/power8/Power8";
 import Noc from "client/pages/projects/noc/Noc";
+import CountDown from "client/pages/countdown/CountDown";
 
 export default function Routes(props) {
 
@@ -63,6 +64,7 @@ export default function Routes(props) {
         "/wp-admin": () => <Login {...props}/>,
         "/research": () => <Research {...props}/>,
         "/intellectual": () => <Intellectual {...props}/>,
+        "/countdown": () => <CountDown {...props}/>,
         "/project/noc": () => <Noc {...props}/>,
         "/admin/:control": (params) => <AdminIndex {...params} {...props}/>,
         "/admin/:control/:id/update": (params) => <AdminIndex {...params} {...props}/>,
