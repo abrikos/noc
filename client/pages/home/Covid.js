@@ -120,7 +120,7 @@ export default function (props) {
                 </tr>
                 {lastData.tests ? <tr>
                     <td>Проведено тестов</td>
-                    <td>{lastData.tests}</td>
+                    <td >{lastData.tests.replace('&gt;','>')}</td>
                 </tr> : <tr>
                     <td>&nbsp;</td>
                 </tr>}
