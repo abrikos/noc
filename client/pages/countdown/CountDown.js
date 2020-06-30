@@ -20,9 +20,15 @@ export default function CountDown(props) {
             stop()
         }
         if(seconds > minutes * 60 - beepStart){
-            beep.play()
+            if( seconds < minutes * 60 - beepStart /3 ) {
+                if(seconds % 2) beep.play()
+            }else{
+                beep.play()
+            }
         }
     }, [seconds])
+
+
 
     function stop() {
         clearInterval(intervalId)
