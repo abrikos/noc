@@ -8,8 +8,6 @@ import {useCookies} from 'react-cookie';
 const themes = [
     {name:'horizontal',label:'Горизонтальный'},
     {name:'vertical',label:'Вертикальный'},
-    {name:'admin',label:'Пустой'},
-    {name:'noc',label:'НОЦ'},
 ]
 
 export default function App() {
@@ -86,16 +84,14 @@ export default function App() {
             this.savedData[key] = value;
         },
 
+
+
         updateReturnUrl(url){
             setReturnUrl(url)
         },
 
         switchTheme(name) {
             this.setCookie('theme', name)
-            setTheme(name)
-        },
-
-        useTheme(name) {
             setTheme(name)
         },
 
@@ -109,6 +105,11 @@ export default function App() {
 
         async login(){
             return await getUser()
+        },
+
+        userLogged(user){
+            if(user) navigate(returnUrl || '/cabinet')
+            //if(user) navigate('/cabinet')
         },
 
         dateAddTime(time) {
@@ -129,10 +130,9 @@ export default function App() {
 
         clearAlert: () => setAlert({isOpen: false}),
 
-        async api(path, data) {
+        async api(path, data, options) {
             //setLoading(true);
-            const res = await API.postData(path, data);
-
+            const res = await API.postData(path, data, options);
             if (!res.error) return res;
             this.clearAlert();
             switch (res.error) {
@@ -184,7 +184,9 @@ export default function App() {
             for (const a of form.elements) {
                 if(!a.name) continue;
                 const isArray = a.name.match(/(.*)\[(.*)\]/)
-                if (isArray) {
+                if (a.type === 'radio') {
+                    if(a.checked)  obj[a.name] = a.value
+                }else if (isArray) {
                     if (!obj[isArray[1]]) obj[isArray[1]] = [];
                     obj[isArray[1]].push({key: isArray[2], value: a.value})
                 } else if (a.type === 'checkbox') {

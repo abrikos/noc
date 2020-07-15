@@ -22,6 +22,7 @@ export default function (props) {
         setFilter(f);
         console.log(JSON.stringify(f))
         props.api('/post/list', f).then(res=> {
+            console.log(res)
             setPosts(res.list)
             setTotalCount(res.count);
         });

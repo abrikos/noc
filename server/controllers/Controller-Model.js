@@ -1,13 +1,9 @@
 import Mongoose from "server/db/Mongoose";
 import striptags from "striptags";
 
-const nodemailer = require('nodemailer');
-const mailer = JSON.parse(process.env.mailer);
-const transport = nodemailer.createTransport(mailer)
-
 const passportLib = require('server/lib/passport');
-//const passport = require('passport');
-
+const removeMd = require('remove-markdown');
+const axios = require('axios')
 
 module.exports.controller = function (app) {
 
@@ -39,6 +35,7 @@ module.exports.controller = function (app) {
                 return ret;
             }) : [])
                 .concat(schema.formOptions.hasMany ? schema.formOptions.hasMany.map(f => {
+
                     const ret = {
                         name: f,
                         type: 'hasMany',
@@ -55,47 +52,27 @@ module.exports.controller = function (app) {
 
     });
 
-    app.post('/api/conference/create', (req, res) => {
-        Mongoose.conference.create(req.body)
-            .then(person => {
-                    const schema = getSchema('conference');
-                    let text = '';
-                    for (const f of schema.fields) {
-                        if(!person[f.name]) continue;
-                        text += f.options.label + ': '
-                            + (f.options.select ?
-                                f.options.select[person[f.name] - 1] && f.options.select[person[f.name] - 1].label
-                                : person[f.name]) + '\n'
-                    }
-                text += `Посмотреть на сайте: https://yakutia.science${person.link}`
-
-                    const message = {
-                        from: mailer.auth.user,
-                        cc: "me@abrikos.pro",
-                        to:"abrikoz@gmail.com",
-                        //to:"guspopov@mail.ru",
-                        subject: `${person.fioShort} Регистрация. IX Международная конференция по математическому моделированию`,
-                        text,
-                    };
-                    transport.sendMail(message, (error) => {
-                        if (error) return res.send(app.locals.sendError(error));
-                        res.send({ok: 200});
-                    });
-                }
-            )
-
-    })
-
-
     app.post('/api/:model/:id/view', (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
             .then(item => {
-                if (!item) return res.sendStatus(404)//.send({message:'Wrong ID ' + req.params.id})
-                item.editable = req.session.admin;
+                if (!item) return res.status(404).send({message: `No model ${req.params.model} with id ${req.params.id}`})
+                item.editable = req.session.isAdmin;
                 res.send(item)
             })
-            .catch(e => res.send(app.locals.sendError(e)))
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+    });
+
+    app.post('/api/:model/:id/view/my', passportLib.isLogged, (req, res) => {
+        Mongoose[req.params.model].findById(req.params.id)
+            .populate(Mongoose[req.params.model].populationAdmin)
+            .then(item => {
+                if (!item) return res.status(404).send({message: `No model ${req.params.model} with id ${req.params.id}`})
+                if (item.user && !item.user.equals(req.session.userId)) return res.status(403).send({message: `Wrong user`})
+                item.editable = req.session.isAdmin;
+                res.send(item)
+            })
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
     function bodyToWhere(body) {
@@ -116,20 +93,29 @@ module.exports.controller = function (app) {
         return body.where;
     }
 
-    app.post('/api/:model/list', (req, res) => {
-        const filter = bodyToWhere(req.body);
-        Mongoose[req.params.model].find(filter)
+    async function list(req, filter, isAdmin, cb) {
+        const list = await Mongoose[req.params.model].find(filter)
             .sort(req.body.sort || req.body.order || {createdAt: -1})
             .limit(parseInt(req.body.limit))
             .skip(parseInt(req.body.skip))
-            .populate(Mongoose[req.params.model].population)
-            .then(list => {
-                Mongoose[req.params.model].countDocuments(filter)
-                    .then(count => {
-                        res.send({count, list})
-                    })
+            .populate(Mongoose[req.params.model][isAdmin ? 'populationAdmin' : 'population'])
+        const count = await Mongoose[req.params.model].countDocuments(filter)
+        return {list, count}
+    }
+
+    app.post('/api/:model/list', (req, res) => {
+        axios('https://yakutia.science/api/post/noc')
+            .then(r=> {
+                console.log(r.data)
+                res.send({list: r.data, totalCount: r.data.length})
             })
-            .catch(e => res.send(app.locals.sendError(e)))
+    });
+
+    app.post('/api/:model/list/my', passportLib.isLogged, (req, res) => {
+        const filter = bodyToWhere(req.body);
+        filter.user = req.session.userId
+        list(req, filter, true)
+            .then(d=>res.send(d))
     });
 
 
@@ -187,12 +173,12 @@ module.exports.controller = function (app) {
                 res.send(r);
             })
     });
-    app.post('/api/admin/:model/:id/images/add', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message: 'Wrong id'}))
+    app.post('/api/admin/:model/:id/files/add', passportLib.isAdmin, (req, res) => {
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose[req.params.model].findById(req.params.id)
 
             .then(model => {
-                model.images = model.images.concat(req.body.images);
+                model.files = model.files.concat(req.body.files);
 
                 model.save()
                 model.populate(Mongoose[req.params.model].population).execPopulate((e, m) => {
@@ -201,26 +187,46 @@ module.exports.controller = function (app) {
 
 
             })
-            .catch(e => res.send(app.locals.sendError(e)))
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
-    app.post('/api/admin/:model/:id/image-preview/:image', passportLib.isAdmin, (req, res) => {
-        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({message: 'Wrong id'}))
+    app.post('/api/admin/:model/:id/file-preview/:file', passportLib.isAdmin, (req, res) => {
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose[req.params.model].findById(req.params.id)
             .then(model => {
-                model.image = req.params.image;
-                model.save();
-                model.populate(Mongoose[req.params.model].population).execPopulate((e, m) => {
-                    res.send(m)
-                })
+                model.photo = req.params.file;
+                model.save()
+                    .then(model1 => {
+                        model1.populate(Mongoose[req.params.model].population).execPopulate((e, m) => {
+                            res.send(m)
+                        })
+                    });
+
             })
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+    });
+
+    app.get('/api/:model/share/:id/:link', (req, res) => {
+        Mongoose[req.params.model].findById(req.params.id)
+            .populate(Mongoose[req.params.model].population)
+            .then(post => res.render('share', {
+                header: `${process.env.SITE_NAME} - ${removeMd(post.header || post.name)}`,
+                text: removeMd(striptags(post.text || post.description)),
+                image: req.protocol + '://' + req.get('host') + (post.photo ? post.photo.path : '/logo.svg'),
+                url: req.protocol + '://' + req.get('host') + post.link
+            }))
             .catch(e => res.send(app.locals.sendError(e)))
     });
 
-    app.get('/api/:model/share/:id', (req, res) => {
-        Mongoose[req.params.model].findById(req.params.id)
-            .populate(Mongoose[req.params.model].population)
-            .then(post => res.render('post', post.shareData))
-            .catch(e => res.send(app.locals.sendError(e)))
+
+    app.post('/api/:model/search', (req, res) => {
+        const filter = bodyToWhere(req.body);
+        Mongoose[req.params.model].find(filter)
+            .sort({createdAt: -1})
+            .limit(parseInt(req.body.limit) || 10)
+            .skip(parseInt(req.body.skip))
+            .populate(Mongoose.post.population)
+            .then(items => res.send(items))
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
 

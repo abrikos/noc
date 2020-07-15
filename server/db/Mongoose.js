@@ -1,15 +1,9 @@
 import User from "server/db/models/Model-User";
-import image from "server/db/models/Model-Image";
+import file from "server/db/models/Model-File";
+import question from "server/db/models/Model-Question";
+import vote from "server/db/models/Model-Vote";
+import bulletin from "server/db/models/Model-Bulletin";
 import post from "server/db/models/Model-Post";
-import division from "server/db/models/Model-Division";
-import person from "server/db/models/Model-Person";
-import meeting from "server/db/models/Model-Meeting";
-import edition from "server/db/models/Model-Edition";
-import video from "server/db/models/Model-Video";
-import document from "server/db/models/Model-Document";
-import council from "server/db/models/Model-Council";
-import covid from "server/db/models/Model-Covid";
-import conference from "server/db/models/Model-Conference";
 
 const mongoose = require("mongoose");
 require('dotenv').config();
@@ -38,7 +32,7 @@ const Mongoose = {
     isValidId: function (id) {
         return mongoose.Types.ObjectId.isValid(id)
     },
-    User, image, post, division, person, meeting, edition, video, document, council, covid, conference
+    User, file, vote, question, bulletin, post
 
 };
 export default Mongoose;

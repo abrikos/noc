@@ -44,7 +44,7 @@ async function siteMap() {
             {label: 'Выборы', path: '/election', className: 'text-danger'},
             {label: 'Об Академии', path: '/about'},
             {label: 'Веб-ресурсы академии', path: '/web-resources'},
-            {label: 'Научные учреждения', path: '/science-org'},
+            {label: 'Научные учереждения', path: '/science-org'},
             {label: 'Документы', path: '/documents/all'},
             {label: 'Партнёры', path: '/partners'},
             {label: 'СМИ о нас', path: '/mass-media'},
@@ -54,12 +54,6 @@ async function siteMap() {
             {label: 'Контакты', path: '/contacts'},
             {label: 'Телефонный справочник', path: '/phone-book'}
         ], menu: true
-    });
-    map.push({
-        label: 'IX Международная конференция по математическому моделированию', items: [
-            {label: 'Регистраци', path: '/conference/registration'},
-            {label: 'Список участников', path: '/conference'},
-        ], menu: false
     });
     Mongoose.close()
     return map;

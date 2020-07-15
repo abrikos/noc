@@ -36,8 +36,8 @@ module.exports.controller = function (app) {
             text: req.body.name + ':\n\n' + options[req.body.option] +'\n\n' +  req.body.text,
             attachments: [{path: `./${file}`}]
         };
-        transport.sendMail(message, (error) => {
-            if (error) return res.send(app.locals.sendError(error));
+        transport.sendMail(message, (err) => {
+            if (err) return res.send(app.locals.sendError({error: 500, message: err}));
             fs.unlinkSync(`./${file}`);
             res.send({ok: 200});
 
@@ -95,7 +95,7 @@ module.exports.controller = function (app) {
 
     app.get('/api/login/:strategy', passport.authenticate('custom'), (req, res, next) => {
         //const redir = req.cookies.returnUrl || req.query.returnUrl || '/admin/news';
-        res.redirect(req.session.admin ? '/admin/news' : (req.query.returnUrl || '/cabinet'))
+        res.redirect(req.session.admin ? '/admin/post' : (req.query.returnUrl || '/cabinet'))
     });
 
     app.post('/api/login/:strategy', passport.authenticate('custom'), (req, res, next) => {

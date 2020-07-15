@@ -27,10 +27,9 @@ export default function AdminIndex(props) {
     };
 
     useEffect(()=>{
-        props.useTheme('admin')
     },[])
 
-    if (!props.authenticatedUser.admin) return <ErrorPage error={403}/>;
+    if (!props.authenticatedUser.isAdmin) return <ErrorPage error={403}/>;
 
     return <div>
         <Nav tabs>

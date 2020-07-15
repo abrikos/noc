@@ -17,8 +17,7 @@ const wss = new WebSocket.Server({clientTracking: true, noServer: true});
 app.locals.wss = wss;
 const bot = require('server/bot');
 const CronJob = require('cron').CronJob;
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+
 mailer.extend(app, JSON.parse(process.env.mailer));
 
 const sessionParser = session({
@@ -35,13 +34,13 @@ app.locals.sendError = (obj) => {
     if (process.env.NODE_ENV === 'production') {
         obj.message = 'Server error'
     }
-    return {error: 500, message: obj.message};
+    return obj;
 };
 
 app.locals.bot = bot;
 app.locals.CronJob = CronJob;
 
-app.locals.socketSend = (action, data) => {
+app.locals.socketSend = (action,data)=>{
     wss.clients.forEach(function each(client) {
         client.send(JSON.stringify({action, data}));
     });
@@ -85,6 +84,7 @@ server.on('upgrade', function (request, socket, head) {
         });
     });
 });
+
 
 
 //
