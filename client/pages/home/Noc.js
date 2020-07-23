@@ -4,6 +4,10 @@ import PostList from "client/pages/news/PostList";
 import documents from "client/pages/home/text-documents"
 import comments from "client/pages/home/text-comments"
 import BlockDirections from "client/pages/home/block-directions";
+import news from "client/pages/home/news.png";
+import comm from "./comments.png";
+import docs from "./documents.png";
+
 
 export default function Noc(props) {
     const newsFilter = {where: {isNoc: true}}
@@ -16,17 +20,17 @@ export default function Noc(props) {
         <BlockDirections/>
         <div className="block-lift-up">
             <div className="block">
-                <h2>Новости</h2>
+                <h2><img src={news} alt="news"/>Новости</h2>
                 <PostList {...props} filter={newsFilter}/>
             </div>
 
             <div className="block">
-                <h2>Документы</h2>
+                <h2><img src={docs} alt="docs"/>Документы</h2>
                 <MarkDown source={documents}/>
             </div>
 
             <div className="block">
-                <h2>Отзывы</h2>
+                <h2><img src={comm} alt="comm"/>Отзывы</h2>
                 <div className="d-sm-flex justify-content-around">
                     {comments.map((c, i) => <div className="comment" key={i}>
                         <div className="img-wrap">

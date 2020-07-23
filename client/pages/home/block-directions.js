@@ -1,6 +1,9 @@
 import directions from "client/pages/home/text-directions";
 import MarkDown from "react-markdown";
 import React, {useState} from "react";
+import dirs from "./directions.png";
+
+
 
 export default function BlockDirections(props) {
     const [block, setBlock] = useState();
@@ -12,7 +15,7 @@ export default function BlockDirections(props) {
     }
 
     return <div className="block">
-        <h2>Направления</h2>
+        <h2><img src={dirs} alt="directions"/>Направления</h2>
         <div className="d-none d-sm-block">
             <div className="row">
                 {directions.map((t, i) => <div key={i} className="col-sm">

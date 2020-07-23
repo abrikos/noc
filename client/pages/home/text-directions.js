@@ -1,5 +1,5 @@
 import n1 from "./1.png"
-import n2 from "./2.png"
+import n2 from "./2.jpg"
 import n3 from "./3.png"
 
 export default [
