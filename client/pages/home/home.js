@@ -1,30 +1,46 @@
 import React from 'react';
 import "./home.sass"
-import logo from "./noc.svg"
-import "./noc.sass"
-import top from "./top.png"
-import Noc from "client/pages/home/Noc";
+import news from "client/pages/home/news.png";
+import PostList from "client/pages/post/PostList";
+import docs from "client/pages/home/documents.png";
+import MarkDown from "react-markdown";
+import documents from "client/pages/home/text-documents";
+import comm from "client/pages/home/comments.png";
+import comments from "client/pages/home/text-comments";
 
 
 export default function Home(props) {
+    const newsFilter = {where: {isNoc: true}}
 
+    return <div className="home">
+        <div className="top-cover">
+            <h1>НОЦ "СЕВЕР" <small>Территория устойчивого развития</small>
+            </h1>
+        </div>
+        <div className="content">
+            <PostList {...props} filter={newsFilter}/>
 
-    return <div className="theme-noc container">
-        <img src={top} className="img-fluid"/>
-        {/*<div className=" header">
-            <div className="row">
-                <div className="col-2 text-center"><img src={logo} alt="НОЦ лого" className="img-fluid m-2"/></div>
-                <div className="col-10 d-flex align-items-center"><h1>Научно-образовательный центр «Север: территория устойчивого развития»</h1></div>
+            <div className="block">
+                <h2>Документы</h2>
+                <MarkDown source={documents}/>
             </div>
-        </div>*/}
-        <Noc {...props}/>
-        <footer className="d-flex flex-wrap justify-content-around">
 
-            <img src={logo} alt="НОЦ лого" className="img-fluid"/>
+            <div className="block">
+                <h2>Отзывы</h2>
+                <div className="d-sm-flex justify-content-around">
+                    {comments.map((c, i) => <div className="comment" key={i}>
+                        <div className="img-wrap">
+                            <img src={c.photo} className="img-fluid" alt={c.name}/>
+                        </div>
 
-            <a href={window.location.origin}><img src="https://yakutia.science/static/media/logo-text.c4afef52.svg" alt="АН РС(Я) лого" className="img-fluid"/></a>
+                        <h4>{c.name}</h4>
+                        <div>{c.text}</div>
+                    </div>)}
+                </div>
+            </div>
+        </div>
 
-        </footer>
+
     </div>
 }
 

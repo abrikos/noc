@@ -1,5 +1,5 @@
 import React from 'react';
-import "client/pages/news/post-small.sass"
+import "client/pages/post/post-small.sass"
 import {A} from "hookrouter";
 import DateFormat from "client/components/DateFormat";
 import PropTypes from "prop-types";

@@ -1,3 +1,55 @@
-.top-menu
-  .top-menu-logo
+@import "client/components/themes/params"
+.menu-top
+  width: 100%
+  position: fixed
+  .menu-toggle
+    padding: 5px
+    color: white
+    font-size: 1.5em
+  @media screen and (min-width: $min-width)
+    input#show-menu + label
+        height: 30px
+        margin: auto
+        width: 800px
+        .menu-toggle,.menu-cross
+          display: none
+        .menu-items
+            display: flex
+            justify-content: space-around
+            .menu-item
+              display: flex
+              align-items: center
+              width: 20%
+  @media screen and (max-width: $min-width)
+    input#show-menu + label
+      z-index: 99999
+      position: fixed
+      height: 100%
+      width: 50%
+      right: 0
+      .menu-cross,.menu-items
+        display: none
+
+  input#show-menu:checked + label
+    box-shadow: 5px 5px 15px 5px #000000
+    background-color: $blue-color
+    padding: 10px
+    .menu-cross
+      display: block
+    .menu-toggle
+      display: none
+    .menu-items
+      padding: 10px 15px
+      display: block
+
+  background-color: $blue-color
+  display: flex
+  @media screen and (max-width: $min-width)
+    justify-content: space-between
+  .menu-logo
     height: 50px
+    padding: 2px
+  a
+    color: white
+  a:hover
+    color: red

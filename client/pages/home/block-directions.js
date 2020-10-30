@@ -1,7 +1,7 @@
-import directions from "client/pages/home/text-directions";
+import directions from "client/pages/directions/text-directions";
 import MarkDown from "react-markdown";
 import React, {useState} from "react";
-import dirs from "./directions.png";
+import dirs from "client/pages/directions/directions.png";
 
 
 
@@ -41,12 +41,12 @@ export default function BlockDirections(props) {
         </div>
 
 
-        <div className="d-sm-none d-block">
+        <div className="d-sm-none d-block container">
             {directions.map((t, i) => <div key={i}>
                 <h3 className="blue-block">{t.title}</h3>
-                <div className="row">
-                    <div className="col-sm"><img src={t.image} className="img-fluid" alt={t.title}/></div>
-                    <div className="col-sm"><MarkDown source={t.text}/></div>
+                <div>
+                    <div><img src={t.image} className="img-fluid" alt={t.title}/></div>
+                    <div><MarkDown source={t.text}/></div>
                 </div>
 
             </div>)}

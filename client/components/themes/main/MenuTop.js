@@ -1,66 +1,25 @@
-import React, {useState} from 'react';
-import {Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, UncontrolledDropdown,} from "reactstrap";
-import {A, navigate, usePath} from "hookrouter";
-import logo from "public/logo.svg"
+import React from 'react';
 import "./menu-top.sass"
+import {A} from "hookrouter"
 
 export default function MenuTop(props) {
-    const [menuPulled, pullMenu] = useState(false);
-    const currentPath = usePath();
 
-    function isActive(path) {
-        return path === currentPath;
-    }
+    return <div className="menu-top">
+        <div className="menu-logo"><img src="/logo.svg" className="h-100"/></div>
 
-    const items = [
-        {label: 'Начало', path: '/'},
-        {
-            label: `${(props.authenticatedUser && props.authenticatedUser.displayName)}`, items: [
-                {label: 'ADMIN', path: '/admin/post', hidden: !(props.authenticatedUser && props.authenticatedUser.isAdmin)},
-                {label: 'Кабинет', path: '/cabinet'},
-                {label: 'Выход', onClick: props.logOut, hidden: !props.authenticatedUser},
-            ], hidden: !props.authenticatedUser
-        },
-        {
-            label: 'Вход', onClick: () => {
-                props.updateReturnUrl(window.location.pathname);
-                navigate('/login')
-            }, pathX: '/login?xx', hidden: props.authenticatedUser
-        },
-    ]
+        <input type="checkbox" id="show-menu" hidden={true}/>
+        <label htmlFor="show-menu">
+            <div className="menu-toggle text-right">=</div>
+            <div className="menu-cross text-right">x</div>
+            <div className={"menu-items"}>
+                <div className="menu-item"><A href="/">Начало</A></div>
+                <div className="menu-item"><A href="/directions">Направления</A></div>
+                <div className="menu-item"><a href="#docs">Документы</a></div>
+                <div className="menu-item"><a href="#reply">Отзывы</a></div>
+            </div>
+        </label>
 
-    return <div>
 
-        <Navbar color="dark" expand="xl" className="top-menu">
-            <NavbarBrand href='#' onClick={e => navigate('/')} className='mr-auto site-logo'>
-                <img src={logo} alt="logo" className="top-menu-logo"/>
-            </NavbarBrand>
-            <NavbarToggler onClick={e => pullMenu(!menuPulled)} className="dark"/>
-            <Collapse isOpen={menuPulled} navbar>
-                <Nav className="m-auto" navbar>
-                    {items.map((item, i) => {
-                        if (item.hidden) return <span key={i}></span>;
-                        return item.items ? <UncontrolledDropdown nav inNavbar key={i}>
-                                <DropdownToggle nav caret>
-                                    {item.label}
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                    {item.items.map((itemSub, i) => {
-                                        const ps = itemSub.path ? {href: itemSub.path} : itemSub.onClick ? {href: '#', onClick: itemSub.onClick} : null
-                                        return <DropdownItem key={i} disabled={!ps}>
-                                            {ps ? <A {...ps} className={itemSub.className}>{itemSub.label}</A> : itemSub.label}
-                                        </DropdownItem>
-                                    })}
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                            :
-                            <NavItem key={i} active={isActive(item.path)}>
-                                <A href={item.path || '#'} onClick={item.onClick} className={'nav-link'}>{item.label}</A>
-                            </NavItem>
-                    })}
-                </Nav>
-            </Collapse>
-        </Navbar>
     </div>
 }
 

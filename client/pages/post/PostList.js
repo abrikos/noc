@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PostSmall from "client/pages/news/PostSmall";
+import PostSmall from "client/pages/post/PostSmall";
 import Pager from "client/components/Pager";
 import Loader from "client/components/Loader";
 
@@ -22,7 +22,6 @@ export default function (props) {
         setFilter(f);
         console.log(JSON.stringify(f))
         props.api('/post/list', f).then(res=> {
-            console.log(res)
             setPosts(res.list)
             setTotalCount(res.count);
         });
@@ -35,9 +34,16 @@ export default function (props) {
 
     if(!posts) return <Loader/>
     return <div className="post-list">
-        {totalCount>=0 && <div className="m-3 text-center">Найдено: {totalCount}</div>}
+        <h2>Новости</h2>
         <div className="d-flex flex-wrap">
-            {posts.map(p => <PostSmall isAdmin={props.isAdmin} key={p.id} post={p}/>)}
+            {posts.map(p => <div key={p.id}  className="w-25 p-2">
+                <a href={p.link } target="_blank" rel="noopener noreferrer">
+                    <div className="img-wrapper">
+                    <img src={p.previewPath} alt={p.header} className="img-fluid"/>
+                    </div>
+                    <span>{p.header}</span>
+                </a>
+            </div>)}
         </div>
         {filter && !!totalCount && <Pager count={totalCount} filter={filter} onPageChange={pageChange}/>}
     </div>

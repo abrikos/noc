@@ -1,5 +1,5 @@
 import React from "react";
-import PostList from "client/pages/news/PostList";
+import PostList from "client/pages/post/PostList";
 
 export default function NewsPage(props) {
     const filter ={where: {published: true, isMassMedia:{$ne:true}}};

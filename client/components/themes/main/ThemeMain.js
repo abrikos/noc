@@ -6,10 +6,16 @@ import MenuTop from "client/components/themes/main/MenuTop";
 export default function ThemeMain(props) {
 
 
-    return <div className="theme-main">
-        <div className="container">
+    return <div>
+        <MenuTop/>
+        <div className="theme-main">
             {props.errorPage || props.routeResult}
+
         </div>
+        <footer className="d-flex flex-wrap justify-content-center">
+            <img src="/logo.svg" alt="НОЦ лого"/>
+            <a href="https://asrsya.ru"><img src="https://yakutia.science/logo.svg" alt="АН РС(Я) лого"/></a>
+        </footer>
 
     </div>
 }

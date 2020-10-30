@@ -3,7 +3,6 @@ import "client/components/themes/main.sass"
 import "client/components/themes/top-menu/theme-horizontal.sass"
 import logo from "./noc.svg"
 import logoAcademy from "client/images/logo-text.svg"
-import "./noc.sass"
 import top from "./top.png"
 import {A} from "hookrouter"
 

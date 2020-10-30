@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PostList from "client/pages/news/PostList";
+import PostList from "client/pages/post/PostList";
 
 export default function PostMy(props) {
     const [filter, setFilter] = useState();
