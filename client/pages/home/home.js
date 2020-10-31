@@ -25,15 +25,14 @@ export default function Home(props) {
                 <MarkDown source={documents}/>
             </div>
 
-            <div className="block">
+            <div className="comments">
                 <h2>Отзывы</h2>
                 <div className="d-sm-flex justify-content-around">
                     {comments.map((c, i) => <div className="comment" key={i}>
-                        <div className="img-wrap">
-                            <img src={c.photo} className="img-fluid" alt={c.name}/>
+                        <div className="img-wrapper">
+                            <img src={c.photo} alt={c.name}/>
                         </div>
-
-                        <h4>{c.name}</h4>
+                        <h4>{c.name} <small><i>{c.title}</i></small></h4>
                         <div>{c.text}</div>
                     </div>)}
                 </div>

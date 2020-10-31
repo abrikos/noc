@@ -14,8 +14,6 @@ export default function MenuTop(props) {
             <div className={"menu-items"}>
                 <div className="menu-item"><A href="/">Начало</A></div>
                 <div className="menu-item"><A href="/directions">Направления</A></div>
-                <div className="menu-item"><a href="#docs">Документы</a></div>
-                <div className="menu-item"><a href="#reply">Отзывы</a></div>
             </div>
         </label>
 

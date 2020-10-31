@@ -106,7 +106,6 @@ module.exports.controller = function (app) {
     app.post('/api/:model/list', (req, res) => {
         axios('https://yakutia.science/api/post/noc')
             .then(r=> {
-                console.log(r.data)
                 res.send({list: r.data, totalCount: r.data.length})
             })
     });
