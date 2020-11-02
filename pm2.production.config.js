@@ -1,9 +1,6 @@
 const pkginfo = require('./package.json');
 const execSync = require('child_process').execSync;
 
-const log_date_format = 'DD.MM.YYYY HH:mm:ss';
-const combine_logs = true;
-
 let branch = '';
 
 try {
@@ -19,7 +16,7 @@ try {
 module.exports = {
     apps: [{
         name: `${pkginfo.name}-server`,
-        script: `${__dirname}/server/websocket-server.js`,
+        script: `${__dirname}/server/server.js`,
         node_args: '--preserve-symlinks -r esm',
         env: {
             NODE_ENV: 'production',

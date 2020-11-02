@@ -17,7 +17,6 @@ https://glava.sakha.gov.ru/news/front/view/id/3236165
 */
 
 export default function Home(props) {
-    const newsFilter = {where: {isNoc: true}}
 
     return <div className="home">
         <div className="top-cover">
@@ -26,7 +25,7 @@ export default function Home(props) {
         </div>
         <div className="content">
 
-            <PostList {...props} filter={newsFilter}/>
+            <PostList {...props}/>
 
             <div className="block">
                 <h2>Документы</h2>
