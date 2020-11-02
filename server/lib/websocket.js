@@ -1,4 +1,3 @@
-import Mongoose from "server/db/Mongoose";
 const logger = require('logat');
 const WebSocket = require('ws');
 require('dotenv').config();

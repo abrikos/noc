@@ -23,7 +23,7 @@ export default function (props) {
     }, []);
 
     function loadPost() {
-        props.id && props.api(`/post/${props.id}/view/`).then(p => {
+        props.id && props.store.api(`/post/${props.id}/view/`).then(p => {
             setIsMassMedia(p.isMassMedia)
             setIsMarkdown(p.isMarkdown)
             setPost(p);
@@ -38,7 +38,7 @@ export default function (props) {
         setErrors(errs);
         if (Object.keys(errs).length) return;
         //const formData = new FormData(e.target);
-        props.api(`/admin/post/${post.id}/update`, form)
+        props.store.api(`/admin/post/${post.id}/update`, form)
             .then(p => {
                 setUpdated(false)
                 //navigate(`/post/${post.id}`)
@@ -51,7 +51,7 @@ export default function (props) {
 
 
     function uploadDone(images) {
-        props.api(`/post/${post.id}/images/add`, {images}).then(loadPost)
+        props.store.api(`/post/${post.id}/images/add`, {images}).then(loadPost)
     }
 
     function change() {
@@ -60,13 +60,13 @@ export default function (props) {
 
     function deletePost() {
         if (!window.confirm('Удалить новость?')) return;
-        props.api(`/post/${post.id}/delete`)
+        props.store.api(`/post/${post.id}/delete`)
             .then(() => navigate('/admin/news'))
     }
 
     function setPreview(img) {
         console.log(img)
-        props.api(`/post/${post.id}/image-preview/${img.id}`)
+        props.store.api(`/post/${post.id}/image-preview/${img.id}`)
             .then(loadPost)
     }
 

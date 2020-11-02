@@ -3,12 +3,15 @@ import striptags from "striptags";
 
 const passportLib = require('server/lib/passport');
 const removeMd = require('remove-markdown');
-const axios = require('axios')
 
 module.exports.controller = function (app) {
 
 
     function getSchema(name) {
+        if(!Mongoose[name]) {
+            console.log('Wrong model', name)
+            return {}
+        }
         const schema = Mongoose[name].schema;
         const ret = {
             formOptions: schema.formOptions,
@@ -63,6 +66,17 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
+    app.post('/api/:model/:id/editor/view', (req, res) => {
+        Mongoose[req.params.model].findById(req.params.id)
+            .populate(Mongoose[req.params.model].populationAdmin)
+            .then(item => {
+                if (!item) return res.status(404).send({message: `No model ${req.params.model} with id ${req.params.id}`})
+                item.editable = req.session.isAdmin;
+                res.send(item)
+            })
+            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+    });
+
     app.post('/api/:model/:id/view/my', passportLib.isLogged, (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].populationAdmin)
@@ -76,10 +90,14 @@ module.exports.controller = function (app) {
     });
 
     function bodyToWhere(body) {
+
         if (!body.where) body.where = {};
-        for (const f in body.where) {
+
+        /*for (const f in body.where) {
+            console.log(f, body.where[f])
             if (!body.where[f]) delete body.where[f];
-        }
+        }*/
+
         if (body.regexp) {
             body.where.$or = body.regexp.map(reg => {
                 const ret = {}
@@ -94,7 +112,9 @@ module.exports.controller = function (app) {
     }
 
     async function list(req, filter, isAdmin, cb) {
+
         const list = await Mongoose[req.params.model].find(filter)
+            .collation({ locale: "ru" })
             .sort(req.body.sort || req.body.order || {createdAt: -1})
             .limit(parseInt(req.body.limit))
             .skip(parseInt(req.body.skip))
@@ -104,10 +124,14 @@ module.exports.controller = function (app) {
     }
 
     app.post('/api/:model/list', (req, res) => {
-        axios('https://yakutia.science/api/post/noc')
-            .then(r=> {
-                res.send({list: r.data, totalCount: r.data.length})
-            })
+        const filter = bodyToWhere(req.body);
+        list(req, filter, false)
+            .then(d=>res.send(d))
+    });
+
+    app.post('/api/:model/method/:name', (req, res) => {
+        Mongoose[req.params.model][req.params.name](req.body, req.session.userId)
+            .then(d=>res.send(d))
     });
 
     app.post('/api/:model/list/my', passportLib.isLogged, (req, res) => {
@@ -118,13 +142,15 @@ module.exports.controller = function (app) {
     });
 
 
-    app.post('/api/admin/:model/:id/update', passportLib.isAdmin, (req, res) => {
+    app.post('/api/admin/:model/:id/update', passportLib.isEditor, (req, res) => {
+        if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
             .then(async r => {
                 const schema = getSchema(req.params.model);
                 for (const f of Object.keys(req.body)) {
                     const field = schema.fields.find(fld => fld.name === f);
+
                     if (!field) {
                         r[f] = req.body[f]
                         continue;
@@ -155,24 +181,28 @@ module.exports.controller = function (app) {
                     }
 
                 }
-                r.save();
-                res.sendStatus(200);
+                r.save()
+                    .then(r2=> {
+                        res.send(r2)
+                    });
             })
     });
-    app.post('/api/admin/:model/:id/delete', passportLib.isAdmin, (req, res) => {
+
+
+    app.post('/api/admin/:model/:id/delete', passportLib.isEditor, (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
             .then(r => {
                 r.delete();
                 res.sendStatus(200);
             })
     });
-    app.post('/api/admin/:model/create', passportLib.isAdmin, (req, res) => {
+    app.post('/api/admin/:model/create', passportLib.isEditor, (req, res) => {
         Mongoose[req.params.model].create(req.body)
             .then(r => {
                 res.send(r);
             })
     });
-    app.post('/api/admin/:model/:id/files/add', passportLib.isAdmin, (req, res) => {
+    app.post('/api/admin/:model/:id/files/add', passportLib.isEditor, (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose[req.params.model].findById(req.params.id)
 
@@ -188,7 +218,7 @@ module.exports.controller = function (app) {
             })
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
-    app.post('/api/admin/:model/:id/file-preview/:file', passportLib.isAdmin, (req, res) => {
+    app.post('/api/admin/:model/:id/file-preview/:file', passportLib.isEditor, (req, res) => {
         if (!Mongoose.Types.ObjectId.isValid(req.params.id)) return res.send(app.locals.sendError({error: 404, message: 'Wrong Id'}))
         Mongoose[req.params.model].findById(req.params.id)
             .then(model => {
@@ -204,29 +234,31 @@ module.exports.controller = function (app) {
             .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
     });
 
-    app.get('/api/:model/share/:id/:link', (req, res) => {
+    app.get('/api/:model/share/:id', (req, res) => {
         Mongoose[req.params.model].findById(req.params.id)
             .populate(Mongoose[req.params.model].population)
-            .then(post => res.render('share', {
-                header: `${process.env.SITE_NAME} - ${removeMd(post.header || post.name)}`,
-                text: removeMd(striptags(post.text || post.description)),
+            .then(post => res.render('post', {
+                header: `${process.env.SITE_NAME} - ${removeMd(post.name)}`,
+                text: removeMd(striptags(post.description)),
                 image: req.protocol + '://' + req.get('host') + (post.photo ? post.photo.path : '/logo.svg'),
                 url: req.protocol + '://' + req.get('host') + post.link
             }))
             .catch(e => res.send(app.locals.sendError(e)))
     });
 
+    /*
 
-    app.post('/api/:model/search', (req, res) => {
-        const filter = bodyToWhere(req.body);
-        Mongoose[req.params.model].find(filter)
-            .sort({createdAt: -1})
-            .limit(parseInt(req.body.limit) || 10)
-            .skip(parseInt(req.body.skip))
-            .populate(Mongoose.post.population)
-            .then(items => res.send(items))
-            .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
-    });
+        app.post('/api/:model/search', (req, res) => {
+            const filter = bodyToWhere(req.body);
+            Mongoose[req.params.model].find(filter)
+                .sort({createdAt: -1})
+                .limit(parseInt(req.body.limit) || 10)
+                .skip(parseInt(req.body.skip))
+                .populate(Mongoose.post.population)
+                .then(items => res.send(items))
+                .catch(e => res.send(app.locals.sendError({error: 500, message: e.message})))
+        });
+    */
 
 
 };

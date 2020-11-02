@@ -6,7 +6,7 @@ export default function RubricView(props) {
     const [breadcrumb, setBreadcrumb] = useState([]);
 
     useEffect(() => {
-        props.api('/rubric/breadcrumbs', {id: props.id}).then(setBreadcrumb);
+        props.store.api('/rubric/breadcrumbs', {id: props.id}).then(setBreadcrumb);
     }, [props.id, props.message]);
     const filter = {where:{types: {$in: props.id}}};
 

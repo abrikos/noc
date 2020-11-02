@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import "./markdown.sass"
 import MarkDown from "react-markdown";
 import PropTypes from "prop-types";
-import {Input} from "reactstrap";
-import {ModalDialog} from "client/components/ModalDialog";
+import {Form, FormControl} from "react-bootstrap";
+import {ModalDialog} from "client/components/ModalDialog/ModalDialog";
 
 MarkdownEditor.propTypes = {
     value: PropTypes.string,
@@ -26,16 +26,16 @@ export default function MarkdownEditor(props) {
     }
 
     return <>
-        <Input name={props.name} defaultValue={value} invalid={props.invalid} type="textarea" rows={3} onChange={handleChange}/>
-        <div className="text-right">
-        <ModalDialog
-            body={<MarkDown source={value}/>}
-            //open={true}
-            header="Форматированный текст"
-            //controls={[<Button onClick={submit} color="primary">Отправить</Button>, <Button onClick={clear} color="warning">Отменить</Button>]}
-            buttonText="Предпросмотр"/>
+        <FormControl name={props.name} defaultValue={value} invalid={props.invalid} as="textarea" rows={props.rows || 3}
+                      onChange={handleChange}/>
+        <div className="text-center">
+            <ModalDialog
+                body={<MarkDown source={value}/>}
+                //open={true}
+                header="Форматированный текст"
+                //controls={[<Button onClick={submit} variant="primary">Отправить</Button>, <Button onClick={clear} variant="warning">Отменить</Button>]}
+                buttonText="Предпросмотр"/>
         </div>
-
     </>
 
 }

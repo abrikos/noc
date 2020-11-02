@@ -1,5 +1,5 @@
 import Mongoose from "server/db/Mongoose";
-import axios from "axios"
+
 const nodemailer = require('nodemailer');
 const mailer = JSON.parse(process.env.mailer);
 const transport = nodemailer.createTransport(mailer)

@@ -7,7 +7,14 @@ import MarkDown from "react-markdown";
 import documents from "client/pages/home/text-documents";
 import comm from "client/pages/home/comments.png";
 import comments from "client/pages/home/text-comments";
-
+/*
+https://academia.interfax.ru/ru/news/articles/2900/
+https://nauka.tass.ru/nauka/6770258
+http://www.1sn.ru/234318.html
+https://yk24.ru/index/nauka/nauchno-obrazovatelnyij-czentr-sever-planiruyut-sozdat-v-yakutske
+https://yakutia.info/article/193575
+https://glava.sakha.gov.ru/news/front/view/id/3236165
+*/
 
 export default function Home(props) {
     const newsFilter = {where: {isNoc: true}}
@@ -18,6 +25,7 @@ export default function Home(props) {
             </h1>
         </div>
         <div className="content">
+
             <PostList {...props} filter={newsFilter}/>
 
             <div className="block">

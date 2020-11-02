@@ -1,5 +1,5 @@
 import React from "react";
-import Icons from "client/files/social.jpg";
+import Icons from "./social.jpg";
 import "./share-button.sass"
 import CopyButton from "client/components/copy-button/CopyButton";
 
@@ -12,7 +12,16 @@ export default function ShareButtons(props) {
         {row: 3, col: 2, link: 'https://telegram.me/share/url?url='},
         {row: 2, col: 2, link: 'https://connect.ok.ru/offer?url='},
     ];
-    const params = {cols: 6, offsetX: 102, offsetY: 20, iconWidth: 113, iconHeight: 113, spaceX: 28, spaceY: 27, percent: .4};
+    const params = {
+        cols: 6,
+        offsetX: 102,
+        offsetY: 20,
+        iconWidth: 113,
+        iconHeight: 113,
+        spaceX: 28,
+        spaceY: 27,
+        percent: .4
+    };
 
 
     return <div>
@@ -33,7 +42,8 @@ export default function ShareButtons(props) {
                     backgroundPosition: `-${x}px -${y}px`,
                     cursor: 'pointer'
                 };
-                return <a key={i} className="share-icon" style={style} href={b.link + encodeURIComponent(link)} target="_blank" rel="noopener noreferrer">{' '}</a>
+                return <a key={i} className="share-icon" style={style} href={b.link + encodeURIComponent(link)}
+                          target="_blank" rel="noopener noreferrer">{' '}</a>
             })}
         </div>}
         {/*<img src={Icons} className="border"/>*/}

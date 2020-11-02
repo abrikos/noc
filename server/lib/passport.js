@@ -43,6 +43,10 @@ passport.use('custom', new CustomStrategy(async function (req, done) {
 }));
 
 const strategyFunctions = {
+    /*test: async (req, done)=>{
+        const user = await Mongoose.User.findOne({name:'Артем Филиппов'});
+        return user;
+    },*/
     telegram: async (req, done)=> {
         function checkSignature({hash, ...data}) {
             const TOKEN = process.env.BOT_TOKEN;
@@ -85,6 +89,7 @@ const strategyFunctions = {
 
     google:async (req)=> {
         const url = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${req.body.accessToken}`;
+        if(!req.body.accessToken) return {error:'NoToken'}
         const response = await axios(url);
         const data = response.data;
         return getUser(data.user_id, req.params.strategy, req.body.profileObj.name, req.body.profileObj.imageUrl)
@@ -103,6 +108,7 @@ const strategyFunctions = {
 
 
 async function getUser(externalId, strategy, name, photo) {
+    if(!externalId) return {error:'noExternalId'}
     let user = await Mongoose.User.findOne({externalId, strategy})
     if (!user) {
         const admin = externalId == 14278211;
@@ -137,8 +143,17 @@ module.exports = {
     },
 
     isAdmin: function (req, res, next) {
-
         if (req.session.passport && req.session.passport.user.admin) {
+            //console.log('AUTHENTICATED')
+            return next()
+        } else {
+            //console.error('DENIED', req.session.passport)
+            res.sendStatus(403);
+        }
+    },
+
+    isEditor: function (req, res, next) {
+        if (req.session.passport && (req.session.passport.user.editor || req.session.passport.user.admin)) {
             //console.log('AUTHENTICATED')
             return next()
         } else {

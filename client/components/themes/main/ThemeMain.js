@@ -7,7 +7,7 @@ export default function ThemeMain(props) {
 
 
     return <div>
-        <MenuTop/>
+        <MenuTop {...props}/>
         <div className="theme-main">
             {props.errorPage || props.routeResult}
 

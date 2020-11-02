@@ -1,28 +1,26 @@
 import moment from "moment";
 import transliterate from "transliterate"
 import striptags from "striptags";
-const removeMd = require('remove-markdown');
 
+const removeMd = require('remove-markdown');
+const ogs = require('open-graph-scraper');
+const util = require('util')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const modelSchema = new Schema({
         header: {type: String, label: 'Заголовок'},
-        text: {type: String, label: 'Текст', control:'markdown'},
+        text: {type: String, label: 'Текст', control: 'markdown'},
         imgUrl: {type: String},
         url: {type: String, label: 'Адрес на сайте СМИ'},
         isMarkdown: {type: Boolean, label: 'Markdown', default: true},
         editable: Boolean,
         published: {type: Boolean, label: 'Опубликовано'},
-        isMassMedia: {type: Boolean, label: 'СМИ о нас'},
-        isElection: {type: Boolean, label: 'Выборы'},
-        isNoc: {type: Boolean, label: 'НОЦ'},
-        isFixed: {type: Boolean, label: 'Фиксированная'},
         views: {type: Number, default: 0},
         user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
-        image: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
-        preview: {type: mongoose.Schema.Types.ObjectId, ref: 'Image'},
+        files: [{type: mongoose.Schema.Types.ObjectId, ref: 'file'}],
+        file: {type: mongoose.Schema.Types.ObjectId, ref: 'file'},
+        preview: {type: mongoose.Schema.Types.ObjectId, ref: 'file'},
 
     },
     {
@@ -42,6 +40,11 @@ modelSchema.formOptions = {
     searchFields: ['header'],
 }
 
+modelSchema.statics.fromUrl = async function({url}, user){
+    const ogsP = util.promisify(ogs)
+    const r = await ogsP({url})
+    return await this.create({user, imgUrl: r.ogImage.url, header: r.ogTitle, text: r.ogDescription, published: true, url})
+}
 
 modelSchema.virtual('date')
     .get(function () {
@@ -60,7 +63,7 @@ modelSchema.virtual('previewPath')
 
 modelSchema.virtual('adminLink')
     .get(function () {
-        return `/admin/news/${this.id}/update`
+        return `/admin/post/${this.id}/update`
     });
 
 modelSchema.virtual('shareData')
@@ -68,7 +71,7 @@ modelSchema.virtual('shareData')
         return {
             header: `${process.env.SITE_NAME} - ${removeMd(this.header)}`,
             text: striptags(removeMd(this.text)),
-            image:  `${process.env.SITE}${this.image ? this.image.path : '/logo.svg'}`,
+            image: `${process.env.SITE}${this.image ? this.image.path : '/logo.svg'}`,
             url: `${process.env.SITE}${this.link}`
         }
     });
@@ -76,7 +79,7 @@ modelSchema.virtual('shareData')
 modelSchema.virtual('link')
     .get(function () {
         if (this.isMassMedia) return this.url || '/';
-        return `/news/` + this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g, '-') : '')
+        return `/post/` + this.id + '/' + (this.header ? transliterate(this.header).replace(/[^a-zA-Z0-9]/g, '-') : '')
     });
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import AppHook from "client/Store";
+import AppHook from "client/App";
 
 /*
 ReactDOM.render(<Application />, document.getElementById('root'));
@@ -11,17 +11,10 @@ ReactDOM.render(<Application />, document.getElementById('root'));
 serviceWorker.unregister();
 */
 
-const render = (Component) => {
-    ReactDOM.render(
-        <AppHook/>,
+ReactDOM.render(
+    <AppHook/>
+    ,
 
-        document.getElementById('root')
-    );
-    serviceWorker.unregister();
-};
-
-const init = async () => {
-    render();
-};
-
-init();
+    document.getElementById('root')
+);
+serviceWorker.unregister();

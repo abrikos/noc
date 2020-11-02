@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import FileList from "client/components/file-list/FileList";
-import Loader from "client/components/Loader";
+import Loader from "client/components/loader/Loader";
 import PropTypes from "prop-types";
+import {Button} from "react-bootstrap";
 
 FileUpload.propTypes = {
     uploadDone: PropTypes.func.isRequired
@@ -12,6 +13,7 @@ export default function FileUpload(props) {
     const [filesDeclined, setImagesDeclined] = useState([]);
     const [loader, setLoader] = useState(false);
     const tokens = props.tokens;
+    const nameRef = useRef()
 
     async function _handleImageChange(e) {
         setLoader(true)
@@ -30,7 +32,7 @@ export default function FileUpload(props) {
             formData.append('file', file);
             formData.append('tokens', tokens);
             try {
-                const image = await props.api('/file/upload/', formData);
+                const image = await props.store.api('/file/upload/', formData);
                 uploaded.push(image);
             } catch (e) {
                 declined.push({error: e.message, file})
@@ -44,16 +46,22 @@ export default function FileUpload(props) {
         setLoader(false)
     }
 
+    function openDialog() {
+        nameRef.current.click()
+    }
+
     return <div>
-        {loader ? <Loader/> : <input type="file" multiple={true} onChange={_handleImageChange}/>}
+        {loader ? <Loader/> : <input type="file" ref={nameRef} multiple={props.multiple} onChange={_handleImageChange}
+                                     className="d-none"/>}
+        <Button onClick={openDialog}>Загрузить фотографии</Button>
         {/*{!!filesUploaded.length && <div>
             <h4>Загружено</h4>
-            <ImageList files={filesUploaded} editable={props.editable} {...props}/>
+            <ImageList files={filesUploaded} editable={props.editable} store={props.store}/>
         </div>}*/}
 
         {!!filesDeclined.length && <div>
             <h4>Отказано</h4>
-            <FileList files={filesDeclined} {...props}/>
+            <FileList files={filesDeclined} store={props.store}/>
         </div>}
 
     </div>

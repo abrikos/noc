@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
 import "./select-checkbox.sass"
-import {Button} from "reactstrap";
+import {Button} from "react-bootstrap";
 
 export default function SelectCheckbox(props) {
     const [show, setShow] = useState(false);
@@ -43,12 +43,14 @@ export default function SelectCheckbox(props) {
         {show && <div className="popup-items-container">
             <div className="popup-wrapper">
                 {!!items.length && <div>
-                    <Button size="sm" onClick={done} color="success">подтвердить</Button>
-                    <Button size="sm" onClick={clear} color="warning">отменить</Button>
+                    <Button size="sm" onClick={done} variant="success">подтвердить</Button>
+                    <Button size="sm" onClick={clear} variant="warning">отменить</Button>
                 </div>}
                 <div className="popup-items">
-                    {props.options.map((o, i) => <label htmlFor={`option-${o.value}`} key={i} className="select-checkbox-item" onChange={checkboxChange}>
-                            <input type="checkbox" id={`option-${o.value}`} name={props.name} value={o.value} defaultChecked={items.includes(o.value)}/>
+                    {props.options.map((o, i) => <label htmlFor={`option-${o.value}`} key={i}
+                                                        className="select-checkbox-item" onChange={checkboxChange}>
+                            <input type="checkbox" id={`option-${o.value}`} name={props.name} value={o.value}
+                                   defaultChecked={items.includes(o.value)}/>
                             {o.label}
                         </label>
                     )}

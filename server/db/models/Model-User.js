@@ -1,4 +1,5 @@
 import moment from "moment";
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -10,6 +11,7 @@ const modelSchema = new Schema({
         password: String,
         photo: String,
         admin: {type: Boolean},
+        editor: {type: Boolean},
         files: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}]
     },
     {
@@ -21,7 +23,7 @@ const modelSchema = new Schema({
     });
 
 
-
+modelSchema.statics.population =['quizzes']
 
 modelSchema.virtual('date')
     .get(function () {
@@ -33,6 +35,12 @@ modelSchema.virtual('displayName')
         return this.name || this.username;
     });
 
+modelSchema.virtual('quizzes', {
+    ref: 'quiz',
+    localField: '_id',
+    foreignField: 'user',
+    justOne: false // set true for one-to-one relationship
+});
 
 
 export default mongoose.model("User", modelSchema)

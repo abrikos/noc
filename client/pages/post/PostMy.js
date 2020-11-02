@@ -6,7 +6,7 @@ export default function PostMy(props) {
     const tokens = props.getCookie(props.cookieName);
     console.log(tokens)
     useEffect(() => {
-        props.api('/post/my', {tokens}).then(posts => {
+        props.store.api('/post/my', {tokens}).then(posts => {
             console.log(posts)
             setFilter({where: {_id: {$in: posts}}})
         });

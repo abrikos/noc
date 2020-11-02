@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {Dropdown, DropdownMenu, DropdownToggle} from "reactstrap";
+import React, {useState} from "react";
+import {Dropdown} from "react-bootstrap";
 import {A} from "hookrouter"
 
 export default function (props) {
-    const [value, setValue] = useState([])
+    const [value, setValue] = useState(props.value)
     //const [selected, setSelected] = useState([])
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);
     const list = props.list;
-    useEffect(() => {
-        setValue(props.value)
-    }, [])
+
+    /*useEffect(() => {
+        setValue()
+    }, [])*/
 
     function selectValues(e) {
         const vals = [];
@@ -28,7 +29,8 @@ export default function (props) {
     }
 
     return <div className="input-has-many">
-        {!props.field.options.readOnly && <select size={20} multiple={true} name={props.field.name} value={value.map(v => v.id)} hidden readOnly>
+        {!props.field.options.readOnly &&
+        <select size={20} multiple={true} name={props.field.name} value={value.map(v => v.id)} hidden readOnly>
             {value.map((item, i) => <option key={i} value={item.id}> {item[props.field.options.property]} </option>)}
         </select>}
 
@@ -41,15 +43,17 @@ export default function (props) {
             </span>)}
         </div>
         {!props.field.options.readOnly && <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle caret size="sm">
+            <Dropdown.Toggle caret size="sm">
                 Выбрать
-            </DropdownToggle>
-            <DropdownMenu>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
 
-                <select size={20} multiple={true} onChange={selectValues} name="hasManyItems">{list.filter(l => !value.map(v => v.id).includes(l.id)).map(l => <option key={l.id} value={l.id}>{l[props.field.options.property]}</option>)}</select>
+                <select size={20} multiple={true} onChange={selectValues}
+                        name="hasManyItems">{list.filter(l => !value.map(v => v.id).includes(l.id)).map(l => <option
+                    key={l.id} value={l.id}>{l[props.field.options.property]}</option>)}</select>
                 {/*<Button size="sm" onClick={addHasMany}>Добавить</Button>*/}
 
-            </DropdownMenu>
+            </Dropdown.Menu>
         </Dropdown>}
 
     </div>

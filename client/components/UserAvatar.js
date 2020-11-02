@@ -26,7 +26,10 @@ export default function UserAvatar(props) {
     if (!props.user) return <></>;
     //const photo = telegramAvailable ? props.user.photo_url || noUserImg : blockedImg;
     return <div className={'user-avatar ' + props.size}>
-        <div className={'user-avatar-image'}><img src={photo || props.user.photo_url || noUserImg} alt={props.user.first_name} title={photo ? "Telegram blocked" : props.user.first_name} onError={e => setPhoto(blockedImg)}/></div>
+        <div className={'user-avatar-image'}><img src={photo || props.user.photo_url || noUserImg}
+                                                  alt={props.user.first_name}
+                                                  title={photo ? "Telegram blocked" : props.user.first_name}
+                                                  onError={e => setPhoto(blockedImg)}/></div>
         <div className={'user-avatar-name'}>{props.user.first_name}</div>
     </div>;
 }

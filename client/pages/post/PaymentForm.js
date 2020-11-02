@@ -22,7 +22,7 @@ export default function PaymentForm(props) {
 
     function showPayments(e) {
         if (!e.target.value) return;
-        props.api(`/payment/create/post/${props.post.id}/tariff/${props.tariff.id}/method/${e.target.value}`)
+        props.store.api(`/payment/create/post/${props.post.id}/tariff/${props.tariff.id}/method/${e.target.value}`)
             .then(data => {
                 //console.log(data)
                 //const externalWindow = window.open('', '', 'width=600,height=400,left=200,top=200');

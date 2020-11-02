@@ -7,7 +7,7 @@ export default function DateFormat(props) {
     const date = moment(props.date)
     const diff = moment().diff(date, 'days');
     let result;
-    switch(diff){
+    switch (diff) {
         case 0:
             result = `сегодня ${date.format('HH:mm')}`;
             break;

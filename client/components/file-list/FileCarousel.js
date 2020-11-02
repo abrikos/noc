@@ -1,15 +1,9 @@
 import React, {useState} from "react";
-import {
-    Carousel,
-    CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption
-} from 'reactstrap';
+import {Carousel, CarouselCaption, CarouselControl, CarouselIndicators, CarouselItem} from 'react-bootstrap';
 import FileList from "client/components/file-list/FileList";
 
 export default function FileCarousel(props) {
-    const items= props.files.map(i=>({src:i.path}))
+    const items = props.files.map(i => ({src: i.path}))
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
 
@@ -37,8 +31,8 @@ export default function FileCarousel(props) {
                 onExited={() => setAnimating(false)}
                 key={item.src}
             >
-                <img src={item.src} alt={item.altText} />
-                <CarouselCaption captionText={''} captionHeader={''} />
+                <img src={item.src} alt={item.altText}/>
+                <CarouselCaption captionText={''} captionHeader={''}/>
             </CarouselItem>
         );
     });
@@ -50,12 +44,12 @@ export default function FileCarousel(props) {
             next={next}
             previous={previous}
         >
-            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex}/>
             {slides}
-            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-            <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous}/>
+            <CarouselControl direction="next" directionText="Next" onClickHandler={next}/>
         </Carousel>
-        <div  className="d-sm-none d-block"><FileList files={props.files}/></div>
+        <div className="d-sm-none d-block"><FileList files={props.files}/></div>
     </div>
 
 }

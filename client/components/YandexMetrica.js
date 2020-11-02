@@ -3,7 +3,7 @@ import {YMInitializer} from 'react-yandex-metrika';
 
 export default function YandexMetrica() {
     //const ID = 61177273;
-    const ID= 61177573;
+    const ID = 61177573;
 
 
     //return <div dangerouslySetInnerHTML={{__html: ym()}}/>

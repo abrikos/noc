@@ -9,12 +9,16 @@ class API {
     };
 
 
-    async postData(path = '', data = {}, options = {}) {
-        if(!options.noLog) console.log('POST', path)
+    async postData(path = '', data = {}) {
+        const label = 'POST ' +  path;
+        console.time(label)
         const url = '/api' + path;
         return new Promise((resolve, reject) => {
             axios.post(url, data)
-                .then(res => resolve(res.data))
+                .then(res => {
+                    resolve(res.data)
+                    console.timeEnd(label)
+                })
                 .catch(err => {
                     resolve({error: err.response.status, message: err.response.data.message || err.response.statusText})
                 })
@@ -26,28 +30,6 @@ class API {
 
     }
 
-    async postDataBak(path = '', data = {}) {
-        console.log('POST', path)
-        const url = '/api' + path;
-        //const start = new Date().valueOf();
-        this.isLoading = true;
-        try {
-            const res = await axios.post(url, data);
-            if (res.data.error) {
-                console.warn('WARN', res.data, path);
-            }
-            return res.data;
-
-        } catch (e) {
-
-            if (!e.response) {
-
-                return {error: 500, message: e.toJSON().message}
-            }
-            return {error: e.response.status, message: e.response.statusText}
-        }
-
-    }
 
 }
 

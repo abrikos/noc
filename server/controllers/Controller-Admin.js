@@ -30,4 +30,13 @@ module.exports.controller = function (app) {
             });
     });
 
+    app.post('/api/admin/user/:id/change-editor', passportLib.isAdmin, (req, res) => {
+        Mongoose.User.findById(req.params.id)
+            .then(user => {
+                user.editor = !user.editor;
+                user.save();
+                res.sendStatus(200)
+            });
+    });
+
 };

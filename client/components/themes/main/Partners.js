@@ -1,9 +1,8 @@
 import React from "react";
 import * as files from "./photos/partners"
-import {A} from "hookrouter"
 
 export default function Partners() {
-    const partners =[
+    const partners = [
         'https://internat.msu.ru',
         'https://sesc.nsu.ru',
         'https://www.s-vfu.ru',
@@ -24,8 +23,9 @@ export default function Partners() {
             <hr/>
         </div>
         <div className="partners">
-        {partners.map((p,i)=><a key={i} href={p} target="_blank"><img src={files[`i${i+1}`]} className="img-fluid"/></a>)}
-    </div>
+            {partners.map((p, i) => <a key={i} href={p} target="_blank"><img src={files[`i${i + 1}`]}
+                                                                             className="img-fluid"/></a>)}
+        </div>
     </div>
 
 }

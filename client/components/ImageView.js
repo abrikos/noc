@@ -1,4 +1,4 @@
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "react-bootstrap";
 import React, {useState} from "react";
 
 export default function ImageView(props) {
@@ -12,14 +12,14 @@ export default function ImageView(props) {
     }
 
     return <div>
-        <img {...props} onClick={()=>showImage(props.src)}/>
+        <img store={props.store} onClick={() => showImage(props.src)}/>
         <Modal isOpen={modal} toggle={toggle} backdrop={true} keyboard={true}>
             <ModalHeader toggle={toggle}></ModalHeader>
             <ModalBody>
                 <img src={modalImage} alt={'Full'} className="img-fluid"/>
             </ModalBody>
             <ModalFooter>
-                <Button color="secondary" onClick={toggle}>Закрыть</Button>
+                <Button variant="secondary" onClick={toggle}>Закрыть</Button>
             </ModalFooter>
         </Modal>
     </div>

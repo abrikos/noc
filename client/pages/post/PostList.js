@@ -12,7 +12,9 @@ export default function (props) {
     const [totalCount, setTotalCount] = useState();
     const [filter, setFilter] = useState(props.filter);
 
-    useEffect(() => {
+    useEffect(init, []);
+
+    function init(){
         const f = filter ? Object.assign(filter, {}) : {where:{}};
         if(!f.where) f.where = {};
         f.order = {createdAt: -1};
@@ -21,15 +23,15 @@ export default function (props) {
         if (!props.isAdmin) f.where.published = true;
         setFilter(f);
         console.log(JSON.stringify(f))
-        props.api('/post/list', f).then(res=> {
+        props.store.api('/post/list', f).then(res=> {
+            console.log(res)
             setPosts(res.list)
             setTotalCount(res.count);
         });
-    }, [props.filter]);
-
+    }
 
     function pageChange(f) {
-        props.api('/post/list', f).then(res=>setPosts(res.list));
+        props.store.api('/post/list', f).then(res=>setPosts(res.list));
     }
 
     if(!posts) return <Loader/>
